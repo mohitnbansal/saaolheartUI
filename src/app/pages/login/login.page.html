@@ -11,11 +11,11 @@
 <ion-content padding>
     <ion-grid>
         <ion-row justify-content-center>
-            <ion-col size="3">
+            <ion-col [size]="isWeb==true? 3 : ''">
                 <ion-card>
 
                     <ion-card-header text-center>
-                        Login
+                        <ion-card-title> Login {{isWeb}} </ion-card-title>
                     </ion-card-header>
 
                     <ion-card-content>
@@ -32,7 +32,7 @@
                                 <ion-input type="password"></ion-input>
                             </ion-item>
 
-                            <ion-button slot="right">Login</ion-button>
+                            <ion-button (click)="authenticateUser();" slot="right">Login</ion-button>
                             <ion-button slot="left">Reset</ion-button>
                             <ion-button>
                                 <ion-icon slot="icon-only" name="home"></ion-icon>

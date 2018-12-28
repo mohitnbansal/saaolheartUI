@@ -16,9 +16,14 @@ export class AppComponent {
       icon: 'home'
     },
     {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
+      title: 'Customer Managment',
+      url: '/customer',
+      icon: 'people'
+    },
+    {
+      title: 'Appointment',
+      url: '/appointment',
+      icon: 'time'
     }
   ];
 

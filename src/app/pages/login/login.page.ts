@@ -21,6 +21,6 @@ export class LoginPage implements OnInit {
     /**
      * Service to be written for Authenticating user
      */
-    this.router.navigate(['/dashboard-home']);
+    this.router.navigate(['/home']);
   }
 }

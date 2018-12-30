@@ -1,3 +1,4 @@
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ComponentModule } from 'src/app/components/component.module';
 
 import { NgModule } from '@angular/core';
@@ -16,7 +17,8 @@ import {CustomerRoutingModule} from './customer-routing.module';
     FormsModule,
     IonicModule,
     ComponentModule,
-    CustomerRoutingModule
+    CustomerRoutingModule,
+    NgxDatatableModule
   ],
   declarations: [CustomerPage]
 })

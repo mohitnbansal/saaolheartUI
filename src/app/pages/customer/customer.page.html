@@ -1,5 +1,29 @@
 <app-header></app-header>
 
 <ion-content padding>
-    <ion-router-outlet main></ion-router-outlet>
+    <ng-container *ngIf="isLoggedIn; else loggedOut">
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title>
+                    Search Customer
+                </ion-card-title>
+                <ion-card-subtitle>
+                    Registered Only Customer
+                </ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+                <!-- Animated Searchbar -->
+                <ion-searchbar (ionInput)="getCustomerListBySearch($event)" animated showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
+                <ngx-datatable class="material" [rows]="rows" [columnMode]="'force'" [columns]="columns" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="5" [selected]="selected" [selectionType]="'single'">
+                    <ngx-datatable-column name="Name"></ngx-datatable-column>
+                    <ngx-datatable-column name="Gender"></ngx-datatable-column>
+                    <ngx-datatable-column name="Age"></ngx-datatable-column>
+                </ngx-datatable>
+            </ion-card-content>
+
+        </ion-card>
+    </ng-container>
+    <ng-template #loggedOut>
+        <ion-router-outlet></ion-router-outlet>
+    </ng-template>
 </ion-content>

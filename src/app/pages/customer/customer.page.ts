@@ -6,28 +6,90 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
   styleUrls: ['./customer.page.scss'],
 })
 export class CustomerPage implements OnInit {
-  isLoggedIn = true;
+  isLoggedIn = false;
+
+  @ViewChild('myTable') table: any;
  public rows = [
-    {
-      'name': 'Ethel Price',
-      'gender': 'female',
-      'age': 22
-    },
-    {
-      'name': 'Claudine Neal',
-      'gender': 'female',
-      'age': 55
-    },
-    {
-      'name': 'Beryl Rice',
-      'gender': 'female',
-      'age': 67
-    },
-    {
-      'name': 'Simon Grimm',
-      'gender': 'male',
-      'age': 28
+  {
+    'id': 0,
+    'name': 'Ramsey Cummings',
+    'gender': 'male',
+    'age': 52,
+    'address': {
+        'state': 'South Carolina',
+        'city': 'Glendale'
     }
+},
+{
+    'id': 1,
+    'name': 'Stefanie Huff',
+    'gender': 'female',
+    'age': 70,
+    'address': {
+        'state': 'Arizona',
+        'city': 'Beaverdale'
+    }
+},
+{
+    'id': 2,
+    'name': 'Mabel David',
+    'gender': 'female',
+    'age': 52,
+    'address': {
+        'state': 'New Mexico',
+        'city': 'Grazierville'
+    }
+},
+{
+    'id': 3,
+    'name': 'Frank Bradford',
+    'gender': 'male',
+    'age': 61,
+    'address': {
+        'state': 'Wisconsin',
+        'city': 'Saranap'
+    }
+},
+{
+    'id': 4,
+    'name': 'Forbes Levine',
+    'gender': 'male',
+    'age': 34,
+    'address': {
+        'state': 'Vermont',
+        'city': 'Norris'
+    }
+},
+{
+    'id': 5,
+    'name': 'Santiago Mcclain',
+    'gender': 'male',
+    'age': 38,
+    'address': {
+        'state': 'Montana',
+        'city': 'Bordelonville'
+    }
+},
+{
+    'id': 6,
+    'name': 'Merritt Booker',
+    'gender': 'male',
+    'age': 33,
+    'address': {
+        'state': 'New Jersey',
+        'city': 'Aguila'
+    }
+},
+{
+    'id': 7,
+    'name': 'Oconnor Wade',
+    'gender': 'male',
+    'age': 18,
+    'address': {
+        'state': 'Virginia',
+        'city': 'Kenmar'
+    }
+}
   ];
  
 
@@ -38,15 +100,33 @@ export class CustomerPage implements OnInit {
     { name: 'Company' }, 
     { name: 'Gender' }
   ];
+
   tablestyle = 'bootstrap';
   constructor() {
-    this.isLoggedIn = true;
    }
+
+  onPage(event) {
+    // clearTimeout(this.timeout);
+    // this.timeout = setTimeout(() => {
+    //   console.log('paged!', event);
+    // }, 100);
+  }
+  getHeight(): number {
+      return 100;
+  };
    getCustomerListBySearch(event){
      
      return null;
    }
   ngOnInit() {
+  }
+  toggleExpandRow(row) {
+    console.log('Toggled Expand Row!', row);
+    this.table.rowDetail.toggleExpandRow(row);
+  }
+
+  onDetailToggle(event) {
+    console.log('Detail Toggled', event);
   }
 
 }

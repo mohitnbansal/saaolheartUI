@@ -1,9 +1,75 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>customer-details</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>Customer Details</ion-title>
+    </ion-toolbar>
 </ion-header>
 
+
 <ion-content padding>
+
+
+    <ion-grid>
+        <ion-segment [(ngModel)]="pet" color="primary" (ionChange)="segmentChanged($event)">
+            <ion-row>
+                <ion-col>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col align-self-start>
+                                <div>
+                                    <ion-segment-button value="puppies">
+                                        Friends13
+                                    </ion-segment-button>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col align-self-center>
+                                <div>
+                                    <ion-segment-button value="kittens">
+                                        Friends4
+                                    </ion-segment-button>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col align-self-end>
+                                <div>
+                                    <ion-segment-button value="friends">
+                                        Friends2
+                                    </ion-segment-button>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-col>
+                <ion-col>
+                    <div>
+                        <div [ngSwitch]="pet">
+                            <ion-list *ngSwitchCase="'puppies'">
+                                <ion-item>
+                                    <ion-thumbnail item-start>
+                                        <img src="img/thumbnail-puppy-1.jpg">
+                                    </ion-thumbnail>
+                                    <h2>Ruby</h2>
+                                </ion-item>
+                                ...
+                            </ion-list>
+
+                            <ion-list *ngSwitchCase="'kittens'">
+                                <ion-item>
+                                    <ion-thumbnail item-start>
+                                        <img src="img/thumbnail-kitten-1.jpg">
+                                    </ion-thumbnail>
+                                    <h2>Luna</h2>
+                                </ion-item>
+                                ...
+                            </ion-list>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-segment>
+    </ion-grid>
+
 
 </ion-content>

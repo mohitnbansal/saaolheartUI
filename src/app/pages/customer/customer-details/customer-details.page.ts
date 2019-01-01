@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./customer-details.page.scss'],
 })
 export class CustomerDetailsPage implements OnInit {
-
+  pet = '';
   constructor() { }
 
   ngOnInit() {

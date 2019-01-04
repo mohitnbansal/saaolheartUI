@@ -19,13 +19,6 @@
             <ion-content>
                 <ion-list>
                     <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-                        <ion-item-group>
-                            <ion-item-divider>
-                                {{p.title}}
-                                <ion-icon slot="start" [name]="p.icon"></ion-icon>
-                            </ion-item-divider>
-                        </ion-item-group>
-
                         <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
                             {{p.title}}
                             <ion-icon slot="start" [name]="p.icon"></ion-icon>

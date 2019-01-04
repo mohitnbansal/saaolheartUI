@@ -25,7 +25,9 @@ const routes: Routes = [
             loadChildren: './customer-registration/customer-registration.module#CustomerRegistrationPageModule'
           }
         ]
-      }
+      },
+      { path: 'search', loadChildren: './customer-search/customer-search.module#CustomerSearchPageModule' }
+
     ]
   }
 ];

@@ -10,6 +10,11 @@ const routes: Routes = [
     component: CustomerPage,
     children: [
       {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'search'
+    },
+      {
         path: 'details',
         children: [
           {

@@ -11,6 +11,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { ComponentModule } from './components/component.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
+import { JwtModule } from '@auth0/angular-jwt';
+import { HttpClientModule } from '@angular/common/http';
+import { IonicStorageModule } from '@ionic/storage';
+
+
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -19,7 +27,16 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     IonicModule.forRoot(),
     AppRoutingModule,
     ComponentModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    HttpClientModule,
+    IonicStorageModule.forRoot(),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+       // whitelistedDomains: ['example.com'],
+      // blacklistedRoutes: ['example.com/examplebadroute/']
+      }
+    })
   ],
   providers: [
     StatusBar,

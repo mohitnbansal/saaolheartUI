@@ -1,6 +1,8 @@
+import { AuthServiceService } from './../../services/authentication/auth-service.service';
 import { Platform } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { UserService } from 'src/app/services/userservice/user.service';
 
 @Component({
   selector: 'app-login',
@@ -9,18 +11,51 @@ import { Router } from '@angular/router';
 })
 export class LoginPage implements OnInit {
   public isWeb: boolean;
-  constructor(public plat: Platform, private router: Router) {
-    this.isWeb  = this.plat.is('desktop') === true ? true : false;
+  model: any = {};
+  loading = false;
+  error = '';
+  redirectUrl: string;
 
+  constructor(public plat: Platform, private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private authenticationService: AuthServiceService,
+    private userService: UserService) {
+    this.isWeb  = this.plat.is('desktop') === true ? true : false;
+    this.redirectUrl = this.activatedRoute.snapshot.queryParams['redirectTo'];
    }
 
   ngOnInit() {
+
+    this.userService.logout();
   }
-  
-  authenticateUser(){
-    /**
-     * Service to be written for Authenticating user
-     */
-    this.router.navigate(['/home']);
+ 
+  login() {
+    this.loading = true;
+
+    this.authenticationService.login(this.model.username, this.model.password)
+      .subscribe(
+        result => {
+          this.loading = false;
+
+          if (result.access_token) {
+            this.userService.login(result.access_token);
+            this.navigateAfterSuccess();
+          } else {
+            this.error = 'Username or password is incorrect';
+          }
+        },
+        error => {
+          this.error = 'Username or password is incorrect';
+          this.loading = false;
+        }
+      );
+  }
+
+  private navigateAfterSuccess() {
+    if (this.redirectUrl) {
+      this.router.navigateByUrl(this.redirectUrl);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 }

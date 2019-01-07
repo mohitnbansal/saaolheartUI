@@ -11,14 +11,13 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AuthguardService implements CanActivate{
 
-  private jwtHelpService:JwtHelperService;
 
-  constructor(private router: Router, private userService: UserService,private jwtHelp: JwtHelperService) {
-this.jwtHelpService = jwtHelp;
+  constructor(private router: Router, private userService: UserService, private jwtHelp: JwtHelperService) {
+
  }
 
  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean{
-  if (this.jwtHelpService.isTokenExpired(TOKEN_NAME, this.userService.accessToken)) {
+  if (this.jwtHelp.isTokenExpired(TOKEN_NAME, this.userService.accessToken)) {
     return true;
   } else {
     this.router.navigate(['login'], {queryParams: {redirectTo: state.url}});

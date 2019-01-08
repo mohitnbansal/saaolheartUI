@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
   jwtHelper: JwtHelperService = new JwtHelperService();
-  accessToken: string;
+  public accessToken: string = null;
   isAdmin: boolean;
 
   constructor() {
@@ -34,6 +34,7 @@ export class UserService {
   }
 
   isUser(): boolean {
-    return this.accessToken && !this.isAdmin;
+    console.log( this.accessToken != null);
+    return this.accessToken != null;
   }
 }

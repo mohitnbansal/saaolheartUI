@@ -14,13 +14,15 @@ export class AuthServiceService {
 
   login(username: string, password: string): Observable<any> {
     const body = `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&grant_type=password`;
-
+console.log(body)
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/x-www-form-urlencoded',
-        'Authorization': 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD)}};
+        'Authorization': 'Basic ' + btoa(TOKEN_AUTH_USERNAME + ':' + TOKEN_AUTH_PASSWORD)
+        })
+      };
 
-        return this.http.post(AuthServiceService.AUTH_TOKEN, body, httpOptions)
+        return this.http.post<any>(AuthServiceService.AUTH_TOKEN, body, httpOptions);
   //   .subscribe((res: any) => {
   //     console.log(res);
   //     if (res.access_token) {
@@ -29,4 +31,7 @@ export class AuthServiceService {
   //     return null;
   //   });
   // }
+}
+
+
 }

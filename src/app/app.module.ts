@@ -13,9 +13,9 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
-import { IonicStorageModule } from '@ionic/storage';
+import { IonicStorageModule, Storage } from '@ionic/storage';
 
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 export function tokenGetter() {
   return localStorage.getItem('access_token');
 }
@@ -24,19 +24,22 @@ export function tokenGetter() {
   entryComponents: [],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
-    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+        AppRoutingModule,
     ComponentModule,
     NgxDatatableModule,
     HttpClientModule,
     IonicStorageModule.forRoot(),
+
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
        // whitelistedDomains: ['example.com'],
       // blacklistedRoutes: ['example.com/examplebadroute/']
       }
-    })
+    }),
+    IonicModule.forRoot()
   ],
   providers: [
     StatusBar,

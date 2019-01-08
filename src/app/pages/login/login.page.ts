@@ -1,8 +1,10 @@
 import { AuthServiceService } from './../../services/authentication/auth-service.service';
-import { Platform } from '@ionic/angular';
+import { Platform, MenuController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/userservice/user.service';
+import { FormGroup, FormBuilder, Validators ,ReactiveFormsModule} from '@angular/forms';
+import { MustMatch } from 'src/app/helper/must-match.validators';
 
 @Component({
   selector: 'app-login',
@@ -15,24 +17,41 @@ export class LoginPage implements OnInit {
   loading = false;
   error = '';
   redirectUrl: string;
+  public loginForm: FormGroup;
 
   constructor(public plat: Platform, private router: Router,
     private activatedRoute: ActivatedRoute,
     private authenticationService: AuthServiceService,
-    private userService: UserService) {
+    private userService: UserService,
+    public formBuilder: FormBuilder,
+    public react: ReactiveFormsModule,
+    private menu: MenuController) {
     this.isWeb  = this.plat.is('desktop') === true ? true : false;
     this.redirectUrl = this.activatedRoute.snapshot.queryParams['redirectTo'];
+
    }
 
   ngOnInit() {
 
     this.userService.logout();
+
+    this.loginForm = this.formBuilder.group({
+      userName: [],
+      password: ['', [Validators.required, Validators.minLength(3)]],
+  //     confirmPassword: ['', Validators.required]
+  // }, {
+  //     validator: MustMatch('password', 'confirmPassword')
+  //     
+    });
   }
  
   login() {
+    
+    console.log( this.loginForm);
     this.loading = true;
-
-    this.authenticationService.login(this.model.username, this.model.password)
+const userN = this.loginForm.get('userName').value;
+const pass = this.loginForm.get('password').value;
+    this.authenticationService.login(userN,pass)
       .subscribe(
         result => {
           this.loading = false;
@@ -52,10 +71,28 @@ export class LoginPage implements OnInit {
   }
 
   private navigateAfterSuccess() {
+    console.log(this.redirectUrl);
     if (this.redirectUrl) {
-      this.router.navigateByUrl(this.redirectUrl);
+     // this.router.navigateByUrl(this.redirectUrl);
     } else {
-      this.router.navigate(['/']);
+      this.router.navigate(['home']);
     }
   }
+
+  ionViewDidEnter() {
+   // this.menu.enable(false);
+
+    // If you have more than one side menu, use the id like below
+     this.menu.enable(false);
+  }
+
+  ionViewWillLeave() {
+    // Don't forget to return the swipe to normal, otherwise 
+    // the rest of the pages won't be able to swipe to open menu
+    this.menu.enable(true);
+
+    // If you have more than one side menu, use the id like below
+    // this.menu.swipeEnable(true, 'menu1');
+   }
+  
 }

@@ -1,8 +1,6 @@
 <ion-header>
     <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
-        </ion-buttons>
+
         <ion-title text-center>
             <b>   Saaol Heart Center Juhu Login</b>
         </ion-title>
@@ -19,24 +17,24 @@
                     </ion-card-header>
 
                     <ion-card-content>
+                        <form [formGroup]="loginForm" (ngSubmit)="login()">
+                            <ion-list>
 
-                        <ion-list>
+                                <ion-item>
+                                    <ion-label color="primary" position="floating">User Name</ion-label>
+                                    <ion-input type="text" formControlName="userName"></ion-input>
+                                </ion-item>
 
-                            <ion-item>
-                                <ion-label color="primary" position="floating">User Name</ion-label>
-                                <ion-input></ion-input>
-                            </ion-item>
+                                <ion-item>
+                                    <ion-label color="primary" position="floating">Password</ion-label>
+                                    <ion-input type="password" formControlName="password"></ion-input>
+                                </ion-item>
 
-                            <ion-item>
-                                <ion-label color="primary" position="floating">Password</ion-label>
-                                <ion-input type="password"></ion-input>
-                            </ion-item>
+                                <ion-button type="submit" [disabled]="!loginForm.valid" slot="right">Login</ion-button>
+                                <ion-button slot="left" type="reset">Reset</ion-button>
 
-                            <ion-button (click)="login();" slot="right">Login</ion-button>
-                            <ion-button slot="left">Reset</ion-button>
-
-                        </ion-list>
-
+                            </ion-list>
+                        </form>
                     </ion-card-content>
 
                 </ion-card>

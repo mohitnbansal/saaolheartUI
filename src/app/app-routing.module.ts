@@ -9,20 +9,25 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
-  { path: 'login',loadChildren: './pages/login/login.module#LoginPageModule'},
+  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule'},
 
   { path: 'home',
    loadChildren: './pages/dashboard-home/dashboard-home.module#DashboardHomePageModule' ,
-  canActivate: [AuthGuard]},
+  canActivate: [AuthGuard]
+},
   { path: 'customer', loadChildren: './pages/customer/customer.module#CustomerPageModule',
-  canActivate: [AuthGuard] },
+  canActivate: [AuthGuard] 
+},
   { path: 'appointment', loadChildren: './pages/appointment/appointment.module#AppointmentPageModule' ,
-  canActivate: [AuthGuard]},
+ // canActivate: [AuthGuard]
+},
   { path: 'inventory', loadChildren: './pages/inventory/inventory.module#InventoryPageModule' },
   { path: 'sales', loadChildren: './pages/sales/sales.module#SalesPageModule' ,
-  canActivate: [AuthGuard]},
+ // canActivate: [AuthGuard]
+},
   { path: 'store', loadChildren: './pages/store/store.module#StorePageModule' ,
-  canActivate: [AuthGuard]}
+ // canActivate: [AuthGuard]
+}
 ];
 
 @NgModule({

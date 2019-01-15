@@ -1,3 +1,5 @@
+import { CustomerService } from './../../../services/customer/customer.service';
+import { Customer } from './../../../interfaces/customer';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
@@ -7,102 +9,16 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class CustomerSearchPage implements OnInit {
 
- 
-  @ViewChild('myTable') table: any;
- public rows = [
-  {
-    'id': 0,
-    'name': 'Ramsey Cummings',
-    'gender': 'male',
-    'age': 52,
-    'address': {
-        'state': 'South Carolina',
-        'city': 'Glendale'
-    }
-},
-{
-    'id': 1,
-    'name': 'Stefanie Huff',
-    'gender': 'female',
-    'age': 70,
-    'address': {
-        'state': 'Arizona',
-        'city': 'Beaverdale'
-    }
-},
-{
-    'id': 2,
-    'name': 'Mabel David',
-    'gender': 'female',
-    'age': 52,
-    'address': {
-        'state': 'New Mexico',
-        'city': 'Grazierville'
-    }
-},
-{
-    'id': 3,
-    'name': 'Frank Bradford',
-    'gender': 'male',
-    'age': 61,
-    'address': {
-        'state': 'Wisconsin',
-        'city': 'Saranap'
-    }
-},
-{
-    'id': 4,
-    'name': 'Forbes Levine',
-    'gender': 'male',
-    'age': 34,
-    'address': {
-        'state': 'Vermont',
-        'city': 'Norris'
-    }
-},
-{
-    'id': 5,
-    'name': 'Santiago Mcclain',
-    'gender': 'male',
-    'age': 38,
-    'address': {
-        'state': 'Montana',
-        'city': 'Bordelonville'
-    }
-},
-{
-    'id': 6,
-    'name': 'Merritt Booker',
-    'gender': 'male',
-    'age': 33,
-    'address': {
-        'state': 'New Jersey',
-        'city': 'Aguila'
-    }
-},
-{
-    'id': 7,
-    'name': 'Oconnor Wade',
-    'gender': 'male',
-    'age': 18,
-    'address': {
-        'state': 'Virginia',
-        'city': 'Kenmar'
-    }
-}
-  ];
- 
+public customerList: Customer[];
 
+  @ViewChild('myTable') table: any;
+ public rows: Customer[];
   selected = [];
 
-  columns: any[] = [
-    { prop: 'name'} ,
-    { name: 'Company' }, 
-    { name: 'Gender' }
-  ];
+  columns: any[];
 
   tablestyle = 'bootstrap';
-  constructor() {
+  constructor(public custService: CustomerService) {
    }
 
   onPage(event) {
@@ -112,13 +28,44 @@ export class CustomerSearchPage implements OnInit {
     // }, 100);
   }
   getHeight(): number {
-      return 100;
+      return 150;
   };
-   getCustomerListBySearch(event){
+   getCustomerListBySearch(event:any){
+
+let val = event.target.value.toLowerCase();
+  // get the amount of columns in the table
+  let colsAmt = this.columns.length;
+  // get the key names of each column in the dataset
+  let keys = Object.keys(this.customerList[0]);
+  // assign filtered matches to the active datatable
+  this.rows = this.customerList.filter(function(item){
+    // iterate through each row's column data
+    for (let i=0; i<colsAmt; i++){
+      // check for a match
+      if(item[keys[i]]!=null){
+      if (item[keys[i]].toString().toLowerCase().indexOf(val) !== -1 || !val){
+        // found match, return true to add to result set
+        return true;
+      }
+      }
+    }
+  });
+};
      
-     return null;
-   }
+   
   ngOnInit() {
+      this.custService.getAllCustomerSortedList().subscribe((res) => {
+ console.log(res)
+ this.customerList = res;
+ this.rows = res;
+ this.columns = Object.keys(res[0]).map((key) => {
+    return {
+      'prop': key
+    };
+  });
+      }, (err) => {
+console.log(err);
+      });
   }
   toggleExpandRow(row) {
     console.log('Toggled Expand Row!', row);

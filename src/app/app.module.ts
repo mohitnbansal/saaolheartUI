@@ -30,15 +30,14 @@ export function tokenGetter() {
     ComponentModule,
     NgxDatatableModule,
     HttpClientModule,
-    IonicStorageModule.forRoot(),
-
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-       // whitelistedDomains: ['example.com'],
+        whitelistedDomains: ['http://localhost:8082', 'localhost:8082', 'localhost'],
       // blacklistedRoutes: ['example.com/examplebadroute/']
       }
     }),
+    IonicStorageModule.forRoot(),
     IonicModule.forRoot()
   ],
   providers: [

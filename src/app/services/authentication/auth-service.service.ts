@@ -14,7 +14,7 @@ export class AuthServiceService {
 
   login(username: string, password: string): Observable<any> {
     const body = `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&grant_type=password`;
-console.log(body)
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/x-www-form-urlencoded',

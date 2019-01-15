@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
 
 @Component({
   selector: 'app-customer-details',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CustomerDetailsPage implements OnInit {
   pet = '';
+
   constructor() { }
 
   ngOnInit() {
+  
   }
 
 }

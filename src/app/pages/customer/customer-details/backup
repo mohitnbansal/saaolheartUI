@@ -1,0 +1,27 @@
+<ion-row class="fixedClass">
+                                    <ion-col>
+                                        <div>
+                                            <ion-segment-button value="puppies">
+                                                Customer Details
+                                            </ion-segment-button>
+                                        </div>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col>
+                                        <div>
+                                            <ion-segment-button value="kittens">
+                                                Friends4
+                                            </ion-segment-button>
+                                        </div>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col>
+                                        <div>
+                                            <ion-segment-button value="friends">
+                                                Friends2
+                                            </ion-segment-button>
+                                        </div>
+                                    </ion-col>
+                                </ion-row>

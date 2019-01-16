@@ -10,6 +10,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { CustomerPage } from './customer.page';
 import {CustomerRoutingModule} from './customer-routing.module';
+
+
 @NgModule({
   entryComponents: [],
   imports: [

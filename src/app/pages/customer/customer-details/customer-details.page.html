@@ -8,67 +8,59 @@
 <ion-content padding>
 
     <ion-card>
-        <ion-card-header>
+        <ion-card-header color="primary">
             <ion-card-title>
-
+                Mohit N Bansal - Cust ID 00056
             </ion-card-title>
         </ion-card-header>
         <ion-card-content>
 
-            <ion-grid slot="start">
+            <ion-grid>
 
                 <ion-row>
 
-                    <ion-col align-self-start size="3">
-                        <ion-segment [(ngModel)]="pet" color="primary">
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col>
-                                        <ion-list>
-                                            <ion-list-header>
-                                                ion-card-content
-                                            </ion-list-header>
-                                            <ion-item>
-                                                <ion-segment-button value="puppies">
-                                                    Customer Details
-                                                </ion-segment-button>
-                                            </ion-item>
-                                            <ion-item>
-                                                Doctor
-                                            </ion-item>
-                                            <ion-item>
-                                                CT ANGIO
-                                            </ion-item>
-                                        </ion-list>
-                                    </ion-col>
-                                    <ion-col>
-                                        <ion-item>
-                                            aasdf
-                                        </ion-item>
-                                    </ion-col>
-                                </ion-row>
+                    <ion-col align-self-stretch size="3">
+                        <ion-segment [(ngModel)]="customercomp" color="primary">
 
-                            </ion-grid>
+
+                            <ion-segment-button value="customerdetails" float-left>
+                                Customer Details
+                            </ion-segment-button>
+
+
+
+                            <ion-segment-button float-left value="doctordetails">
+                                Doctor Consultation
+                            </ion-segment-button>
+
+
+
+                            <ion-segment-button float-left value="ctangiographydetails">
+                                Ct Angiography MOU
+                            </ion-segment-button>
+
+
+                            <ion-segment-button float-left value="treatmentplandetails">
+                                Treatment Plan
+                            </ion-segment-button>
+
+
+                            <ion-segment-button float-left value="invociedetails">
+                                Invoice
+                            </ion-segment-button>
+
+
                         </ion-segment>
                     </ion-col>
-                    <ion-col>
-
-                        <div [ngSwitch]="pet">
-
-                            <app-customer-detail *ngSwitchCase="'puppies'"></app-customer-detail>
 
 
-                            <ion-list *ngSwitchCase="'kittens'">
-                                <ion-item>
-                                    <ion-thumbnail item-start>
-                                        <img src="img/thumbnail-kitten-1.jpg">
-                                    </ion-thumbnail>
-                                    <h2>Luna</h2>
-                                </ion-item>
-                                ...
-                            </ion-list>
-                        </div>
+                    <ion-col [ngSwitch]="customercomp">
 
+
+
+                        <app-customer-detail *ngSwitchCase="'customerdetails'"></app-customer-detail>
+
+                        <app-doctor-details *ngSwitchCase="'doctordetails'"></app-doctor-details>
                     </ion-col>
                 </ion-row>
 

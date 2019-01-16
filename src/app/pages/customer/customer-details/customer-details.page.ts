@@ -7,7 +7,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./customer-details.page.scss'],
 })
 export class CustomerDetailsPage implements OnInit {
-  pet = '';
+  customercomp = '';
 
   constructor() { }
 

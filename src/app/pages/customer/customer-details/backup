@@ -1,9 +1,7 @@
 <ion-row class="fixedClass">
                                     <ion-col>
                                         <div>
-                                            <ion-segment-button value="puppies">
-                                                Customer Details
-                                            </ion-segment-button>
+                                            
                                         </div>
                                     </ion-col>
                                 </ion-row>

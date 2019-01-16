@@ -8,6 +8,7 @@ import { ComponentModule } from 'src/app/components/component.module';
 
 import { CustomerDetailsPage } from './customer-details.page';
 
+
 const routes: Routes = [
   {
     path: '',
@@ -21,6 +22,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     ComponentModule,
+
     RouterModule.forChild(routes)
   ],
   declarations: [CustomerDetailsPage]

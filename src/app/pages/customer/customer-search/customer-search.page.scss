@@ -1,14 +1,22 @@
-.ngx-datatable,
-.info {
-    text-align: left;
-    width: 98% !important;
-    margin: 0 auto;
-}
-
-datatable-scroller {
-    width: 100% !important;
-}
-
-.row-wrap {
-    white-space: pre-wrap
-}
+    .ngx-datatable,
+    .info {
+        text-align: left;
+        width: 98% !important;
+        margin: 0 auto;
+    }
+    
+    datatable-scroller {
+        width: 100% !important;
+    }
+    
+    .row-wrap {
+        white-space: pre-wrap
+    }
+    
+    body:not(.dropdown-opened) .datatable-row-group {
+        will-change: transform;
+    }
+    
+     :host /deep/ .ngx-datatable.material .datatable-header .datatable-row-right {
+        margin-left: -8px;
+    }

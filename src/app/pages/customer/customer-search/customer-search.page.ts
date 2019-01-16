@@ -1,6 +1,7 @@
 import { CustomerService } from './../../../services/customer/customer.service';
 import { Customer } from './../../../interfaces/customer';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgxDatatableModule, DatatableComponent } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-customer-search',
@@ -11,7 +12,7 @@ export class CustomerSearchPage implements OnInit {
 
 public customerList: Customer[];
 
-  @ViewChild('myTable') table: any;
+  @ViewChild('myTable') table: DatatableComponent;
  public rows: Customer[];
   selected = [];
 
@@ -32,17 +33,17 @@ public customerList: Customer[];
   };
    getCustomerListBySearch(event:any){
 
-let val = event.target.value.toLowerCase();
+const val = event.target.value.toLowerCase();
   // get the amount of columns in the table
-  let colsAmt = this.columns.length;
+  const colsAmt = this.columns.length;
   // get the key names of each column in the dataset
-  let keys = Object.keys(this.customerList[0]);
+  const keys = Object.keys(this.customerList[0]);
   // assign filtered matches to the active datatable
   this.rows = this.customerList.filter(function(item){
     // iterate through each row's column data
-    for (let i=0; i<colsAmt; i++){
+    for (let i = 0; i < colsAmt; i++) {
       // check for a match
-      if(item[keys[i]]!=null){
+      if(item[keys[i]] !=  null) {
       if (item[keys[i]].toString().toLowerCase().indexOf(val) !== -1 || !val){
         // found match, return true to add to result set
         return true;
@@ -67,14 +68,15 @@ let val = event.target.value.toLowerCase();
 console.log(err);
       });
   }
-  toggleExpandRow(row) {
-    console.log('Toggled Expand Row!', row);
+  toggleExpandRow(row,expanded) {
+   
+if(expanded !== true)
+{this.table.rowDetail.collapseAllRows();
+}
     this.table.rowDetail.toggleExpandRow(row);
   }
 
-  onDetailToggle(event) {
-    console.log('Detail Toggled', event);
-  }
+ 
 
 
 }

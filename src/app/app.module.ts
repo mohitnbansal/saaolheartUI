@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule, Storage } from '@ionic/storage';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 export function tokenGetter() {
   return localStorage.getItem('access_token');
 }
@@ -38,7 +39,8 @@ export function tokenGetter() {
       }
     }),
     IonicStorageModule.forRoot(),
-    IonicModule.forRoot()
+    IonicModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [
     StatusBar,

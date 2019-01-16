@@ -12,7 +12,6 @@ export class CustomerDetailsPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  
   }
 
 }

@@ -1,3 +1,4 @@
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -22,7 +23,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     ComponentModule,
-
+    NgxDatatableModule,
     RouterModule.forChild(routes)
   ],
   declarations: [CustomerDetailsPage]

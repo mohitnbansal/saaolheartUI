@@ -25,4 +25,8 @@ return this.http.post<Customer>(environment.apiUrl + 'customer/addcustomer', cus
       console.log(environment.apiUrl);
       return this.http.get(environment.apiUrl + 'customer/getAllCustomersList', this.httpOptions);
     }
+
+    getCustomerById(id: string): Observable<any> {
+      return this.http.get(environment.apiUrl + 'customer/detail/' + id, this.httpOptions);
+    }
 }

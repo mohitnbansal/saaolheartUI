@@ -9,6 +9,7 @@ export interface Customer {
     gender:  (string | ((control: AbstractControl) => ValidationErrors))[];
     martialStatus: (string | ((control: AbstractControl) => ValidationErrors))[];
     dob: (Date | ((control: AbstractControl) => ValidationErrors))[];
+    age: (number | ((control: AbstractControl) => ValidationErrors))[];
     mobileNo: (number | ((control: AbstractControl) => ValidationErrors))[];
     altMobileNo: (number | ((control: AbstractControl) => ValidationErrors))[];
     vistingFor: (string | ((control: AbstractControl) => ValidationErrors))[];

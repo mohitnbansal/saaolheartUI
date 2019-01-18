@@ -13,7 +13,7 @@
         white-space: pre-wrap
     }
     
-    body:not(.dropdown-opened) .datatable-row-group {
+     :host /deep/ .datatable-row-group {
         will-change: transform;
     }
     

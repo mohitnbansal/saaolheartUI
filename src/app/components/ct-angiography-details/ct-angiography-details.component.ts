@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-doctor-details',
-  templateUrl: './doctor-details.component.html',
-  styleUrls: ['./doctor-details.component.scss']
+  selector: 'app-ct-angiography-details',
+  templateUrl: './ct-angiography-details.component.html',
+  styleUrls: ['./ct-angiography-details.component.scss']
 })
-export class DoctorDetailsComponent implements OnInit {
+export class CtAngiographyDetailsComponent implements OnInit {
+
 
   editing = {};
   rows = [
@@ -18,9 +19,7 @@ export class DoctorDetailsComponent implements OnInit {
         'dateAndTime': new Date()
     }]
 ;
-
-  constructor() {}
-
+  constructor() { }
 
   ngOnInit() {
   }
@@ -29,6 +28,5 @@ export class DoctorDetailsComponent implements OnInit {
     this.editing[rowIndex + '-' + cell] = false;
     this.rows[rowIndex][cell] = event.target.value;
   }
-
 
 }

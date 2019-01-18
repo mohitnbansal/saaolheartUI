@@ -67,7 +67,7 @@
                                     <ion-col>
                                         <ion-item>
                                             <ion-label position="floating">Age</ion-label>
-                                            <ion-input name="age" formControlName="age" type="readonly" id="age">
+                                            <ion-input name="age" formControlName="age" type="text" readonly="true" id="age">
                                             </ion-input>
                                         </ion-item>
                                     </ion-col>
@@ -124,7 +124,7 @@
                                     <ion-col>
                                         <ion-item>
                                             <ion-label position="floating">Mobile (Primary)</ion-label>
-                                            <ion-input type="text" formControlName="mobi    leNo" id="mobileNo">
+                                            <ion-input type="text" formControlName="mobileNo" id="mobileNo">
                                             </ion-input>
                                         </ion-item>
                                     </ion-col>
@@ -169,6 +169,7 @@
                     <ion-button shape="round" size="default" slot="end" type="submit" [disabled]="!custformGroup.valid">
                         <ion-icon size="default" name="person-add"></ion-icon> &nbsp; Add Customer</ion-button>
                     <ion-button shape="round" size="default" slot="end" type="reset">Reset</ion-button>
+
                 </ion-item>
 
             </form>

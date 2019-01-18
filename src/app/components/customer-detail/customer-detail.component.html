@@ -2,91 +2,91 @@
     <ion-row>
         <ion-col size="3">
             <ion-label>
-                Consultaion Number: -
+                <ion-text color="dark"><b>Consultation Number: -</b></ion-text>
             </ion-label>
         </ion-col>
         <ion-col size="3">
-            5646513216
+            {{customerDetails.consultaionNumber}}
         </ion-col>
     </ion-row>
     <ion-row>
         <ion-col size="3">
             <ion-label>
-                SAAOL Code: -
+                <ion-text color="dark"><b>   SAAOL Code: -</b></ion-text>
             </ion-label>
         </ion-col>
         <ion-col size="3">
-            5646513216
+            {{customerDetails.saaolCode}}
         </ion-col>
     </ion-row>
     <ion-row>
         <ion-col size="3">
             <ion-label>
-                Pateint Name
+                <ion-text color="dark"><b> Pateint Name</b></ion-text>
             </ion-label>
         </ion-col>
         <ion-col size="3">
-            5646513216
+            {{customerDetails.firstName}} {{customerDetails.lastName}}
         </ion-col>
     </ion-row>
     <ion-row>
         <ion-col size="3">
             <ion-label>
-                Date of Birth
+                <ion-text color="dark"><b>     Date of Birth</b></ion-text>
             </ion-label>
         </ion-col>
         <ion-col size="3">
-            5646513216
+            {{customerDetails.dob | date:'MMM d, y'}}
         </ion-col>
     </ion-row>
     <ion-row>
         <ion-col size="3">
             <ion-label>
-                Age
+                <ion-text color="dark"><b> Age</b></ion-text>
             </ion-label>
         </ion-col>
         <ion-col size="3">
-            5646513216
+            {{customerDetails.age}}
         </ion-col>
     </ion-row>
     <ion-row>
         <ion-col size="3">
             <ion-label>
-                Gender
+                <ion-text color="dark"><b>    Gender</b></ion-text>
             </ion-label>
         </ion-col>
         <ion-col size="3">
-            5646513216
+            {{customerDetails.gender}}
         </ion-col>
     </ion-row>
     <ion-row>
         <ion-col size="3">
             <ion-label>
-                Address
+                <ion-text color="dark"><b> Address</b></ion-text>
             </ion-label>
         </ion-col>
-        <ion-col size="3">
-            5646513216
+        <ion-col size="3" wrap-text>
+            {{customerDetails.address}}
         </ion-col>
     </ion-row>
     <ion-row>
         <ion-col size="3">
             <ion-label>
-                Email Id
+                <ion-text color="dark"><b>   Email Id</b></ion-text>
             </ion-label>
         </ion-col>
         <ion-col size="3">
-            5646513216
+            {{customerDetails.emailId}}
         </ion-col>
     </ion-row>
     <ion-row>
         <ion-col size="3">
             <ion-label>
-                Aadhar Number
+                <ion-text color="dark"><b> Aadhar Number</b></ion-text>
             </ion-label>
         </ion-col>
         <ion-col size="3">
-            5646513216
+            {{customerDetails.aadharNumber}}
         </ion-col>
     </ion-row>
     <ion-row>
@@ -95,21 +95,21 @@
                 <ion-row>
                     <ion-col>
                         <ion-label>
-                            Aadhar Number
+                            <ion-text color="dark"><b> Mobile (Primary)</b></ion-text>
                         </ion-label>
                     </ion-col>
                     <ion-col>
-                        5646513216
+                        {{customerDetails.mobileNo}}
                     </ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col>
                         <ion-label>
-                            Aadhar Number
+                            <ion-text color="dark"><b>   Landline No.</b></ion-text>
                         </ion-label>
                     </ion-col>
                     <ion-col>
-                        5646513216
+                        {{customerDetails.landlineRes}}
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -119,21 +119,21 @@
                 <ion-row>
                     <ion-col>
                         <ion-label>
-                            Aadhar Number
+                            <ion-text color="dark"><b>  Pateint Added by</b></ion-text>
                         </ion-label>
                     </ion-col>
                     <ion-col>
-                        5646513216
+                        {{customerDetails.generetedBy}}
                     </ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col>
                         <ion-label>
-                            Aadhar Number
+                            <ion-text color="dark"><b> Pateint Added On</b></ion-text>
                         </ion-label>
                     </ion-col>
                     <ion-col>
-                        5646513216
+                        {{customerDetails.dateOfCreation | date:'MMM d, y'}}
                     </ion-col>
                 </ion-row>
             </ion-grid>

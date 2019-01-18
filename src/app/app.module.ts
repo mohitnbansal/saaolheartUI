@@ -27,7 +27,7 @@ export function tokenGetter() {
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-        AppRoutingModule,
+    AppRoutingModule,
     ComponentModule,
     NgxDatatableModule,
     HttpClientModule,

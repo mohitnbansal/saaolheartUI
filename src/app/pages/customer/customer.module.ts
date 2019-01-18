@@ -1,3 +1,4 @@
+import { CustomerDetailsService } from 'src/app/services/customer/customer-details.service';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ComponentModule } from 'src/app/components/component.module';
 
@@ -22,6 +23,7 @@ import {CustomerRoutingModule} from './customer-routing.module';
     CustomerRoutingModule,
     NgxDatatableModule
   ],
+  providers:[CustomerDetailsService],
   declarations: [CustomerPage]
 })
 export class CustomerPageModule {}

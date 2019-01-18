@@ -1,6 +1,7 @@
 import { CustomerPage } from './customer.page';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { CustomerDetailsService } from 'src/app/services/customer/customer-details.service';
 
 
 
@@ -20,6 +21,13 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: './customer-details/customer-details.module#CustomerDetailsPageModule'
+          },
+          {
+            path: ':id',
+            loadChildren: './customer-details/customer-details.module#CustomerDetailsPageModule',
+            resolve:{
+              data: CustomerDetailsService
+            }
           }
         ]
       },

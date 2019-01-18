@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 
@@ -9,9 +10,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 export class CustomerDetailsPage implements OnInit {
   customercomp = '';
 
-  constructor() { }
+  constructor(public activate: ActivatedRoute) {
+   console.log(this.activate.snapshot.data) ;
+   }
 
   ngOnInit() {
+    this.customercomp = 'customerdetails';
   }
 
 }

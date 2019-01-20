@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule, FormGroupDirective } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HeaderComponent } from './header/header.component';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -19,7 +20,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
        FlashMessageComponent],
   imports: [
     CommonModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [HeaderComponent,

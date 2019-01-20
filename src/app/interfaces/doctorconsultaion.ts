@@ -8,5 +8,6 @@ export interface DoctorConsultation {
     testSuggested: (string | ((control: AbstractControl) => ValidationErrors))[];
     typeOfTreatement:  (string | ((control: AbstractControl) => ValidationErrors))[];
     invoice: (Invoice | ((control: AbstractControl) => ValidationErrors))[];
-    invoiceId: (number | ((control: AbstractControl) => ValidationErrors))[];
+    invoiceTotalamt: (number | ((control: AbstractControl) => ValidationErrors))[];
+    customerId: (number | ((control: AbstractControl) => ValidationErrors))[];
  }

@@ -20,7 +20,7 @@
                 <ion-row>
 
                     <ion-col align-self-stretch size="3">
-                        <ion-segment [(ngModel)]="customercomp" color="primary">
+                        <ion-segment [(ngModel)]="customercomp" (ionChange)="onSegmentChange($event)" color="primary">
 
 
                             <ion-segment-button value="customerdetails" float-left>
@@ -59,6 +59,7 @@
 
 
                         <app-customer-detail *ngSwitchCase="'customerdetails'"></app-customer-detail>
+
 
                         <app-doctor-details *ngSwitchCase="'doctordetails'"></app-doctor-details>
                         <app-ct-angiography-details *ngSwitchCase="'ctangiographydetails'"></app-ct-angiography-details>

@@ -76,7 +76,6 @@ if(expanded !== true)
     this.table.rowDetail.toggleExpandRow(row);
   }
 
- 
 
 
 }

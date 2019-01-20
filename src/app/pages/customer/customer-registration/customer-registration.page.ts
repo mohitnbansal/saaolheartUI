@@ -23,8 +23,7 @@ export class CustomerRegistrationPage implements OnInit {
     public jwt: JwtHelperService) { }
 
   ngOnInit() {
-    const tok = this.jwt.decodeToken(this.jwt.tokenGetter());
-    console.log(tok)
+    
     this.custformGroup = this.createForm({
       firstName: ['', Validators.required],
       lastName: [''],
@@ -40,22 +39,20 @@ export class CustomerRegistrationPage implements OnInit {
       vistingFor: [''],
       aadharNumber: [],
       occupation: [],
-      landlineOff: [''],
-       landlineRes: ['']
+      landlineOff: [],
+       landlineRes: []
     });
 
     this.updateDate();
   }
   onSubmit() {
-
-    console.log(this.custformGroup.value);
+console.log(this.custformGroup.value)
     this.customerService.saveCustomer(this.custformGroup.value).subscribe((res) => {
 
-     console.log(res);
      this.flashProvider.show('Customer Succesfully Added!' , 4000);
      this.custformGroup.reset();
     }, (err) => {
-      console.log(err);
+     
       this.flashProvider.show('Unable to Save Customer!' , 4000);
     }) ;
 

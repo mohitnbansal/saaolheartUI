@@ -1,3 +1,4 @@
+import { DoctorConsultation } from './../../interfaces/doctorconsultaion';
 import { Customer } from '../../interfaces/customer';
 import { FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -28,5 +29,9 @@ return this.http.post<Customer>(environment.apiUrl + 'customer/addcustomer', cus
 
     getCustomerById(id: string): Observable<any> {
       return this.http.get(environment.apiUrl + 'customer/detail/' + id, this.httpOptions);
+    }
+
+    saveDoctorDetails(doct: DoctorConsultation): Observable<any>{
+      return this.http.post<DoctorConsultation>(environment.apiUrl + 'customer/savedoctordetails', doct ,this.httpOptions);
     }
 }

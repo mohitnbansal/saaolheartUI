@@ -25,6 +25,18 @@
                         <ion-col>
                             <ion-grid>
                                 <ion-row>
+                                    <ion-col size="6">
+                                        <ion-item>
+                                            <ion-label position="floating">Customer Type</ion-label>
+                                            <ion-select formControlName="vistingFor" [interfaceOptions]="customPopover" interface="popover" placeholder="Select">
+                                                <ion-select-option value="store">Products</ion-select-option>
+                                                <ion-select-option value="treatment">Treatment</ion-select-option>
+                                            </ion-select>
+
+                                        </ion-item>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
                                     <ion-col>
                                         <ion-item>
                                             <ion-label position="floating">First Name</ion-label>
@@ -50,21 +62,18 @@
                                 <ion-row>
                                     <ion-col>
                                         <ion-item>
-                                            <ion-label position="floating">Store Only Customer</ion-label>
-                                            <ion-select formControlName="vistingFor" [interfaceOptions]="customPopover" interface="popover" placeholder="Select">
-                                                <ion-select-option value="yes">Yes</ion-select-option>
-                                                <ion-select-option value="no">No</ion-select-option>
-                                            </ion-select>
-
+                                            <ion-label position="floating">Email Id</ion-label>
+                                            <ion-input type="email" formControlName="emailId" id="emailId">
+                                            </ion-input>
                                         </ion-item>
                                     </ion-col>
-                                    <ion-col>
+                                    <ion-col *ngIf="showHide">
                                         <ion-item>
-                                            <ion-label position="floating">Date</ion-label>
+                                            <ion-label position="floating">Date of Birth</ion-label>
                                             <ion-datetime formControlName="dob" id="dob" display-format="MMM DD, YYYY"></ion-datetime>
                                         </ion-item>
                                     </ion-col>
-                                    <ion-col>
+                                    <ion-col *ngIf="showHide">
                                         <ion-item>
                                             <ion-label position="floating">Age</ion-label>
                                             <ion-input name="age" formControlName="age" type="text" readonly="true" id="age">
@@ -73,7 +82,7 @@
                                     </ion-col>
                                 </ion-row>
                                 <ion-row>
-                                    <ion-col>
+                                    <ion-col *ngIf="showHide">
                                         <ion-item>
                                             <ion-label position="floating">Gender</ion-label>
                                             <ion-select formControlName="gender" interface="popover" id="gender" placeholder="Select">
@@ -84,14 +93,14 @@
 
                                         </ion-item>
                                     </ion-col>
-                                    <ion-col>
+                                    <ion-col *ngIf="showHide">
                                         <ion-item>
                                             <ion-label position="floating">Occupation</ion-label>
                                             <ion-input type="text" formControlName="occupation" id="occupation">
                                             </ion-input>
                                         </ion-item>
                                     </ion-col>
-                                    <ion-col>
+                                    <ion-col *ngIf="showHide">
                                         <ion-item>
                                             <ion-label position="floating">Aadhar number</ion-label>
 
@@ -102,9 +111,9 @@
                                 </ion-row>
                             </ion-grid>
                         </ion-col>
-                        <ion-col>
+                        <!-- <ion-col>
                             <ion-img style="width:50%;height:50%;" src="https://picsum.photos/100"></ion-img>
-                        </ion-col>
+                        </ion-col> -->
 
 
                     </ion-row>
@@ -112,13 +121,14 @@
                         <ion-col>
                             <ion-grid>
                                 <ion-row>
-                                    <ion-col>
+                                    <ion-col *ngIf="showHide">
                                         <ion-item>
-                                            <ion-label position="floating">Email Id</ion-label>
-                                            <ion-input type="email" formControlName="emailId" id="emailId">
+                                            <ion-label position="floating">Pan Number</ion-label>
+                                            <ion-input type="text" formControlName="lastName" id="lastName">
                                             </ion-input>
                                         </ion-item>
                                     </ion-col>
+
                                 </ion-row>
                                 <ion-row>
                                     <ion-col>
@@ -128,7 +138,7 @@
                                             </ion-input>
                                         </ion-item>
                                     </ion-col>
-                                    <ion-col>
+                                    <ion-col *ngIf="showHide">
                                         <ion-item>
                                             <ion-label position="floating">Mobile (Alternate)</ion-label>
                                             <ion-input type="text" formControlName="altMobileNo" id="altMobileNo">
@@ -136,26 +146,10 @@
                                         </ion-item>
                                     </ion-col>
                                 </ion-row>
-                                <ion-row>
-                                    <ion-col>
-                                        <ion-item>
-                                            <ion-label position="floating">Landline (Resisdence)</ion-label>
-                                            <ion-input type="text" formControlName="landlineRes" id="landlineRes">
-                                            </ion-input>
-                                        </ion-item>
-                                    </ion-col>
-                                    <ion-col>
-                                        <ion-item>
-                                            <ion-label position="floating">Landline (Office)</ion-label>
-                                            <ion-input type="text" formControlName="landlineOff" id="landlineOff">
-                                            </ion-input>
-                                        </ion-item>
-                                    </ion-col>
 
-                                </ion-row>
                             </ion-grid>
                         </ion-col>
-                        <ion-col>
+                        <ion-col *ngIf="showHide">
                             <ion-item>
                                 <ion-label position="floating">Address</ion-label>
                                 <ion-textarea rows="10" type="email" formControlName="address" id="address">

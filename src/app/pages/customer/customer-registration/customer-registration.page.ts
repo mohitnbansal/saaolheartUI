@@ -13,11 +13,10 @@ import { FlashMessageService } from 'src/app/services/flash/flash-message.servic
 export class CustomerRegistrationPage implements OnInit {
 
   public custformGroup: FormGroup;
+  public showHide: boolean;
   customPopover: any = {
-    heade: 'Customer Type',
-    subHeader: 'Select Customer Type',
-    message: 'No if he/she is a Pateint'
-  }
+    subHeader: 'Select Customer Type'
+  };
   constructor(public fb: FormBuilder, public customerService: CustomerService,
     public flashProvider: FlashMessageService,
     public jwt: JwtHelperService) { }
@@ -43,7 +42,8 @@ export class CustomerRegistrationPage implements OnInit {
        landlineRes: []
     });
 
-    this.updateDate();
+    this.changeEvent();
+    this.showHide = true;
   }
   onSubmit() {
 console.log(this.custformGroup.value)
@@ -64,9 +64,11 @@ console.log(this.custformGroup.value)
     this.custformGroup.patchValue(model);
   }
  
-  updateDate() {
+  changeEvent() {
+    /**
+     * Below is the event to capture changes in date and covert it into age.
+     */
 this.custformGroup.get('dob').valueChanges.subscribe(val => {
-
  const today = new Date();
  const selectedDate = new Date(Date.parse(val));
  const diffMillisec = (today.getTime() - selectedDate.getTime());
@@ -79,5 +81,18 @@ this.custformGroup.get('dob').valueChanges.subscribe(val => {
  }
  this.custformGroup.get('age').setValue(theAge);
 });
+
+/**
+ * Below is the change event to capture the change in customer type and set the boolean value
+ */
+
+ this.custformGroup.get('vistingFor').valueChanges.subscribe(val => {
+
+    if (val === 'store') {
+          this.showHide = false;
+    } else {
+          this.showHide = true;
+    }
+   });
   }
 }

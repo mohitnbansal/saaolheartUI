@@ -1,3 +1,4 @@
+import { InvoiceMasterService } from './../../services/master/invoice-master.service';
 import { CustomerPage } from './customer.page';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -26,7 +27,8 @@ const routes: Routes = [
             path: ':id',
             loadChildren: './customer-details/customer-details.module#CustomerDetailsPageModule',
             resolve:{
-              data: CustomerDetailsService
+              data: CustomerDetailsService,
+              invoiceType: InvoiceMasterService
             }
           }
         ]

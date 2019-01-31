@@ -12,41 +12,97 @@ import { Component, OnInit, OnChanges, DoCheck, Input, AfterViewInit } from '@an
 })
 export class DoctorDetailsComponent implements OnInit {
   doctorDetailsForm: FormGroup;
-
+  invoiceMasterType: any;
   doctorDetailfromDb: any;
-  editing = {};
-  rows = [
-    {
-        'type': 'Doctor Consultation',
-        'paymentMode': 'Cheque',
-        'bankName': 'Johnson, Johnson and Partners, LLC CMP DDC',
-        'details': '22',
-        'amount': 0.00,
-        'dateAndTime': new Date()
-    }]
+  invoiceTypeId: number;
+
+  /**
+   * Doctor Consultation Row Details
+   */
+  editingDoctor = {};
+  rowsDoctor = [];
+  columnsDoctor = [];
+
+   /**
+   * Invoice Consultation Row Details
+   */
+  editingInvoice = {};
+  rowsInvoice = [];
+  rowInvoiceFromDb = [];
+  columnsInvoice = [];
+  
+   /**
+   * Payment Consultation Row Details
+   */
+  editingPayment = {};
+  rowsPayment = [];
+  columnsPayment = [];
 ;
 constructor(public activate: ActivatedRoute, public fb: FormBuilder,
   public customerService: CustomerService,
   public flashProvider: FlashMessageService) {
   this.doctorDetailfromDb = this.activate.snapshot.data['data'];
+  this.invoiceMasterType = this.activate.snapshot.data['invoiceType'];
+  console.log(this.invoiceMasterType);
+  this.invoiceMasterType.forEach(element => {
+   if (element.typeName === 'DOCTOR CONSULTATION') {
+  this.invoiceTypeId = element.id;
+   }
+  });
 
+ this.rowsDoctor = this.doctorDetailfromDb.doctorConsultationList;
+ if (this.doctorDetailfromDb.doctorConsultationList.length > 0  ) {
+ this.columnsDoctor = Object.keys(this.doctorDetailfromDb.doctorConsultationList[0]).map((key) => {
+    return {
+      'prop': key
+    };
+  });
+ }
+    this.updateInvoiceAndPaymentDomain();
+   
 }
 
 
-  ngOnInit() {
-    if (this.doctorDetailfromDb.doctorConsultationList.length > 0) {
-      this.doctorDetailsForm = this.createForm({
-        id: [],
-        consulatationDate:  [this.doctorDetailfromDb.consulatationDate],
-        consultationBy: [this.doctorDetailfromDb.consultationBy],
-        daignosisSummary: [this.doctorDetailfromDb.daignosisSummary],
-        testSuggested: [this.doctorDetailfromDb.testSuggested],
-        typeOfTreatement:  [this.doctorDetailfromDb.typeOfTreatement],
-        invoice:  [this.doctorDetailfromDb.invoice],
-        customerId: [this.doctorDetailfromDb.id],
-        invoiceTotalamt: [, Validators.required]
+  private updateInvoiceAndPaymentDomain() {
+    this.doctorDetailfromDb.doctorConsultationList.filter((ele) => {
+      this.rowsInvoice.push(ele.invoiceDomain);
+      this.rowInvoiceFromDb.push(ele.invoiceDomain);
+      ele.invoiceDomain.invoiceReciptList.filter((val) => {
+        this.rowsPayment.push(val);
       });
-        } else {
+      return ele.invoiceDomain;
+    });
+    if (this.rowsInvoice.length > 0) {
+      this.columnsInvoice = Object.keys(this.rowsInvoice[0]).map((key) => {
+        return {
+          'prop': key
+        };
+      });
+    }
+    if (this.rowsPayment.length > 0) {
+      this.columnsInvoice = Object.keys(this.rowsPayment[0]).map((key) => {
+        return {
+          'prop': key
+        };
+      });
+    }
+  }
+
+  ngOnInit() {
+    // if (this.doctorDetailfromDb.doctorConsultationList.length > 0) {
+    //   this.doctorDetailsForm = this.createForm({
+    //     id: [],
+    //     consulatationDate:  [this.doctorDetailfromDb.consulatationDate],
+    //     consultationBy: [this.doctorDetailfromDb.consultationBy],
+    //     daignosisSummary: [this.doctorDetailfromDb.daignosisSummary],
+    //     testSuggested: [this.doctorDetailfromDb.testSuggested],
+    //     typeOfTreatement:  [this.doctorDetailfromDb.typeOfTreatement],
+    //     invoice:  [this.doctorDetailfromDb.invoice],
+    //     customerId: [this.doctorDetailfromDb.id],
+    //     invoiceTotalamt: [, Validators.required],
+    //     invoiceMasterTypeId: [this.invoiceTypeId]
+    //   });
+    //     } else {
           this.doctorDetailsForm = this.createForm({
             id: [],
             consulatationDate:  [],
@@ -56,22 +112,20 @@ constructor(public activate: ActivatedRoute, public fb: FormBuilder,
             typeOfTreatement:  [''],
             invoice:  [],
             customerId: [this.doctorDetailfromDb.id],
-            invoiceTotalamt: [, Validators.required]
+            invoiceTotalamt: [, Validators.required],
+            invoiceMasterTypeId: [this.invoiceTypeId]
           });
-        }
+       // }
 
   }
   onSubmit() {
     console.log(this.doctorDetailsForm.value);
     this.customerService.saveDoctorDetails(this.doctorDetailsForm.value).subscribe((res) => {
+      console.log(res);
       this.flashProvider.show('Doctor Details Succesfully Added!' , 4000);
      }, (err) => {
        this.flashProvider.show('Unable to update doctor details!' , 4000);
      }) ;
-  }
-  updateValue(event, cell, rowIndex) {
-    this.editing[rowIndex + '-' + cell] = false;
-    this.rows[rowIndex][cell] = event.target.value;
   }
 
   private updateForm(model: Partial<DoctorConsultation>): void {
@@ -81,5 +135,63 @@ constructor(public activate: ActivatedRoute, public fb: FormBuilder,
     return this.fb.group(model);
   }
 
+  updateValueDoctor(event, cell, rowIndex) {
+    this.editingDoctor[rowIndex + '-' + cell] = false;
+    this.rowsDoctor[rowIndex][cell] = event.target.value;
+  }
+  updateValueInvoice(event, cell, rowIndex) {
+    /**
+     * Bug needs to be solved the Balance amount not getting reset to original DB amount when entered zero
+     */
+    if ( cell === 'paymentAmount' ) {
+      const balAmt =     this.rowInvoiceFromDb[rowIndex]['balanceAmt'];
+      console.log(balAmt)
+      const newBalAmt = Number(balAmt) - Number(event.target.value);
+      if (isNaN(newBalAmt)) {
+
+      } else if (newBalAmt < 0 ) {
+        this.flashProvider.show('Kindly Enter Amount Less than the balance amount', 5000);
+        event.target.value = '';
+        return;
+      } else {
+        this.rowsInvoice[rowIndex]['balanceAmt'] = newBalAmt  ;
+        this.rowsInvoice = [...this.rowsInvoice];
+        console.log(this.rowsInvoice);
+
+      }
+              }
+    this.editingInvoice[rowIndex + '-' + cell] = false;
+    this.rowsInvoice[rowIndex][cell] = event.target.value;
+
+  }
+  updateValuePayment(event, cell, rowIndex) {
+    this.editingPayment[rowIndex + '-' + cell] = false;
+    this.rowsPayment[rowIndex][cell] = event.target.value;
+
+  }
+  printReciept(event, cell, rowIndex, row) {
+this.customerService.printRecipt(row).subscribe((res) => {
+ console.log(res);
+// const blob = new Blob([data], { type: 'text/csv' });
+const url = window.URL.createObjectURL(res);
+// window.open(url); if Image needs to open in new tab
+const a = document.createElement('a');
+  a.href = url;
+  a.download = 'File.pdf';
+  a.click();
+}  , (errr) => {
+  console.log(errr);
+ });
+  }
+
+
+  generateReciept(event, cell, rowIndex, row) {
+    console.log(row);
+   this.customerService.generateReciept(row).subscribe((res) => {
+      console.log(res);
+   }, (err) => {
+     console.log(err);
+   });
+  }
  
 }

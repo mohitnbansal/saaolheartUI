@@ -23,7 +23,7 @@ import {CustomerRoutingModule} from './customer-routing.module';
     CustomerRoutingModule,
     NgxDatatableModule
   ],
-  providers:[CustomerDetailsService],
+  providers: [CustomerDetailsService],
   declarations: [CustomerPage]
 })
 export class CustomerPageModule {}

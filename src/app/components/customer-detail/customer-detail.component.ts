@@ -12,7 +12,7 @@ export class CustomerDetailComponent implements OnInit {
 customerDetails: any;
 custStatusForm: FormGroup;
 
-  constructor(public activate: ActivatedRoute,public fb: FormBuilder) {
+  constructor(public activate: ActivatedRoute, public fb: FormBuilder) {
     this.customerDetails = this.activate.snapshot.data['data'];
     console.log(this.activate.snapshot.data) ;
 

@@ -1,7 +1,7 @@
 import { DoctorConsultation } from './../../interfaces/doctorconsultaion';
 import { Customer } from '../../interfaces/customer';
 import { FormGroup } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -16,6 +16,7 @@ export class CustomerService {
       'Content-Type':  'application/json',
       })
     };
+    
   constructor(public http: HttpClient) { }
 
   saveCustomer(cust: Customer): Observable<any> {
@@ -33,5 +34,14 @@ return this.http.post<Customer>(environment.apiUrl + 'customer/addcustomer', cus
 
     saveDoctorDetails(doct: DoctorConsultation): Observable<any>{
       return this.http.post<DoctorConsultation>(environment.apiUrl + 'customer/savedoctordetails', doct ,this.httpOptions);
+    }
+
+    generateReciept(invoice:any): Observable<any>{
+      return this.http.post<DoctorConsultation>(environment.apiUrl + 'customer/generatereciept', invoice ,this.httpOptions);
+    
+    }
+
+    printRecipt(invo: any): Observable<any> {
+      return this.http.post(environment.apiUrl + 'customer/printreciept', invo ,  { responseType : 'blob'});
     }
 }

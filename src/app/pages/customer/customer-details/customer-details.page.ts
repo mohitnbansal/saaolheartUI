@@ -16,8 +16,8 @@ import { Component, OnInit, ViewChild, ViewChildren, AfterViewInit, Input } from
 
 export class CustomerDetailsPage implements OnInit, AfterViewInit{
   customercomp = '';
-
-constructor(public activate: ActivatedRoute, public fb: FormBuilder,
+  customerFormDetails: any;
+  constructor(public activate: ActivatedRoute, public fb: FormBuilder,
   public customerService: CustomerService,
   public flashProvider: FlashMessageService) {
 
@@ -25,7 +25,8 @@ constructor(public activate: ActivatedRoute, public fb: FormBuilder,
 
 
   ngOnInit() {
-
+    this.customercomp = 'customerdetails';
+    this.customerFormDetails = this.activate.snapshot.data['data'];
   }
   ngAfterViewInit() {
    // console.log(this.doctorDetail.initializeForm());

@@ -32,19 +32,7 @@
                 </ion-item>
             </ion-col>
         </ion-row>
-        <ion-row>
-            <ion-col size="5">
-                <ion-item lines="none">
 
-                    Upload Document (if any)
-                </ion-item>
-            </ion-col>
-            <ion-col>
-                <ion-item>
-                    <ion-input type="file"></ion-input>
-                </ion-item>
-            </ion-col>
-        </ion-row>
         <ion-row>
             <ion-col size="5">
                 <ion-item lines="none">
@@ -72,129 +60,122 @@
 <ion-grid>
     <ion-row class="divider">
         <ion-col>
-            <ion-note color="primary"><b><u><h2>Invoice</h2></u></b></ion-note>
+            <ion-note color="primary"><b><u><h2>Consultation Details</h2></u></b></ion-note>
         </ion-col>
     </ion-row>
     <ion-row>
         <ion-col no-padding>
-            <ngx-datatable no-padding #mydatatable class="material fullscreenManual" [headerHeight]="50" [scrollbarH]='true' [limit]="5" [columnMode]="'standard'" [footerHeight]="50" [rowHeight]="'auto'" [rows]="rows">
-                <ngx-datatable-column name="Type">
+            <ngx-datatable no-padding class="material fullscreenManual" [headerHeight]="50" [scrollbarH]='true' [limit]="5" [columnMode]="'flexi'" [footerHeight]="50" [rowHeight]="'auto'" [rows]="rowsDoctor">
+                <ngx-datatable-column name="Consulation Date">
                     <ng-template ngx-datatable-cell-template let-value="value">
+                        {{value | date : 'MMM d, y, h:mm:ss a' }}
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Consultation By">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
                         {{value}}
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Payment Mode">
-                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-gender'] = true" *ngIf="!editing[rowIndex + '-gender']">
-                    {{value}}
-                  </span>
-                        <select *ngIf="editing[rowIndex + '-gender']" (blur)="editing[rowIndex + '-gender'] = false" (change)="updateValue($event, 'gender', rowIndex)" [value]="value">
-                    <option value="Cheque">Cheque</option>
-                    <option value="Online">Online</option>
-                  </select>
-                    </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Bank Name">
+                <ngx-datatable-column name="Test Suggested">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
-                    {{value}}
-                  </span>
-                        <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text" [value]="value" />
+                        {{value}}
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Details">
+                <ngx-datatable-column name="Invoice Ref No">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
-                    {{value}}
-                  </span>
-                        <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text" [value]="value" />
+                        {{row.invoiceDomain.id}}
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Amount">
-                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
-                    {{value}}
-                  </span>
-                        <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text" [value]="value" />
-                    </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Date and Time">
-                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
-                    {{value}}
-                  </span>
-                        <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text" [value]="value" />
-                    </ng-template>
-                </ngx-datatable-column>
-
-
             </ngx-datatable>
 
 
-        </ion-col>
-    </ion-row>
-    <ion-row justify-content-end>
-        <ion-col justify-content-end>
-            <ion-button color="primary">Generate Invoice</ion-button>
         </ion-col>
     </ion-row>
 </ion-grid>
 <br>
+<br>
 <ion-grid>
     <ion-row class="divider">
         <ion-col>
-            <ion-note color="primary"><b><u><h2>Payment Details</h2></u></b></ion-note>
+            <ion-note color="primary"><b><u><h2>Invoice Details</h2></u></b></ion-note>
         </ion-col>
     </ion-row>
     <ion-row>
         <ion-col no-padding>
-            <ngx-datatable no-padding #mydatatable class="material fullscreenManual" [headerHeight]="50" [scrollbarH]='true' [limit]="5" [columnMode]="'standard'" [footerHeight]="50" [rowHeight]="'auto'" [rows]="rows">
-                <ngx-datatable-column name="Type">
-                    <ng-template ngx-datatable-cell-template let-value="value">
-                        {{value}}
+            <ngx-datatable #myTable class='material fullscreenManual' [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rowsInvoice' (page)="onPage($event)">
+                <ngx-datatable-column name="Invoice No">
+                    <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-rowIndex="rowIndex">
+                        {{row.id}}
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Payment Mode">
+                <ngx-datatable-column name="Invoice Type">
+                    <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-rowIndex="rowIndex">
+                        {{row.invoiceType.typeName}}
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Generated By">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-gender'] = true" *ngIf="!editing[rowIndex + '-gender']">
-                    {{value}}
-                  </span>
-                        <select *ngIf="editing[rowIndex + '-gender']" (blur)="editing[rowIndex + '-gender'] = false" (change)="updateValue($event, 'gender', rowIndex)" [value]="value">
-                    <option value="Cheque">Cheque</option>
-                    <option value="Online">Online</option>
-                  </select>
+                        <ion-text> {{row.generatedBy.username}}</ion-text>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Payment Mode">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+
+                        <ion-select value="" name="paymentMode" (ionChange)="updateValueInvoice($event, 'paymentMode', rowIndex)">
+                            <ion-select-option value="cheque">Cheque</ion-select-option>
+                            <ion-select-option value="online">Online</ion-select-option>
+                            <ion-select-option value="cash">Cash</ion-select-option>
+                        </ion-select>
                     </ng-template>
                 </ngx-datatable-column>
                 <ngx-datatable-column name="Bank Name">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
-                    {{value}}
-                  </span>
-                        <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text" [value]="value" />
+
+                        <ion-input name="bankName" autofocus (blur)="updateValueInvoice($event, 'bankName', rowIndex)" type="text">
+
+                        </ion-input>
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Details">
+                <ngx-datatable-column name="Reference Number">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
-                    {{value}}
-                  </span>
-                        <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text" [value]="value" />
+
+                        <ion-input autofocus (blur)="updateValueInvoice($event, 'referenceNumber', rowIndex)" type="text"></ion-input>
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Amount">
+                <ngx-datatable-column name="Payment Amount">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
-                    {{value}}
-                  </span>
-                        <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text" [value]="value" />
+
+                        <ion-input autofocus (blur)="updateValueInvoice($event, 'paymentAmount', rowIndex)" type="number"></ion-input>
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Date and Time">
+                <ngx-datatable-column name="Total Invoice Amount">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                        <ion-text> {{row.totalInvoiceAmt}}</ion-text>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Balance Amount">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                        <ion-text> {{row.balanceAmt}}</ion-text>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Invoice Status">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
-                    {{value}}
-                  </span>
-                        <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text" [value]="value" />
+
+
+                        <ion-select value="{{row.invoiceStatus}}" name="invoiceStatus" (ionChange)="updateValueInvoice($event, 'cancelInvoice', rowIndex)">
+                            <ion-select-option value="Total Payment Pending">Pending</ion-select-option>
+                            <ion-select-option value="Partially Pending">Partial</ion-select-option>
+                            <ion-select-option value="Payement Conpleted">Completed</ion-select-option>
+                            <ion-select-option value="Invoice Cancelled">Cancel</ion-select-option>
+
+                        </ion-select>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column width="200" name="Payment Amount">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+
+                        <ion-button size="small" shape="round" (click)="generateReciept($event, 'name', rowIndex, row)" color="primary">Generate Reciept</ion-button>
                     </ng-template>
                 </ngx-datatable-column>
 
@@ -204,5 +185,62 @@
 
         </ion-col>
     </ion-row>
-
 </ion-grid>
+<br>
+<br>
+<ion-grid>
+    <ion-row class="divider">
+        <ion-col>
+            <ion-note color="primary"><b><u><h2>Payement Receipts</h2></u></b></ion-note>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col no-padding>
+            <ngx-datatable #myTable class='material fullscreenManual' [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rowsPayment' (page)="onPage($event)">
+                <ngx-datatable-column name="Invoice No">
+                    <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-rowIndex="rowIndex">
+                        {{row.invoiceId}}
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Recived By">
+                    <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-rowIndex="rowIndex">
+                        {{row.recievedBy}}
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Date">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                        <ion-text> {{row.paymentDate | date : 'MMM d, y, h:mm:ss a' }}</ion-text>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Reference Number">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                        <ion-text> {{row.paymentReferenceNo}}</ion-text>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Payment Mode">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+
+                        <ion-text> {{row.paymentMode}}</ion-text>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Payment Amount">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                        <ion-text> {{row.paymentAmount}}</ion-text>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column width="200" name="Print">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+
+                        <ion-button size="small" shape="round" (click)="printReciept($event, 'name', rowIndex, row)" color="primary">Print Reciept</ion-button>
+                    </ng-template>
+                </ngx-datatable-column>
+
+
+            </ngx-datatable>
+
+
+        </ion-col>
+    </ion-row>
+</ion-grid>
+<br>

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Customer } from '../../../interfaces/customer';
 import { FlashMessageService } from 'src/app/services/flash/flash-message.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer-registration',
@@ -19,7 +20,7 @@ export class CustomerRegistrationPage implements OnInit {
   };
   constructor(public fb: FormBuilder, public customerService: CustomerService,
     public flashProvider: FlashMessageService,
-    public jwt: JwtHelperService) { }
+    public jwt: JwtHelperService, public route: Router) { }
 
   ngOnInit() {
     
@@ -51,8 +52,12 @@ console.log(this.custformGroup.value)
 
      this.flashProvider.show('Customer Succesfully Added!' , 4000);
      this.custformGroup.reset();
+     if (res.document.vistingFor === 'store') {
+      //this.route.navigate(['store/' + res.document.id]);
+     } else {
+     this.route.navigate(['customer/details/' + res.document.id]);
+     }
     }, (err) => {
-     
       this.flashProvider.show('Unable to Save Customer!' , 4000);
     }) ;
 
@@ -93,6 +98,7 @@ this.custformGroup.get('dob').valueChanges.subscribe(val => {
     } else {
           this.showHide = true;
     }
+
    });
   }
 }

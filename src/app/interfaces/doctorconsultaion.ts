@@ -10,4 +10,5 @@ export interface DoctorConsultation {
     invoice: (Invoice | ((control: AbstractControl) => ValidationErrors))[];
     invoiceTotalamt: (number | ((control: AbstractControl) => ValidationErrors))[];
     customerId: (number | ((control: AbstractControl) => ValidationErrors))[];
+    invoiceMasterTypeId: (number | ((control: AbstractControl) => ValidationErrors))[];
  }

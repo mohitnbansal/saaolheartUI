@@ -1,86 +1,30 @@
-<form (ngSubmit)="onSubmit()" [formGroup]="ctAngioForm">
+<form (ngSubmit)="onSubmit()" [formGroup]="treatmentInvoiceForm">
     <ion-grid>
         <ion-row>
-            <ion-col size="8">
-
+            <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Center Name</ion-label>
-                    <ion-input type="text" ngDefaultControl formControlName="centerName"></ion-input>
+                    <ion-label position="floating">Treatment Type</ion-label>
+                    <ion-select (ionChange)="updateDataValue($event,'treatmentTypeMasterId')" ngDefaultControl formControlName="treatmentTypeMasterId" id="treatmentTypeMasterId">
+                        <ion-select-option value="1"> Natural Bypass Therapy(ECP)</ion-select-option>
+                        <ion-select-option value="2"> Bio Chemical Angioplasty (BCP)</ion-select-option>
+                    </ion-select>
                 </ion-item>
             </ion-col>
-            <ion-col>
 
+        </ion-row>
+        <ion-row>
+            <ion-col>
                 <ion-item>
                     <ion-label position="floating">Date</ion-label>
-                    <ion-datetime id="consulatationDate" ngDefaultControl formControlName="refDate" value="213" displayFormat="" pickerFormat=""></ion-datetime>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col size="8">
-
-                <ion-item>
-                    <ion-label position="floating">Address Line 1</ion-label>
-                    <ion-input type="text" ngDefaultControl formControlName="addLine1"></ion-input>
+                    <ion-datetime id="treatmentInvoiceDate" (ionChange)="updateDateValue($event,'treatmentInvoiceDate')" name="treatmentInvoiceDate" ngDefaultControl formControlName="treatmentInvoiceDate"></ion-datetime>
                 </ion-item>
             </ion-col>
             <ion-col>
-
-                <ion-item>
-                    <ion-label position="floating">City</ion-label>
-                    <ion-input type="text" ngDefaultControl formControlName="city"></ion-input>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col size="8">
-
-                <ion-item>
-                    <ion-label position="floating">Address Line 2</ion-label>
-                    <ion-input type="text" ngDefaultControl formControlName="addLine2"></ion-input>
-                </ion-item>
-            </ion-col>
-            <ion-col>
-
-                <ion-item>
-                    <ion-label position="floating">Pincode</ion-label>
-                    <ion-input type="number" ngDefaultControl formControlName="pincode"></ion-input>
-                </ion-item>
-            </ion-col>
-
-        </ion-row>
-        <ion-row>
-            <ion-col size="8">
-
-                <ion-item>
-                    <ion-label position="floating">Contact Detail</ion-label>
-                    <ion-input type="text" ngDefaultControl formControlName="contactNo"></ion-input>
-                </ion-item>
-            </ion-col>
-            <ion-col>
-
-                <ion-item>
-                    <ion-label position="floating">Landmark</ion-label>
-                    <ion-input type="number" ngDefaultControl formControlName="landmark"></ion-input>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col size="8">
-
-                <ion-item>
-                    <ion-label position="floating">Scan Test Name</ion-label>
-                    <ion-input type="text" ngDefaultControl formControlName="scanTestName"></ion-input>
-                </ion-item>
-            </ion-col>
-            <ion-col size="8">
-
                 <ion-item>
                     <ion-label position="floating">Invoice Amount</ion-label>
                     <ion-input type="number" ngDefaultControl formControlName="invoiceTotalamt"></ion-input>
                 </ion-item>
             </ion-col>
-
         </ion-row>
     </ion-grid>
     <ion-button float-right type="submit">Submit</ion-button>
@@ -93,23 +37,28 @@
 <ion-grid>
     <ion-row class="divider">
         <ion-col>
-            <ion-note color="primary"><b><u><h2>CT Angiography Details</h2></u></b></ion-note>
+            <ion-note color="primary"><b><u><h2>Treatment Details</h2></u></b></ion-note>
         </ion-col>
     </ion-row>
     <ion-row>
         <ion-col no-padding>
-            <ngx-datatable no-padding class="material fullscreenManual" [headerHeight]="50" [scrollbarH]='true' [limit]="5" [columnMode]="'flexi'" [footerHeight]="50" [rowHeight]="'auto'" [rows]="rowsCtAngio">
-                <ngx-datatable-column name="Ref Date">
+            <ngx-datatable no-padding class="material fullscreenManual" [headerHeight]="50" [scrollbarH]='true' [limit]="5" [columnMode]="'flexi'" [footerHeight]="50" [rowHeight]="'auto'" [rows]="rowsTreatmentInvoice">
+                <ngx-datatable-column name="Treatment Invoice Date">
                     <ng-template ngx-datatable-cell-template let-value="value">
                         {{value | date : 'MMM d, y, h:mm:ss a' }}
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Center Name">
+                <ngx-datatable-column name="Treatment Type">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
                         {{value}}
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Scan Test Name">
+                <ngx-datatable-column name="Treatment Status">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                        {{value}}
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="No Of Sitting/Hours">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                         {{value}}
                     </ng-template>
@@ -135,7 +84,7 @@
     </ion-row>
     <ion-row>
         <ion-col no-padding>
-            <ngx-datatable #myTable class='material fullscreenManual' [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rowsInvoice' >
+            <ngx-datatable #myTable class='material fullscreenManual' [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rowsInvoice' (page)="onPage($event)">
                 <ngx-datatable-column name="Invoice No">
                     <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-rowIndex="rowIndex">
                         {{row.id}}
@@ -229,7 +178,7 @@
     </ion-row>
     <ion-row>
         <ion-col no-padding>
-            <ngx-datatable #myTable class='material fullscreenManual' [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rowsPayment' >
+            <ngx-datatable #myTable class='material fullscreenManual' [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rowsPayment' (page)="onPage($event)">
                 <ngx-datatable-column name="Invoice No">
                     <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-rowIndex="rowIndex">
                         {{row.invoiceId}}

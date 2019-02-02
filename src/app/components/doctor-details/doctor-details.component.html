@@ -5,7 +5,7 @@
 
                 <ion-item>
                     <ion-label position="floating">Consulation Date</ion-label>
-                    <ion-datetime id="consulatationDate" ngDefaultControl formControlName="consulatationDate" value="213" displayFormat="" pickerFormat=""></ion-datetime>
+                    <ion-datetime id="consulatationDate" (ionChange)="updateDataValue($event,'consulatationDate')" ngDefaultControl formControlName="consulatationDate" displayFormat="" pickerFormat=""></ion-datetime>
                 </ion-item>
             </ion-col>
             <ion-col>
@@ -18,16 +18,21 @@
         <ion-row>
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Daignosis</ion-label>
-                    <ion-textarea id="daignosisSummary" ngDefaultControl formControlName="daignosisSummary" rows="5" type="text" id="daignosis">
-                    </ion-textarea>
+                    <ion-label position="floating">Treatment Suggested</ion-label>
+                    <ion-select id="testSuggested" ngDefaultControl formControlName="testSuggested" id="testSuggested">
+                        <ion-select-option value="1"> Natural Bypass Therapy(ECP)</ion-select-option>
+                        <ion-select-option value="2"> Bio Angioplasty (BCP)</ion-select-option>
+                    </ion-select>
+
+
                 </ion-item>
             </ion-col>
 
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Test Suggested</ion-label>
-                    <ion-textarea id="testSuggested" ngDefaultControl formControlName="testSuggested" rows="5" type="text">
+                    <ion-label position="floating">Additional Information</ion-label>
+
+                    <ion-textarea id="daignosisSummary" ngDefaultControl formControlName="daignosisSummary" rows="5" type="text">
                     </ion-textarea>
                 </ion-item>
             </ion-col>

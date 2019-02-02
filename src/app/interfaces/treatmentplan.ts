@@ -6,4 +6,7 @@ export interface TreatmentPlan{
     treatmentStatus: (string | ((control: AbstractControl) => ValidationErrors))[];
     treatmentPlanDetailsList:  (FormArray[] | ((control: AbstractControl) => ValidationErrors))[];
     customerId:  (number | ((control: AbstractControl) => ValidationErrors))[];
+    invoiceMasterTypeId: (number | ((control: AbstractControl) => ValidationErrors))[];
+    invoiceTotalamt: (number | ((control: AbstractControl) => ValidationErrors))[];
+     treatmentInvoiceDate: (Date | ((control: AbstractControl) => ValidationErrors))[];
 }

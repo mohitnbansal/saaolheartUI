@@ -1,27 +1,29 @@
-import { CtAngioDetails } from './../../interfaces/ctangiodetails';
-import { FlashMessageService } from 'src/app/services/flash/flash-message.service';
-import { CustomerService } from './../../services/customer/customer.service';
-import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
+import { FlashMessageService } from './../../services/flash/flash-message.service';
+import { CustomerService } from './../../services/customer/customer.service';
+import { DoctorConsultation } from './../../interfaces/doctorconsultaion';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { TreatmentPlan } from 'src/app/interfaces/treatmentplan';
+
 @Component({
-  selector: 'app-ct-angiography-details',
-  templateUrl: './ct-angiography-details.component.html',
-  styleUrls: ['./ct-angiography-details.component.scss']
+  selector: 'app-treatment-invoice-details',
+  templateUrl: './treatment-invoice-details.component.html',
+  styleUrls: ['./treatment-invoice-details.component.scss']
 })
-export class CtAngiographyDetailsComponent implements OnInit {
-  ctAngioForm: FormGroup;
+export class TreatmentInvoiceDetailsComponent implements OnInit {
+  treatmentInvoiceForm: FormGroup;
   invoiceMasterType: any;
-  ctAngioFromDb: any;
+  treatmentInvoiceFromDb: any;
   invoiceTypeId: number;
 
   /**
    * Ct Angio Row Details
    */
-  editingCtAngio = {};
-  rowsCtAngio = [];
-  columnsCtAngio = [];
+  editingTreatmentInvoice = {};
+  rowsTreatmentInvoice = [];
+  columnsTreatmentInvoice = [];
 
    /**
    * Invoice Consultation Row Details
@@ -41,17 +43,17 @@ export class CtAngiographyDetailsComponent implements OnInit {
   constructor(public activate: ActivatedRoute, public fb: FormBuilder,
     public customerService: CustomerService,
     public flashProvider: FlashMessageService) {
-    this.ctAngioFromDb = this.activate.snapshot.data['data'];
+    this.treatmentInvoiceFromDb = this.activate.snapshot.data['data'];
     this.invoiceMasterType = this.activate.snapshot.data['invoiceType'];
     console.log(this.invoiceMasterType);
     this.invoiceMasterType.forEach(element => {
-     if (element.typeName === 'CT ANGIOGRAPHY') {
+     if (element.typeName === 'TREATMENT') {
     this.invoiceTypeId = element.id;
      }
     });
-    this.rowsCtAngio = this.ctAngioFromDb.ctAngioDetailList;
- if (this.ctAngioFromDb.ctAngioDetailList.length > 0  ) {
- this.columnsCtAngio = Object.keys(this.ctAngioFromDb.ctAngioDetailList[0]).map((key) => {
+    this.rowsTreatmentInvoice = this.treatmentInvoiceFromDb.treatmentPlanList;
+ if (this.treatmentInvoiceFromDb.treatmentPlanList.length > 0  ) {
+ this.columnsTreatmentInvoice = Object.keys(this.treatmentInvoiceFromDb.treatmentPlanList[0]).map((key) => {
     return {
       'prop': key
     };
@@ -61,7 +63,7 @@ export class CtAngiographyDetailsComponent implements OnInit {
 }
 
 private updateInvoiceAndPaymentDomain() {
-  this.ctAngioFromDb.ctAngioDetailList.filter((ele) => {
+  this.treatmentInvoiceFromDb.treatmentPlanList.filter((ele) => {
     this.rowsInvoice.push(ele.invoiceDomain);
     this.rowInvoiceFromDb.push(ele.invoiceDomain);
     ele.invoiceDomain.invoiceReciptList.filter((val) => {
@@ -85,40 +87,33 @@ private updateInvoiceAndPaymentDomain() {
   }
 }
   ngOnInit() {
-
-    this.ctAngioForm = this.createForm({
+    this.treatmentInvoiceForm = this.createForm({
       id: [],
-      centerName:  ['Chitra Scan Center'],
-      refDate: [],
-      scanTestName: ['CT Coronory Scan'],
-      addLine1: ['Sanjeevanee (Karnataka Hospital)'],
-      addLine2:  ['172/A, Naigaum, Behind Dadar Fire Brigade Statation'],
-      pincode:  ['4000020'],
-      city:  ['Dadar(east), Mumbai'],
-      contactNo:  ['24129860'],
-      landmark:  ['Near Sharda Cineam JyotiPhule Road'],
-      invoice: [],
-      invoiceMasterTypeId:  [this.invoiceTypeId],
-      customerId: [this.ctAngioFromDb.id],
-      invoiceTotalamt: [7000]
+      treatmentTypeMasterId: [],
+      treatmentStatus: [],
+      treatmentPlanDetailsList: [],
+      customerId: [this.treatmentInvoiceFromDb.id],
+      invoiceMasterTypeId: [this.invoiceTypeId],
+      invoiceTotalamt: [],
+      treatmentInvoiceDate: []
     });
   }
-  private createForm(model: CtAngioDetails): FormGroup {
+  private createForm(model: TreatmentPlan): FormGroup {
     return this.fb.group(model);
   }
 
+
   onSubmit() {
-    console.log(this.ctAngioForm.value);
-    this.customerService.saveCtAngioDetails(this.ctAngioForm.value).subscribe((res) => {
+    console.log(this.treatmentInvoiceForm.value);
+    this.customerService.saveTreatmentInvoiceDetails(this.treatmentInvoiceForm.value).subscribe((res) => {
       console.log(res);
-      this.flashProvider.show('Ct Angiography Details Succesfully Added!' , 4000);
+      this.flashProvider.show('TreatementDetails  Succesfully Added!' , 4000);
      }, (err) => {
        this.flashProvider.show('Unable to update doctor details!' , 4000);
      }) ;
   }
-  updateValueCtAngio(event, cell, rowIndex) {
-    this.editingCtAngio[rowIndex + '-' + cell] = false;
-    this.rowsCtAngio[rowIndex][cell] = event.target.value;
+  updateDataValue(eve: any, tar: string) {
+    this.treatmentInvoiceForm.get(tar).setValue(eve.target.value);
   }
   updateValueInvoice(event, cell, rowIndex) {
     /**
@@ -148,8 +143,8 @@ private updateInvoiceAndPaymentDomain() {
   updateValuePayment(event, cell, rowIndex) {
     this.editingPayment[rowIndex + '-' + cell] = false;
     this.rowsPayment[rowIndex][cell] = event.target.value;
-
   }
+
   printReciept(event, cell, rowIndex, row) {
     this.customerService.printRecipt(row).subscribe((res) => {
      console.log(res);
@@ -163,13 +158,17 @@ private updateInvoiceAndPaymentDomain() {
     }  , (errr) => {
       console.log(errr);
      });
-      }
-      generateReciept(event, cell, rowIndex, row) {
-        console.log(row);
-       this.customerService.generateReciept(row).subscribe((res) => {
-          console.log(res);
-       }, (err) => {
-         console.log(err);
-       });
-      }
-    }
+  }
+
+
+  generateReciept(event, cell, rowIndex, row) {
+    console.log(row);
+   this.customerService.generateReciept(row).subscribe((res) => {
+      console.log(res);
+   }, (err) => {
+     console.log(err);
+   });
+  }
+
+
+}

@@ -1,3 +1,6 @@
+import { TreatmentPlanDetails } from 'src/app/interfaces/treatmentpladetails';
+import { TreatmentPlan } from './../../interfaces/treatmentplan';
+import { CtAngioDetails } from './../../interfaces/ctangiodetails';
 import { DoctorConsultation } from './../../interfaces/doctorconsultaion';
 import { Customer } from '../../interfaces/customer';
 import { FormGroup } from '@angular/forms';
@@ -43,5 +46,16 @@ return this.http.post<Customer>(environment.apiUrl + 'customer/addcustomer', cus
 
     printRecipt(invo: any): Observable<any> {
       return this.http.post(environment.apiUrl + 'customer/printreciept', invo ,  { responseType : 'blob'});
+    }
+
+    saveCtAngioDetails(doct: CtAngioDetails): Observable<any>{
+      return this.http.post<CtAngioDetails>(environment.apiUrl + 'customer/savectangiodetails', doct , this.httpOptions);
+    }
+    saveTreatmentInvoiceDetails(doct: TreatmentPlan): Observable<any>{
+      return this.http.post<TreatmentPlan>(environment.apiUrl + 'customer/savetreatmentdetails', doct , this.httpOptions);
+    }
+
+    saveTreatmentPlanDetails(doct: TreatmentPlanDetails): Observable<any> {
+      return this.http.post<TreatmentPlanDetails>(environment.apiUrl + 'customer/savetreatmentplandetails', doct , this.httpOptions);
     }
 }

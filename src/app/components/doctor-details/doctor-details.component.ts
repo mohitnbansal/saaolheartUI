@@ -37,7 +37,7 @@ export class DoctorDetailsComponent implements OnInit {
   editingPayment = {};
   rowsPayment = [];
   columnsPayment = [];
-;
+
 constructor(public activate: ActivatedRoute, public fb: FormBuilder,
   public customerService: CustomerService,
   public flashProvider: FlashMessageService) {
@@ -89,20 +89,7 @@ constructor(public activate: ActivatedRoute, public fb: FormBuilder,
   }
 
   ngOnInit() {
-    // if (this.doctorDetailfromDb.doctorConsultationList.length > 0) {
-    //   this.doctorDetailsForm = this.createForm({
-    //     id: [],
-    //     consulatationDate:  [this.doctorDetailfromDb.consulatationDate],
-    //     consultationBy: [this.doctorDetailfromDb.consultationBy],
-    //     daignosisSummary: [this.doctorDetailfromDb.daignosisSummary],
-    //     testSuggested: [this.doctorDetailfromDb.testSuggested],
-    //     typeOfTreatement:  [this.doctorDetailfromDb.typeOfTreatement],
-    //     invoice:  [this.doctorDetailfromDb.invoice],
-    //     customerId: [this.doctorDetailfromDb.id],
-    //     invoiceTotalamt: [, Validators.required],
-    //     invoiceMasterTypeId: [this.invoiceTypeId]
-    //   });
-    //     } else {
+   
           this.doctorDetailsForm = this.createForm({
             id: [],
             consulatationDate:  [],
@@ -115,9 +102,22 @@ constructor(public activate: ActivatedRoute, public fb: FormBuilder,
             invoiceTotalamt: [, Validators.required],
             invoiceMasterTypeId: [this.invoiceTypeId]
           });
-       // }
-
+     
   }
+ 
+
+  private updateForm(model: Partial<DoctorConsultation>): void {
+    this.doctorDetailsForm.patchValue(model);
+  }
+  private createForm(model: DoctorConsultation): FormGroup {
+    return this.fb.group(model);
+  }
+  
+  updateValueDoctor(event, cell, rowIndex) {
+    this.editingDoctor[rowIndex + '-' + cell] = false;
+    this.rowsDoctor[rowIndex][cell] = event.target.value;
+  }
+
   onSubmit() {
     console.log(this.doctorDetailsForm.value);
     this.customerService.saveDoctorDetails(this.doctorDetailsForm.value).subscribe((res) => {
@@ -127,18 +127,7 @@ constructor(public activate: ActivatedRoute, public fb: FormBuilder,
        this.flashProvider.show('Unable to update doctor details!' , 4000);
      }) ;
   }
-
-  private updateForm(model: Partial<DoctorConsultation>): void {
-    this.doctorDetailsForm.patchValue(model);
-  }
-  private createForm(model: DoctorConsultation): FormGroup {
-    return this.fb.group(model);
-  }
-
-  updateValueDoctor(event, cell, rowIndex) {
-    this.editingDoctor[rowIndex + '-' + cell] = false;
-    this.rowsDoctor[rowIndex][cell] = event.target.value;
-  }
+  
   updateValueInvoice(event, cell, rowIndex) {
     /**
      * Bug needs to be solved the Balance amount not getting reset to original DB amount when entered zero
@@ -189,9 +178,12 @@ const a = document.createElement('a');
     console.log(row);
    this.customerService.generateReciept(row).subscribe((res) => {
       console.log(res);
+      this.flashProvider.show('Reciept Generated for the given Invoice', 5000);
    }, (err) => {
      console.log(err);
    });
   }
- 
+  updateDataValue(eve: any, tar: string) {
+    this.doctorDetailsForm.get(tar).setValue(eve.target.value);
+  }
 }

@@ -1,4 +1,4 @@
-import { FormsModule, ReactiveFormsModule, FormGroupDirective } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroupDirective, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HeaderComponent } from './header/header.component';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -10,6 +10,8 @@ import { CtAngiographyDetailsComponent } from './ct-angiography-details/ct-angio
 import { TreatmentPlanDetailComponent } from './treatment-plan-detail/treatment-plan-detail.component';
 import { FlashMessageComponent } from './flash-message/flash-message.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TreatmentInvoiceDetailsComponent } from './treatment-invoice-details/treatment-invoice-details.component';
+import { InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
 
 @NgModule({
   declarations: [HeaderComponent,
@@ -17,19 +19,24 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
      DoctorDetailsComponent,
       CtAngiographyDetailsComponent,
        TreatmentPlanDetailComponent,
-       FlashMessageComponent],
+       FlashMessageComponent,
+       TreatmentInvoiceDetailsComponent,
+       InvoiceDetailsComponent],
   imports: [
     CommonModule,
     NgxDatatableModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
+ 
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [HeaderComponent,
      CustomerDetailComponent,
       DoctorDetailsComponent,
       CtAngiographyDetailsComponent,
       TreatmentPlanDetailComponent,
-      FlashMessageComponent]
+      FlashMessageComponent,
+      TreatmentInvoiceDetailsComponent,
+      InvoiceDetailsComponent]
 })
 export class ComponentModule { }

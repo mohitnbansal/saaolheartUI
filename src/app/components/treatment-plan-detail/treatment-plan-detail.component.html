@@ -1,49 +1,76 @@
-<form>
+<form (ngSubmit)="onSubmit()" [formGroup]="treatmentPlanForm">
     <ion-grid>
         <ion-row>
             <ion-col>
                 <ion-item>
-                    <ion-label>Treatment Type</ion-label>
-                    <ion-select id="treatMentType">
-                        <ion-option value="ecp"> Natural Bypass Therapy(ECP)</ion-option>
-                        <ion-option value="cgp"> Other</ion-option>
+                    <ion-label position="floating">Treatment Type</ion-label>
+                    <ion-select (ionChange)="updateDataValue($event,'treatmentPlanId')" ngDefaultControl formControlName="treatmentPlanId" id="treatmentPlanId">
+                        <ion-select-option value=""></ion-select-option>
+                        <ion-select-option *ngFor="let treat of treatMentOptionList" value="{{treat.value}}">{{treat.text}}</ion-select-option>
                     </ion-select>
                 </ion-item>
             </ion-col>
         </ion-row>
-        <ion-row>
+
+        <ion-row *ngIf="treatMentOptionList.length > 0">
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Daignosis</ion-label>
-                    <ion-textarea rows="10" type="text" id="daignosis">
-                    </ion-textarea>
+                    <ion-label position="floating">Date</ion-label>
+                    <ion-datetime id="treatmentDate" (ionChange)="updateDataValue($event,'treatmentDate')" name="treatmentDate" ngDefaultControl formControlName="treatmentDate"></ion-datetime>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-label position="floating">Duration</ion-label>
+                        <ion-input type="number" ngDefaultControl max="60" formControlName="duration"></ion-input>
+                        <!-- <ion-datetime id="duration" (ionBlur)="updateDataValue($event,'duration')" display-format="mm" picker-format="mm" ngDefaultControl formControlName="duration"></ion-datetime> -->
+                    </ion-item>
+                </ion-col>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="treatMentOptionList.length > 0">
+            <ion-col>
+                <ion-item>
+                    <ion-label position="floating">Beggining B.P.</ion-label>
+                    <ion-input type="number" ngDefaultControl formControlName="begBp"></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label position="floating">Beggining H.P.</ion-label>
+                    <ion-input type="number" ngDefaultControl formControlName="begHp"></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
-        <ion-row>
+        <ion-row *ngIf="treatMentOptionList.length > 0">
             <ion-col>
                 <ion-item>
-                    <ion-label position="floating">Test Suggested</ion-label>
-                    <ion-textarea rows="10" type="text">
-                    </ion-textarea>
+                    <ion-label position="floating">End B.P.</ion-label>
+                    <ion-input type="number" ngDefaultControl formControlName="endBp"></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label position="floating">End H.P.</ion-label>
+                    <ion-input type="number" ngDefaultControl formControlName="endHp"></ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
-        <ion-row>
-            <ion-col size="6">
-                <ion-item lines="none">
-                    Upload Document (if any)
-                </ion-item>
-            </ion-col>
-            <ion-col>
+        <ion-row *ngIf="treatMentOptionList.length > 0">
+            <ion-col size="8">
                 <ion-item>
-                    <ion-input type="file"></ion-input>
+                    <ion-label position="floating">Complaints</ion-label>
+                    <ion-textarea id="complaints" ngDefaultControl formControlName="complaints" rows="2" type="text">
+                    </ion-textarea>
+
+
                 </ion-item>
             </ion-col>
         </ion-row>
     </ion-grid>
-    <ion-button float-right type="submit">Submit</ion-button>
-    <ion-button float-right type="reset">Reset</ion-button>
+    <ion-button *ngIf="treatMentOptionList.length > 0" float-right type="submit">Submit</ion-button>
+    <ion-button *ngIf="treatMentOptionList.length > 0" float-right type="reset">Reset</ion-button>
 </form>
 
 <ion-item-divider class="divider">
@@ -52,137 +79,50 @@
 <ion-grid>
     <ion-row class="divider">
         <ion-col>
-            <ion-note color="primary"><b><u><h2>Invoice</h2></u></b></ion-note>
+            <ion-note color="primary"><b><u><h2>Treatment Plan Details History</h2></u></b></ion-note>
         </ion-col>
     </ion-row>
     <ion-row>
         <ion-col no-padding>
-            <ngx-datatable no-padding #mydatatable class="material fullscreenManual" [headerHeight]="50" [scrollbarH]='true' [limit]="5" [columnMode]="'standard'" [footerHeight]="50" [rowHeight]="'auto'" [rows]="rows">
-                <ngx-datatable-column name="Type">
+            <ngx-datatable no-padding class="material fullscreenManual" [headerHeight]="50" [scrollbarH]='true' [limit]="5" [columnMode]="'flexi'" [footerHeight]="50" [rowHeight]="'auto'" [rows]="rowsTreatmentDetail">
+                <ngx-datatable-column name="Treatment Date">
                     <ng-template ngx-datatable-cell-template let-value="value">
-                        {{value}}
+                        {{value | date : 'MMM d, y, h:mm:ss a' }}
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Payment Mode">
-                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-gender'] = true" *ngIf="!editing[rowIndex + '-gender']">
-                    {{value}}
-                  </span>
-                        <select *ngIf="editing[rowIndex + '-gender']" (blur)="editing[rowIndex + '-gender'] = false" (change)="updateValue($event, 'gender', rowIndex)" [value]="value">
-                    <option value="Cheque">Cheque</option>
-                    <option value="Online">Online</option>
-                  </select>
-                    </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Bank Name">
+                <ngx-datatable-column name="Duration">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
-                    {{value}}
-                  </span>
-                        <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text" [value]="value" />
+                        {{row.duration}}
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Details">
+                <ngx-datatable-column name="Beginning B.P.">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
-                    {{value}}
-                  </span>
-                        <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text" [value]="value" />
+                        {{row.begBp}}
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Amount">
+                <ngx-datatable-column name="Beginning H.P.">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
-                    {{value}}
-                  </span>
-                        <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text" [value]="value" />
+                        {{row.begHp}}
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Date and Time">
+                <ngx-datatable-column name="End B.P.">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
-                    {{value}}
-                  </span>
-                        <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text" [value]="value" />
+                        {{row.endBp}}
                     </ng-template>
                 </ngx-datatable-column>
-
-
+                <ngx-datatable-column name="End H.P.">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                        {{row.endHp}}
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Complaints">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                        {{row.complaints}}
+                    </ng-template>
+                </ngx-datatable-column>
             </ngx-datatable>
 
 
         </ion-col>
     </ion-row>
-    <ion-row justify-content-end>
-        <ion-col justify-content-end>
-            <ion-button color="primary">Generate Invoice</ion-button>
-        </ion-col>
-    </ion-row>
-</ion-grid>
-<br>
-<ion-grid>
-    <ion-row class="divider">
-        <ion-col>
-            <ion-note color="primary"><b><u><h2>Payment Details</h2></u></b></ion-note>
-        </ion-col>
-    </ion-row>
-    <ion-row>
-        <ion-col no-padding>
-            <ngx-datatable no-padding #mydatatable class="material fullscreenManual" [headerHeight]="50" [scrollbarH]='true' [limit]="5" [columnMode]="'standard'" [footerHeight]="50" [rowHeight]="'auto'" [rows]="rows">
-                <ngx-datatable-column name="Type">
-                    <ng-template ngx-datatable-cell-template let-value="value">
-                        {{value}}
-                    </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Payment Mode">
-                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-gender'] = true" *ngIf="!editing[rowIndex + '-gender']">
-                    {{value}}
-                  </span>
-                        <select *ngIf="editing[rowIndex + '-gender']" (blur)="editing[rowIndex + '-gender'] = false" (change)="updateValue($event, 'gender', rowIndex)" [value]="value">
-                    <option value="Cheque">Cheque</option>
-                    <option value="Online">Online</option>
-                  </select>
-                    </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Bank Name">
-                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
-                    {{value}}
-                  </span>
-                        <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text" [value]="value" />
-                    </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Details">
-                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
-                    {{value}}
-                  </span>
-                        <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text" [value]="value" />
-                    </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Amount">
-                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
-                    {{value}}
-                  </span>
-                        <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text" [value]="value" />
-                    </ng-template>
-                </ngx-datatable-column>
-                <ngx-datatable-column name="Date and Time">
-                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
-                    {{value}}
-                  </span>
-                        <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text" [value]="value" />
-                    </ng-template>
-                </ngx-datatable-column>
-
-
-            </ngx-datatable>
-
-
-        </ion-col>
-    </ion-row>
-
 </ion-grid>

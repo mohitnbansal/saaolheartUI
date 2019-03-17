@@ -1,6 +1,6 @@
 import { HeaderComponent } from './../../components/header/header.component';
 
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
@@ -9,6 +9,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { DashboardHomePage } from './dashboard-home.page';
 import { ComponentModule } from 'src/app/components/component.module';
+import { CalendarModule } from 'angular-calendar';
 
 
 const routes: Routes = [
@@ -24,8 +25,10 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     ComponentModule,
+    CalendarModule,
     RouterModule.forChild(routes)
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [DashboardHomePage]
 })
 export class DashboardHomePageModule {}

@@ -12,6 +12,10 @@ import { FlashMessageComponent } from './flash-message/flash-message.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TreatmentInvoiceDetailsComponent } from './treatment-invoice-details/treatment-invoice-details.component';
 import { InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
+import { StockQuantityPageModule } from './stock-quantity/stock-quantity.module';
+import { StockQuantityPage } from './stock-quantity/stock-quantity.page';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { DayViewSchedulerComponent } from './day-view-scheduler/day-view-scheduler.component';
 
 @NgModule({
   declarations: [HeaderComponent,
@@ -21,12 +25,14 @@ import { InvoiceDetailsComponent } from './invoice-details/invoice-details.compo
        TreatmentPlanDetailComponent,
        FlashMessageComponent,
        TreatmentInvoiceDetailsComponent,
-       InvoiceDetailsComponent],
+       InvoiceDetailsComponent,
+       DayViewSchedulerComponent],
   imports: [
     CommonModule,
     NgxDatatableModule,
     FormsModule,
     ReactiveFormsModule,
+    CalendarModule
   ],
  
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -37,6 +43,8 @@ import { InvoiceDetailsComponent } from './invoice-details/invoice-details.compo
       TreatmentPlanDetailComponent,
       FlashMessageComponent,
       TreatmentInvoiceDetailsComponent,
-      InvoiceDetailsComponent]
+      InvoiceDetailsComponent,
+      DayViewSchedulerComponent
+      ]
 })
 export class ComponentModule { }

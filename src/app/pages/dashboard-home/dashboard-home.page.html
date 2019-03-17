@@ -2,4 +2,142 @@
 
 <ion-content padding>
 
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-card>
+                    <ion-card-header>
+                        Patient's Queue
+                    </ion-card-header>
+                    <ion-card-content>
+
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="btn-group">
+                                    <ion-button no-margin class="btn btn-primary" mwlCalendarPreviousView [view]="'day'" [(viewDate)]="viewDate">
+                                        Previous
+                                    </ion-button>
+                                    <ion-button no-margin class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+                                        Today
+                                    </ion-button>
+                                    <ion-button no-margin class="btn btn-primary" mwlCalendarNextView [view]="'day'" [(viewDate)]="viewDate">
+                                        Next
+                                    </ion-button>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <h3>{{ viewDate | calendarDate:('dayViewTitle') }}</h3>
+                            </div>
+                        </div>
+                        <br />
+
+                        <mwl-day-view-scheduler [dayStartHour]="8" [dayEndHour]="20" [viewDate]="viewDate" [events]="events" (eventTimesChanged)="eventTimesChanged($event)" (userChanged)="userChanged($event)">
+                        </mwl-day-view-scheduler>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+            <ion-col>
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-title>
+                            In House Appointments List
+                        </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <ion-list>
+                            <ion-list-header>
+                                <ion-label>Customer's List</ion-label>
+                            </ion-list-header>
+                            <!-- <ion-virtual-scroll> -->
+
+
+
+                            <ion-item class="ion-activatable" ion-activatable>
+                                <ion-ripple-effect></ion-ripple-effect>
+                                <ion-label>
+                                    <h4>
+                                        Mohit Bansal
+                                    </h4>
+                                    <p>
+                                        Expected Time 9.40am
+                                    </p>
+                                    <p>
+                                        Visit No
+                                        <ion-badge slot="end">22</ion-badge>
+                                    </p>
+                                </ion-label>
+
+                            </ion-item>
+
+                            <!-- </ion-virtual-scroll> -->
+                        </ion-list>
+                    </ion-card-content>
+                    <ion-row class="cardfooter">
+                        <ion-col>
+                            <p>Footer goes here </p>
+                        </ion-col>
+                    </ion-row>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-card>
+                    <ion-card-header>
+                        New Joinee List
+                    </ion-card-header>
+                    <ion-card-content>
+
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+            <ion-col>
+                <ion-card>
+                    <ion-card-header>
+                        Search/Update Pateint Treatment Plan
+                    </ion-card-header>
+                    <ion-card-content>
+
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-card>
+                    <ion-card-header>
+                        Payement Pending List
+                    </ion-card-header>
+                    <ion-card-content>
+
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-card>
+                    <ion-card-header>
+                        Treatment Plan pending list
+                    </ion-card-header>
+                    <ion-card-content>
+
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-card>
+                    <ion-card-header>
+                        Low Stock Alert List
+                    </ion-card-header>
+                    <ion-card-content>
+
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>

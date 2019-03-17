@@ -1,0 +1,158 @@
+<ion-header size="2">
+    <ion-toolbar>
+        <ion-title>Sales</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button>
+            <ion-icon name="apps"></ion-icon>
+        </ion-fab-button>
+
+        <ion-fab-list side="top">
+            <ion-fab-button (click)="saveInvoice('print')">
+                <ion-icon name="print"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button (click)="saveInvoice('mail')">
+                <ion-icon name="mail"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button (click)="resetForm()">
+                <ion-icon name="refresh-circle"></ion-icon>
+            </ion-fab-button>
+        </ion-fab-list>
+
+    </ion-fab>
+
+    <ion-card>
+        <ion-card-header color="secondary">
+            <ion-card-title>
+
+                <b>Search Customer</b>
+
+            </ion-card-title>
+
+
+        </ion-card-header>
+
+
+        <ion-card-content>
+
+
+            <ion-searchbar [(ngModel)]="customerString" (ionInput)="getCustomerListBySearch($event)" animated showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
+            <br>
+            <ion-list radio-group>
+                <ion-item *ngFor="let item of customerList">
+                    <ion-label>{{item.firstName}} {{item.lastName}}</ion-label>
+                    <ion-radio color="dark" (ionSelect)="getCustomerDetails($event)" value="{{item.id}}"></ion-radio>
+                </ion-item>
+            </ion-list>
+
+
+        </ion-card-content>
+    </ion-card>
+    <div *ngIf="showHide">
+        <ion-card>
+            <ion-card-header color="secondary">
+                <ion-card-title>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col> <b> Invoice Details</b></ion-col>
+                            <ion-col size="2" float-right><b>Invoice no</b></ion-col>
+                            <ion-col size="1" float-right><b>0058</b></ion-col>
+                        </ion-row>
+                    </ion-grid>
+
+                </ion-card-title>
+
+
+            </ion-card-header>
+
+            <ion-card-content>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item>
+                                <ion-label position="floating">Customer Name</ion-label>
+                                <ion-input type="text" readonly id="panNumber" value="{{customerDbObj.firstName}} {{customerDbObj.lastName}}">
+                                </ion-input>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+
+                            <ion-searchbar #productString placeholder="Search Stock/Items" (ionInput)="getStockBySearch($event)" animated showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
+                            <br>
+                            <ion-list radio-group>
+                                <ion-item *ngFor="let item of stockItems">
+                                    <ion-label>{{item.stockName}}</ion-label>
+                                    <ion-radio color="dark" (ionSelect)="setStockProduct($event)" value="{{item.id}}"></ion-radio>
+                                </ion-item>
+                            </ion-list>
+
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row>
+                        <ion-item-divider></ion-item-divider>
+                    </ion-row>
+                </ion-grid>
+                <ngx-datatable #invTable class='material' [columnMode]="'standard'" [rows]='rows' [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'">
+
+
+                    <!-- Column Templates -->
+
+                    <ngx-datatable-column name="Sr No">
+                        <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                            <strong>{{rowIndex+1}}</strong>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Stock Name">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <strong>{{row.stockName}}</strong>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Rate">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <strong>{{row.currentRateOfStock}}</strong>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Quantity">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <strong>{{row.stockQty}}</strong>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Price">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <strong>{{row.stockQty * row.currentRateOfStock}}</strong>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Delete" [width]="50">
+                        <ng-template let-row="row" let-rowIndex="rowIndex" let-expanded="expanded" ngx-datatable-cell-template>
+                            <a>
+                                <ion-icon class="ionicons" (click)="deleteThisRow(rowIndex,row)" name="trash"></ion-icon>
+                            </a>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-item float-right>
+                                <ion-label>Total Price</ion-label>
+                                <ion-input text-right type="number" [(ngModel)]="totalPriceOfInv" readonly value="{{totalPriceOfInv}}"></ion-input>
+                            </ion-item>
+
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-card-content>
+        </ion-card>
+
+    </div>
+
+
+</ion-content>

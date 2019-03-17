@@ -40,7 +40,8 @@ export class CustomerRegistrationPage implements OnInit {
       aadharNumber: [],
       occupation: [],
       landlineOff: [],
-       landlineRes: []
+       landlineRes: [],
+       panNumber: []
     });
 
     this.changeEvent();

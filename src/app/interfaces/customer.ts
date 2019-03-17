@@ -17,5 +17,5 @@ export interface Customer {
     occupation: (string | ((control: AbstractControl) => ValidationErrors))[];
     landlineOff: (string | ((control: AbstractControl) => ValidationErrors))[];
     landlineRes: (string | ((control: AbstractControl) => ValidationErrors))[];
-    panNumber: (string | ((control: AbstractControl) => ValidationErrors))[];
+    panNumber: (string | ((control: AbstractControl) => ValidationErrors))[];    
 }

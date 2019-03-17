@@ -14,9 +14,13 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule, Storage } from '@ionic/storage';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { StockQuantityPageModule } from './components/stock-quantity/stock-quantity.module';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
 export function tokenGetter() {
   return localStorage.getItem('access_token');
 }
@@ -27,10 +31,11 @@ export function tokenGetter() {
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule,
-    ComponentModule,
+    AppRoutingModule,    
     NgxDatatableModule,
     HttpClientModule,
+    IonicSelectableModule,
+    CalendarModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -40,7 +45,13 @@ export function tokenGetter() {
     }),
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(),
-    BrowserAnimationsModule
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
+    BrowserAnimationsModule,
+    ComponentModule,
+    StockQuantityPageModule
   ],
   providers: [
     StatusBar,

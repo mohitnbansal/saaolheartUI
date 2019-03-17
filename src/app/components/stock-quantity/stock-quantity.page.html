@@ -1,0 +1,43 @@
+<ion-card>
+    <ion-card-header>
+        Add Quantity
+    </ion-card-header>
+    <ion-card-content>
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-label>Stock Name</ion-label>
+                        <ion-input type="text" [(ngModel)]="stockName" readonly value={{stockName}}>{{stockName}}</ion-input>
+                    </ion-item>
+                </ion-col>
+
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-label>Stock Quantity</ion-label>
+                        <ion-input type="number" [(ngModel)]="stockQty" value={{stockQty}}>{{stockQty}}</ion-input>
+
+                    </ion-item>
+                    <br>
+                    <div *ngIf="countExceed">
+                        <ion-text color="danger">
+                            <h1>
+                                Cannot add more than {{totalStck}} in cart</h1>
+                        </ion-text>
+
+                    </div>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-button shape="round" size="default" slot="end" (click)="closeModel()">Add</ion-button>
+                    </ion-item>
+                </ion-col>
+
+            </ion-row>
+        </ion-grid>
+    </ion-card-content>
+</ion-card>

@@ -27,5 +27,13 @@ module.exports = {
             '{{ROOT}}/node_modules/@swimlane/ngx-datatable/release/assets/fonts/data-table.woff'
         ],
         dest: '{{BUILD}}/fonts'
+    },
+    copyCalendarCss: {
+        src: './node_modules/angular-calendar/css/angular-calendar.css',
+        dest: '{{BUILD}}'
+    },
+    copyWeekHoursCss: {
+        src: './node_modules/angular-calendar-week-hours-view/angular-calendar-week-hours-view.scss',
+        dest: '{{BUILD}}'
     }
 }

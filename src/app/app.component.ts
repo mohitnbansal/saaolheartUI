@@ -26,6 +26,18 @@ export class AppComponent {
       title: 'Appointment',
       url: '/appointment',
       icon: 'time'
+    }, {
+      title: 'Sales/Invoices',
+      url: '/sales',
+      icon: 'cart'
+    }, {
+      title: 'Stock Managment',
+      url: '/stock',
+      icon: 'calculator'
+    }, {
+      title: 'Reports',
+      url: '/reports',
+      icon: 'paper'
     }
   ];
 

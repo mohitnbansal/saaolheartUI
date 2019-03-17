@@ -69,9 +69,9 @@ console.log(err);
       });
   }
   toggleExpandRow(row,expanded) {
-   
 if(expanded !== true)
-{this.table.rowDetail.collapseAllRows();
+{
+  this.table.rowDetail.collapseAllRows();
 }
     this.table.rowDetail.toggleExpandRow(row);
   }

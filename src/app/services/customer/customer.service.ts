@@ -4,7 +4,7 @@ import { CtAngioDetails } from './../../interfaces/ctangiodetails';
 import { DoctorConsultation } from './../../interfaces/doctorconsultaion';
 import { Customer } from '../../interfaces/customer';
 import { FormGroup } from '@angular/forms';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -57,5 +57,11 @@ return this.http.post<Customer>(environment.apiUrl + 'customer/addcustomer', cus
 
     saveTreatmentPlanDetails(doct: TreatmentPlanDetails): Observable<any> {
       return this.http.post<TreatmentPlanDetails>(environment.apiUrl + 'customer/savetreatmentplandetails', doct , this.httpOptions);
+    }
+
+    getCustomerListByNameOrMobile(par:any){
+      const params = new HttpParams().set('searchParam', par);
+      return this.http.get(environment.apiUrl + 'customer/getcustomerbysearch', {params: params});
+  
     }
 }

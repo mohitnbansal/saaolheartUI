@@ -1,0 +1,36 @@
+<ion-list>
+    <ion-list-header>
+        Update Plan
+    </ion-list-header>
+    <ion-item no-lines>
+        <ion-radio-group>
+            <ion-list-header>
+                Is Visit Completed
+            </ion-list-header>
+
+            <ion-item>
+                <ion-label>YES</ion-label>
+                <ion-radio slot="start" value="Yes" [(ngModel)]="isVisitDone">Yes</ion-radio>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>NO</ion-label>
+                <ion-radio slot="start" value="No" [(ngModel)]="isVisitDone">No</ion-radio>
+            </ion-item>
+        </ion-radio-group>
+    </ion-item>
+
+    <ion-item>
+        <ion-label position="floating">Duration of Treatment/Visit</ion-label>
+        <ion-input type="number" min="0" max="60" name="duration" [(ngModel)]="duration"></ion-input>
+
+    </ion-item>
+    <ion-item>
+        <ion-label> Suggestions/Complaints </ion-label>
+        <ion-textarea rows="6" cols="20" [(ngModel)]="complaints" placeholder="Enter any notes here..."></ion-textarea>
+
+    </ion-item>
+    <ion-item>
+        <ion-button shape="round" size="default" slot="end" (click)="closeModel()">Update</ion-button>
+    </ion-item>
+</ion-list>

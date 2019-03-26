@@ -1,0 +1,9 @@
+<ion-searchbar [(ngModel)]="customerString" ngDefaultControl (ionInput)="getCustomerListBySearch($event)" animated showCancelButton cancelButtonText="Custom Cancel">
+</ion-searchbar>
+<br>
+<ion-list radio-group>
+    <ion-item *ngFor="let item of customerList">
+        <ion-label>{{item.firstName}} {{item.lastName}}</ion-label>
+        <ion-radio color="dark" (ionSelect)="getCustomerDetails($event)" value="{{item.id}}"></ion-radio>
+    </ion-item>
+</ion-list>

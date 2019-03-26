@@ -43,7 +43,7 @@ constructor(public activate: ActivatedRoute, public fb: FormBuilder,
   public flashProvider: FlashMessageService) {
   this.doctorDetailfromDb = this.activate.snapshot.data['data'];
   this.invoiceMasterType = this.activate.snapshot.data['invoiceType'];
-  console.log(this.invoiceMasterType);
+  
   this.invoiceMasterType.forEach(element => {
    if (element.typeName === 'DOCTOR CONSULTATION') {
   this.invoiceTypeId = element.id;
@@ -58,13 +58,41 @@ constructor(public activate: ActivatedRoute, public fb: FormBuilder,
     };
   });
  }
-    this.updateInvoiceAndPaymentDomain();
+    this.updateInvoiceAndPaymentDomain(this.doctorDetailfromDb.doctorConsultationList);
+    console.log(this.doctorDetailfromDb.doctorConsultationList);
    
 }
 
-
-  private updateInvoiceAndPaymentDomain() {
-    this.doctorDetailfromDb.doctorConsultationList.filter((ele) => {
+updateSingleInvoiceDomainAndAllPaymentList(list:any){
+  list.invoiceReciptList.filter((val) => {
+    this.rowsPayment.push(val);
+  });
+  this.rowsPayment = [...this.rowsPayment];
+  let ind: any;
+  this.rowsInvoice.forEach((ele,index)=>{
+if(ele.id===list.id){
+ind = index;
+}
+  });
+  if(ind){
+  this.rowsInvoice[ind] = list;
+  this.rowsInvoice = [...this.rowsInvoice];
+  }
+}
+getRowClass = (row) => {
+if(!(row.invoiceStatus=='Total Payment Pending' ||  row.invoiceStatus=='Partially Pending')){
+  return {
+    'row-color': true
+  };
+}else{
+  return{
+    'row-color': false
+  }
+}
+}
+  private updateInvoiceAndPaymentDomain(obj:any) {
+    obj.filter((ele) => {
+      console.log(ele);
       this.rowsInvoice.push(ele.invoiceDomain);
       this.rowInvoiceFromDb.push(ele.invoiceDomain);
       ele.invoiceDomain.invoiceReciptList.filter((val) => {
@@ -86,17 +114,18 @@ constructor(public activate: ActivatedRoute, public fb: FormBuilder,
         };
       });
     }
+    this.rowsInvoice = [...this.rowsInvoice];
   }
-
+ 
   ngOnInit() {
    
           this.doctorDetailsForm = this.createForm({
             id: [],
-            consulatationDate:  [],
+            consulationDate:  [],
             consultationBy: [''],
             daignosisSummary: [''],
             testSuggested: [''],
-            typeOfTreatement:  [''],
+            typeOfTreatement:  [],
             invoice:  [],
             customerId: [this.doctorDetailfromDb.id],
             invoiceTotalamt: [, Validators.required],
@@ -121,7 +150,12 @@ constructor(public activate: ActivatedRoute, public fb: FormBuilder,
   onSubmit() {
     console.log(this.doctorDetailsForm.value);
     this.customerService.saveDoctorDetails(this.doctorDetailsForm.value).subscribe((res) => {
-      console.log(res);
+
+      this.rowsDoctor.push(res.document);
+      this.rowsDoctor = [...this.rowsDoctor];
+      let val:any = []
+      val.push(res.document);
+      this.updateInvoiceAndPaymentDomain(val as any)
       this.flashProvider.show('Doctor Details Succesfully Added!' , 4000);
      }, (err) => {
        this.flashProvider.show('Unable to update doctor details!' , 4000);
@@ -177,6 +211,7 @@ const a = document.createElement('a');
   generateReciept(event, cell, rowIndex, row) {
     console.log(row);
    this.customerService.generateReciept(row).subscribe((res) => {
+this.updateSingleInvoiceDomainAndAllPaymentList(res.document)
       console.log(res);
       this.flashProvider.show('Reciept Generated for the given Invoice', 5000);
    }, (err) => {
@@ -184,6 +219,12 @@ const a = document.createElement('a');
    });
   }
   updateDataValue(eve: any, tar: string) {
-    this.doctorDetailsForm.get(tar).setValue(eve.target.value);
+    let val: any;
+    if (tar === 'typeOfTreatement') {
+      val = parseInt(eve.target.value, 10);
+    } else {
+      val = eve.target.value;
+    }
+    this.doctorDetailsForm.get(tar).setValue(val);
   }
 }

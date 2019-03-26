@@ -4,6 +4,7 @@ import { CustomerService } from './../../services/customer/customer.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-ct-angiography-details',
@@ -40,7 +41,8 @@ export class CtAngiographyDetailsComponent implements OnInit {
 
   constructor(public activate: ActivatedRoute, public fb: FormBuilder,
     public customerService: CustomerService,
-    public flashProvider: FlashMessageService) {
+    public flashProvider: FlashMessageService,
+    public alertController: AlertController) {
     this.ctAngioFromDb = this.activate.snapshot.data['data'];
     this.invoiceMasterType = this.activate.snapshot.data['invoiceType'];
     console.log(this.invoiceMasterType);
@@ -58,6 +60,39 @@ export class CtAngiographyDetailsComponent implements OnInit {
   });
   }
   this.updateInvoiceAndPaymentDomain();
+}
+
+
+public updatePartialCtDetailAndInvoiceAndPaymentDomain(list:any){
+  /**
+   * Below will update Invoice Payment
+   */
+  list.invoiceDomain.invoiceReciptList.filter((val) => {
+    this.rowsPayment.push(val);
+  });
+  this.rowsPayment = [...this.rowsPayment];
+  /**
+   * This will update Invoice datatable
+   */
+this.rowsInvoice.push(list.invoiceDomain);
+this.rowInvoiceFromDb.push(list.invoiceDomain);
+this.rowsInvoice = [...this.rowsInvoice];
+  /**
+   * Below will update CT Angio
+   */
+  let ind: any;
+  this.rowsCtAngio.forEach((ele,index)=>{
+if(ele.id===list.id){
+ind = index;
+}
+  });
+ 
+  if(ind){
+  this.rowsCtAngio[ind] = list;
+  this.rowsCtAngio = [...this.rowsCtAngio];
+  }
+
+  this.flashProvider.show("Invoice Cancelled Succesfully and New Created",5000);
 }
 
 private updateInvoiceAndPaymentDomain() {
@@ -124,9 +159,10 @@ private updateInvoiceAndPaymentDomain() {
     /**
      * Bug needs to be solved the Balance amount not getting reset to original DB amount when entered zero
      */
+
     if ( cell === 'paymentAmount' ) {
       const balAmt =     this.rowInvoiceFromDb[rowIndex]['balanceAmt'];
-      console.log(balAmt)
+ 
       const newBalAmt = Number(balAmt) - Number(event.target.value);
       if (isNaN(newBalAmt)) {
 
@@ -137,13 +173,59 @@ private updateInvoiceAndPaymentDomain() {
       } else {
         this.rowsInvoice[rowIndex]['balanceAmt'] = newBalAmt  ;
         this.rowsInvoice = [...this.rowsInvoice];
-        console.log(this.rowsInvoice);
+       
 
       }
+              } else if ( cell == 'cancelInvoice' && event.target.value == 'Invoice Cancelled' ){
+                this.presentAlertRadio(this.rowsInvoice[rowIndex]);
+
               }
     this.editingInvoice[rowIndex + '-' + cell] = false;
     this.rowsInvoice[rowIndex][cell] = event.target.value;
+    
 
+  }
+  async presentAlertRadio(ele:any) {
+    const alert = await this.alertController.create({
+      header: 'New Invoice Creation',
+      inputs: [
+        {
+          name: 'newInvoiceAmt',
+          type: 'number',
+          id: 'newInvoiceAmt',
+          value: 4500,
+          placeholder: 'New Invoice Amount'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (res) => {
+            console.log(res);
+            if(res){
+              ele['newInvoiceAmountInCaseofCancel'] = res.newInvoiceAmt;
+              this.ctAngioForm.value['invoiceDomain'] = ele
+             this.customerService.cancelAndCreateNewInvoice(this.ctAngioForm.value).subscribe((res)=>{
+              this.updatePartialCtDetailAndInvoiceAndPaymentDomain(res.document);
+             },(err)=>{
+
+             });
+
+            }
+            console.log('Confirm Ok');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
   updateValuePayment(event, cell, rowIndex) {
     this.editingPayment[rowIndex + '-' + cell] = false;

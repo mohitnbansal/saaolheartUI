@@ -10,4 +10,5 @@ export interface Invoice  extends FormGroup {
     discountAmt: (number | ((control: AbstractControl) => ValidationErrors))[];
     invoiceStatus: (string | ((control: AbstractControl) => ValidationErrors))[];
     generetedBy: (number | ((control: AbstractControl) => ValidationErrors))[];
+    newInvoiceAmountInCaseofCancel: (number | ((control: AbstractControl) => ValidationErrors))[];
 }

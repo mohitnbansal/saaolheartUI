@@ -28,7 +28,9 @@ const routes: Routes = [
   canActivate: [AuthGuard]
 },
   { path: 'reports', loadChildren: './pages/reports/reports.module#ReportsPageModule' },
-  { path: 'stock-quantity', loadChildren: './components/stock-quantity/stock-quantity.module#StockQuantityPageModule' }
+  { path: 'stock-quantity', loadChildren: './components/stock-quantity/stock-quantity.module#StockQuantityPageModule' },
+  { path: 'customer-appointment', loadChildren: './components/customer-appointment/customer-appointment.module#CustomerAppointmentPageModule' },
+  { path: 'mark-appointment', loadChildren: './components/mark-appointment/mark-appointment.module#MarkAppointmentPageModule' }
 ];
 
 @NgModule({

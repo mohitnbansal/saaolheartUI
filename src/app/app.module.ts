@@ -1,4 +1,6 @@
-import { NgModule } from '@angular/core';
+import { DashboardService } from './services/dashboard/dashboard.service';
+import { MarkAppointmentPageModule } from './components/mark-appointment/mark-appointment.module';
+import { NgModule, Injector } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -21,6 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { StockQuantityPageModule } from './components/stock-quantity/stock-quantity.module';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { CustomerAppointmentPageModule } from './components/customer-appointment/customer-appointment.module';
+import { DatePicker } from '@ionic-native/date-picker';
 export function tokenGetter() {
   return localStorage.getItem('access_token');
 }
@@ -36,6 +40,7 @@ export function tokenGetter() {
     HttpClientModule,
     IonicSelectableModule,
     CalendarModule,
+    MarkAppointmentPageModule,  
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -51,12 +56,14 @@ export function tokenGetter() {
     }),
     BrowserAnimationsModule,
     ComponentModule,
-    StockQuantityPageModule
+    StockQuantityPageModule,
+    CustomerAppointmentPageModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    DashboardService
   ],
   bootstrap: [AppComponent]
 })

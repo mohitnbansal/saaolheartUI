@@ -17,3 +17,15 @@ ion-grid {
     height: auto !important;
     width: 95%;
 }
+
+:host /deep/ .datatable-row-group {
+    will-change: transform;
+}
+
+ :host /deep/ .ngx-datatable.material .datatable-header .datatable-row-right {
+    margin-left: -8px;
+}
+
+:host /deep/ .row-color {
+    background-color: lightgreen;
+}

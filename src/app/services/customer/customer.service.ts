@@ -64,4 +64,8 @@ return this.http.post<Customer>(environment.apiUrl + 'customer/addcustomer', cus
       return this.http.get(environment.apiUrl + 'customer/getcustomerbysearch', {params: params});
   
     }
+
+    cancelAndCreateNewInvoice(ele:any){
+      return this.http.post<any>(environment.apiUrl + 'customer/cancelInvoice', ele , this.httpOptions);
+    }
 }

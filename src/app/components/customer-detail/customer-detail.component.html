@@ -2,7 +2,7 @@
     <ion-row>
         <ion-col size="3">
             <ion-label>
-                <ion-text color="dark"><b>Consultation Number: -</b></ion-text>
+                <ion-text color="dark"><b>Consultation Number:- </b></ion-text>
             </ion-label>
         </ion-col>
         <ion-col size="3">
@@ -105,11 +105,11 @@
                 <ion-row>
                     <ion-col>
                         <ion-label>
-                            <ion-text color="dark"><b>   Landline No.</b></ion-text>
+                            <ion-text color="dark"><b> Pateint Added On</b></ion-text>
                         </ion-label>
                     </ion-col>
                     <ion-col>
-                        {{customerDetails.landlineRes}}
+                        {{customerDetails.dateOfCreation | date:'MMM d, y'}}
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -126,16 +126,7 @@
                         {{customerDetails.generetedBy}}
                     </ion-col>
                 </ion-row>
-                <ion-row>
-                    <ion-col>
-                        <ion-label>
-                            <ion-text color="dark"><b> Pateint Added On</b></ion-text>
-                        </ion-label>
-                    </ion-col>
-                    <ion-col>
-                        {{customerDetails.dateOfCreation | date:'MMM d, y'}}
-                    </ion-col>
-                </ion-row>
+
             </ion-grid>
         </ion-col>
     </ion-row>

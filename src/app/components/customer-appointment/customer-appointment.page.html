@@ -1,0 +1,39 @@
+<ion-list>
+    <ion-list-header>
+    </ion-list-header>
+    <ion-item>
+        <ion-label>Type of Appointment</ion-label>
+        <ion-select [(ngModel)]="appointmentType" placeholder="select appointment">
+            <ion-select-option value="In House">In House Appointment</ion-select-option>
+            <ion-select-option value="Dr Appointment">Dr. Bimal Chhajer</ion-select-option>
+            <ion-select-option value="Treatment ECP">Treatment ECP</ion-select-option>
+            <ion-select-option value="Treatment BCA">Treatment BCA</ion-select-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="appointmentType=='Treatment ECP'">
+        <ion-label>Machine No</ion-label>
+        <ion-select [(ngModel)]="machineNo" placeholder="select Machine">
+            <ion-select-option value="1">Machine 1</ion-select-option>
+            <ion-select-option value="2">Machine 2</ion-select-option>
+            <ion-select-option value="3">Machine 3</ion-select-option>
+            <ion-select-option value="4">Machine 4</ion-select-option>
+            <ion-select-option value="5">Machine 5</ion-select-option>
+
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label> Date of Appointment </ion-label>
+        <ion-datetime mode="ios" [(ngModel)]="appointmentDate" id="appointmentDate" hourValues="08,09,10,11,12,13,14,15,16,17,18" display-format="MMM DD, YYYY HH:mm "></ion-datetime>
+
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Appointment Description</ion-label>
+        <ion-textarea rows="6" cols="20" [(ngModel)]="description" placeholder="Enter any notes here..."></ion-textarea>
+
+    </ion-item>
+    <ion-item>
+        <ion-button shape="round" size="default" slot="end" (click)="closeModel()">Schedule</ion-button>
+    </ion-item>
+</ion-list>

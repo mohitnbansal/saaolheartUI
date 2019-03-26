@@ -6,7 +6,9 @@
                     <ion-label position="floating">Treatment Type</ion-label>
                     <ion-select (ionChange)="updateDataValue($event,'treatmentTypeMasterId')" ngDefaultControl formControlName="treatmentTypeMasterId" id="treatmentTypeMasterId">
                         <ion-select-option value="1"> Natural Bypass Therapy(ECP)</ion-select-option>
-                        <ion-select-option value="2"> Bio Chemical Angioplasty (BCP)</ion-select-option>
+                        <ion-select-option value="2"> Bio Chemical Angioplasty (BCA)</ion-select-option>
+                        <ion-select-option value="3">Both ECP and BCA</ion-select-option>
+
                     </ion-select>
                 </ion-item>
             </ion-col>
@@ -16,7 +18,7 @@
             <ion-col>
                 <ion-item>
                     <ion-label position="floating">Date</ion-label>
-                    <ion-datetime id="treatmentInvoiceDate" (ionChange)="updateDateValue($event,'treatmentInvoiceDate')" name="treatmentInvoiceDate" ngDefaultControl formControlName="treatmentInvoiceDate"></ion-datetime>
+                    <ion-datetime id="treatmentInvoiceDate" (ionChange)="updateDataValue($event,'treatmentInvoiceDate')" name="treatmentInvoiceDate" ngDefaultControl formControlName="treatmentInvoiceDate"></ion-datetime>
                 </ion-item>
             </ion-col>
             <ion-col>

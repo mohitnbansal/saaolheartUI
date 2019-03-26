@@ -59,7 +59,8 @@ console.log(this.custformGroup.value)
      this.route.navigate(['customer/details/' + res.document.id]);
      }
     }, (err) => {
-      this.flashProvider.show('Unable to Save Customer!' , 4000);
+      console.log(err.error.error);
+      this.flashProvider.show(err.error.error , 4000);
     }) ;
 
   }

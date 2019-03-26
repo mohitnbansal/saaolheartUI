@@ -1,3 +1,4 @@
+import { MarkAppointmentPageModule } from './mark-appointment/mark-appointment.module';
 import { FormsModule, ReactiveFormsModule, FormGroupDirective, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HeaderComponent } from './header/header.component';
@@ -16,6 +17,8 @@ import { StockQuantityPageModule } from './stock-quantity/stock-quantity.module'
 import { StockQuantityPage } from './stock-quantity/stock-quantity.page';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { DayViewSchedulerComponent } from './day-view-scheduler/day-view-scheduler.component';
+import { SearchUpdateScheduleComponent } from './search-update-schedule/search-update-schedule.component';
+import { CustomerAppointmentPageModule } from './customer-appointment/customer-appointment.module';
 
 @NgModule({
   declarations: [HeaderComponent,
@@ -26,7 +29,8 @@ import { DayViewSchedulerComponent } from './day-view-scheduler/day-view-schedul
        FlashMessageComponent,
        TreatmentInvoiceDetailsComponent,
        InvoiceDetailsComponent,
-       DayViewSchedulerComponent],
+       DayViewSchedulerComponent,
+       SearchUpdateScheduleComponent],
   imports: [
     CommonModule,
     NgxDatatableModule,
@@ -44,7 +48,8 @@ import { DayViewSchedulerComponent } from './day-view-scheduler/day-view-schedul
       FlashMessageComponent,
       TreatmentInvoiceDetailsComponent,
       InvoiceDetailsComponent,
-      DayViewSchedulerComponent
+      DayViewSchedulerComponent,
+      SearchUpdateScheduleComponent
       ]
 })
 export class ComponentModule { }

@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()" [formGroup]="treatmentPlanForm">
+<!-- <form (ngSubmit)="onSubmit()" [formGroup]="treatmentPlanForm">
     <ion-grid>
         <ion-row>
             <ion-col>
@@ -24,7 +24,6 @@
                     <ion-item>
                         <ion-label position="floating">Duration</ion-label>
                         <ion-input type="number" ngDefaultControl max="60" formControlName="duration"></ion-input>
-                        <!-- <ion-datetime id="duration" (ionBlur)="updateDataValue($event,'duration')" display-format="mm" picker-format="mm" ngDefaultControl formControlName="duration"></ion-datetime> -->
                     </ion-item>
                 </ion-col>
             </ion-col>
@@ -71,11 +70,11 @@
     </ion-grid>
     <ion-button *ngIf="treatMentOptionList.length > 0" float-right type="submit">Submit</ion-button>
     <ion-button *ngIf="treatMentOptionList.length > 0" float-right type="reset">Reset</ion-button>
-</form>
-
+</form> -->
+<!-- 
 <ion-item-divider class="divider">
 </ion-item-divider>
-<br>
+<br> -->
 <ion-grid>
     <ion-row class="divider">
         <ion-col>
@@ -95,7 +94,7 @@
                         {{row.duration}}
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Beginning B.P.">
+                <!-- <ngx-datatable-column name="Beginning B.P.">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                         {{row.begBp}}
                     </ng-template>
@@ -114,7 +113,7 @@
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                         {{row.endHp}}
                     </ng-template>
-                </ngx-datatable-column>
+                </ngx-datatable-column> -->
                 <ngx-datatable-column name="Complaints">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                         {{row.complaints}}

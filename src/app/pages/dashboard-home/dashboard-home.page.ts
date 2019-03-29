@@ -44,7 +44,7 @@ export class DashboardHomePage implements OnInit ,AfterViewInit{
     {
       id: 3,
       name: 'Machine 3',
-      color: colors.yellow
+      color: colors.red
     },
     {
       id: 4,

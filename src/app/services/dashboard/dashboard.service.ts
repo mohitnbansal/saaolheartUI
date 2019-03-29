@@ -50,4 +50,10 @@ export class DashboardService {
   markPatientAppointment(res:any): Observable<any>{
     return this.http.post<Appointment>(environment.apiUrl + 'dashboard/markappointment', res, this.httpOptions);
   }
+
+  getPaymentPendingList(): Observable<any>
+  {
+    return this.http.get(environment.apiUrl + 'dashboard/getnewjoinee', this.httpOptions);
+'' 
+  }
 }

@@ -54,6 +54,8 @@
                     </ion-card-content>
                 </ion-card>
             </ion-col>
+        </ion-row>
+        <ion-row>
             <ion-col>
                 <ion-card>
                     <ion-card-header>
@@ -70,18 +72,18 @@
 
 
 
-                            <ion-item class="ion-activatable" ion-activatable>
-                                <ion-ripple-effect></ion-ripple-effect>
+                            <ion-item class="ion-activatable" ion-activatable *ngFor="let patient of patientList">
+                                <ion-ripple-effect (click)="markAppointmentAlert(patient)"></ion-ripple-effect>
                                 <ion-label>
                                     <h4>
-                                        Mohit Bansal
+                                        {{patient.customerName}}
                                     </h4>
                                     <p>
-                                        Expected Time 9.40am
+                                        Expected Time {{patient.expectedTime | date:'medium' }}
                                     </p>
                                     <p>
                                         Visit No
-                                        <ion-badge slot="end">22</ion-badge>
+                                        <ion-badge slot="end"> {{patient.scheduledNumber}}</ion-badge>
                                     </p>
                                 </ion-label>
 
@@ -92,7 +94,50 @@
                     </ion-card-content>
                     <ion-row class="cardfooter">
                         <ion-col>
-                            <p>Footer goes here </p>
+                            <p>Total Patient Pending {{patientList.length}} </p>
+                        </ion-col>
+                    </ion-row>
+                </ion-card>
+            </ion-col>
+            <ion-col>
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-title>
+                            BCA Appointments List
+                        </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <ion-list>
+                            <ion-list-header>
+                                <ion-label>Customer's List</ion-label>
+                            </ion-list-header>
+                            <!-- <ion-virtual-scroll> -->
+
+
+
+                            <ion-item class="ion-activatable" ion-activatable *ngFor="let patient of bcaPateintList">
+                                <ion-ripple-effect (click)="markAppointmentAlert(patient)"></ion-ripple-effect>
+                                <ion-label>
+                                    <h4>
+                                        {{patient.customerName}}
+                                    </h4>
+                                    <p>
+                                        Expected Time {{patient.expectedTime | date:'medium' }}
+                                    </p>
+                                    <p>
+                                        BCA Visit No
+                                        <ion-badge slot="end"> {{patient.scheduledNumber}}</ion-badge>
+                                    </p>
+                                </ion-label>
+
+                            </ion-item>
+
+                            <!-- </ion-virtual-scroll> -->
+                        </ion-list>
+                    </ion-card-content>
+                    <ion-row class="cardfooter">
+                        <ion-col>
+                            <p>Total Patient Pending {{patientList.length}} </p>
                         </ion-col>
                     </ion-row>
                 </ion-card>
@@ -106,6 +151,73 @@
                     </ion-card-header>
                     <ion-card-content>
 
+                        <!-- <ion-searchbar (ionInput)="getCustomerListBySearch($event)" animated showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar> -->
+                        <!-- (page)="onPage($event)" -->
+                        <ngx-datatable #myTable class='material' [columnMode]="'standard'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50"  [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rowsNewJoinee'>
+                            <!-- Row Detail Template -->
+                            <ngx-datatable-row-detail [rowHeight]="getHeight()" #myDetailRow>
+                                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-row-detail-template>
+                                    <div><strong>Address</strong></div>
+                                    <div class="row-wrap">{{row.address}}</div>
+                                </ng-template>
+                            </ngx-datatable-row-detail>
+                            <!-- Column Templates -->
+                            <ngx-datatable-column [width]="50">
+                                <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                                    <a href="javascript:void(0)" [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded" title="Expand/Collapse Row" (click)="toggleExpandRow(row,expanded)">
+                                    </a>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Sr No" width="80">
+                                <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                                    <strong>{{rowIndex+1}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Customer Id" width="180">
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <a [routerDirection]="'forward'" [routerLink]="['/customer/details/',row.id]">
+                                        <b><i> {{row.customerRefId}}  </i></b>
+                                    </a>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Name" width="150">
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <strong>{{row.firstName}} {{row.lastName}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Age" width="50">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Gender" width="75">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Email Id" width="100">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Mobile No" width="100">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Alt Mobile No" width="100">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Added On (Date and Time) " width="300">
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <strong>{{row.dateOfCreation | date : 'MMM d, y, h:mm:ss a' }} </strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+
+                        </ngx-datatable>
                     </ion-card-content>
                 </ion-card>
             </ion-col>
@@ -118,6 +230,72 @@
                     </ion-card-header>
                     <ion-card-content>
 
+                        <ion-searchbar (ionInput)="getCustomerListBySearch($event)" animated showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
+                        <ngx-datatable #myTable class='material' [columnMode]="'standard'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rows' (page)="onPage($event)">
+                            <!-- Row Detail Template -->
+                            <ngx-datatable-row-detail [rowHeight]="getHeight()" #myDetailRow>
+                                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-row-detail-template>
+                                    <div><strong>Address</strong></div>
+                                    <div class="row-wrap">{{row.address}}</div>
+                                </ng-template>
+                            </ngx-datatable-row-detail>
+                            <!-- Column Templates -->
+                            <ngx-datatable-column [width]="50">
+                                <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                                    <a href="javascript:void(0)" [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded" title="Expand/Collapse Row" (click)="toggleExpandRow(row,expanded)">
+                                    </a>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Sr No" width="80">
+                                <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                                    <strong>{{rowIndex+1}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Customer Id" width="180">
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <a [routerDirection]="'forward'" [routerLink]="['/customer/details/',row.id]">
+                                        <b><i> {{row.customerRefId}}  </i></b>
+                                    </a>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Name" width="150">
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <strong>{{row.firstName}} {{row.lastName}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Age" width="50">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Gender" width="75">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Email Id" width="100">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Mobile No" width="100">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Alt Mobile No" width="100">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Added On (Date and Time) " width="300">
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <strong>{{row.dateOfCreation | date : 'MMM d, y, h:mm:ss a' }} </strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+
+                        </ngx-datatable>
                     </ion-card-content>
                 </ion-card>
             </ion-col>
@@ -130,6 +308,72 @@
                     </ion-card-header>
                     <ion-card-content>
 
+                        <ion-searchbar (ionInput)="getCustomerListBySearch($event)" animated showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
+                        <ngx-datatable #myTable class='material' [columnMode]="'standard'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rows' (page)="onPage($event)">
+                            <!-- Row Detail Template -->
+                            <ngx-datatable-row-detail [rowHeight]="getHeight()" #myDetailRow>
+                                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-row-detail-template>
+                                    <div><strong>Address</strong></div>
+                                    <div class="row-wrap">{{row.address}}</div>
+                                </ng-template>
+                            </ngx-datatable-row-detail>
+                            <!-- Column Templates -->
+                            <ngx-datatable-column [width]="50">
+                                <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                                    <a href="javascript:void(0)" [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded" title="Expand/Collapse Row" (click)="toggleExpandRow(row,expanded)">
+                                    </a>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Sr No" width="80">
+                                <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                                    <strong>{{rowIndex+1}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Customer Id" width="180">
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <a [routerDirection]="'forward'" [routerLink]="['/customer/details/',row.id]">
+                                        <b><i> {{row.customerRefId}}  </i></b>
+                                    </a>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Name" width="150">
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <strong>{{row.firstName}} {{row.lastName}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Age" width="50">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Gender" width="75">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Email Id" width="100">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Mobile No" width="100">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Alt Mobile No" width="100">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Added On (Date and Time) " width="300">
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <strong>{{row.dateOfCreation | date : 'MMM d, y, h:mm:ss a' }} </strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+
+                        </ngx-datatable>
                     </ion-card-content>
                 </ion-card>
             </ion-col>
@@ -142,6 +386,72 @@
                     </ion-card-header>
                     <ion-card-content>
 
+                        <ion-searchbar (ionInput)="getCustomerListBySearch($event)" animated showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
+                        <ngx-datatable #myTable class='material' [columnMode]="'standard'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rows' (page)="onPage($event)">
+                            <!-- Row Detail Template -->
+                            <ngx-datatable-row-detail [rowHeight]="getHeight()" #myDetailRow>
+                                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-row-detail-template>
+                                    <div><strong>Address</strong></div>
+                                    <div class="row-wrap">{{row.address}}</div>
+                                </ng-template>
+                            </ngx-datatable-row-detail>
+                            <!-- Column Templates -->
+                            <ngx-datatable-column [width]="50">
+                                <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                                    <a href="javascript:void(0)" [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded" title="Expand/Collapse Row" (click)="toggleExpandRow(row,expanded)">
+                                    </a>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Sr No" width="80">
+                                <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                                    <strong>{{rowIndex+1}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Customer Id" width="180">
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <a [routerDirection]="'forward'" [routerLink]="['/customer/details/',row.id]">
+                                        <b><i> {{row.customerRefId}}  </i></b>
+                                    </a>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Name" width="150">
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <strong>{{row.firstName}} {{row.lastName}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Age" width="50">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Gender" width="75">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Email Id" width="100">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Mobile No" width="100">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Alt Mobile No" width="100">
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <strong>{{value}}</strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Added On (Date and Time) " width="300">
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <strong>{{row.dateOfCreation | date : 'MMM d, y, h:mm:ss a' }} </strong>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+
+                        </ngx-datatable>
                     </ion-card-content>
                 </ion-card>
             </ion-col>

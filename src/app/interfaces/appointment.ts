@@ -10,4 +10,5 @@ export interface Appointment {
     treatmentDetailPlanId: number;
     treatmentPlanId: number;
     machineNo:number;
+    isVisitDone:string;
 }

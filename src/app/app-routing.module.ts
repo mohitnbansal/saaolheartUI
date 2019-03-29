@@ -1,7 +1,10 @@
+import { DasboardResolveService } from './services/dashboard/dasboard-resolve.service';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './services/guard/auth.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { DashboardService } from './services/dashboard/dashboard.service';
+import { DashboardBCADataResolveService } from './services/dashboard/dashboard-bcadata-resolve.service';
 
 const routes: Routes = [
   {
@@ -13,7 +16,12 @@ const routes: Routes = [
 
   { path: 'home',
    loadChildren: './pages/dashboard-home/dashboard-home.module#DashboardHomePageModule' ,
-  canActivate: [AuthGuard]
+  canActivate: [AuthGuard],
+  resolve:{
+    data: DasboardResolveService,
+    patientQue: DashboardBCADataResolveService
+   
+  }
 },
   { path: 'customer', loadChildren: './pages/customer/customer.module#CustomerPageModule',
  // canActivate: [AuthGuard] 

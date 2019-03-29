@@ -1,7 +1,9 @@
+import { Appointment } from './../../interfaces/appointment';
+import { ActivatedRoute } from '@angular/router';
 import { DayViewSchedulerComponent } from './../../components/day-view-scheduler/day-view-scheduler.component';
 import { FlashMessageService } from './../../services/flash/flash-message.service';
 import { MarkAppointmentPage } from './../../components/mark-appointment/mark-appointment.page';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { DashboardService } from './../../services/dashboard/dashboard.service';
 import { colors } from './../../utils/color';
 import { Component, OnInit, Output, EventEmitter, ViewChild, ViewChildren, AfterViewInit } from '@angular/core';
@@ -23,6 +25,11 @@ import { Subject } from 'rxjs';
   styleUrls: ['./dashboard-home.page.scss'],
 })
 export class DashboardHomePage implements OnInit ,AfterViewInit{
+  public patientList: any = [];
+  public patientQueList: any[] = [];
+  public bcaPateintList: any[] = [];
+  public rowsNewJoinee: any[] = [];
+  public markAppointmentStat:Appointment = <Appointment>{};
    users = [
     {
       id: 1,
@@ -77,24 +84,32 @@ export class DashboardHomePage implements OnInit ,AfterViewInit{
  
   constructor(public dashboardService:DashboardService,
     public modalController:ModalController,
-    public flashService:FlashMessageService) { 
-     
-    this.getPateintsQueueList();
+    public flashService:FlashMessageService,
+    public activate: ActivatedRoute,
+    public alertController: AlertController) { 
+      // this.dashboardService.getInHouseAppointmentList().subscribe((res)=>{
+      //   this.patientList = res.document;
+      //   console.log(res);
+      //     });
+    this.getPateintsQueueList(null);
     this.dashboardService.callModalEvent.subscribe((res)=>{
      this.presentModal(res);
    });
-   
+  
   }
   
   ngOnInit() {
-   this.dashboardService.change.subscribe((res)=>{
-     this.getPateintsQueueList();
-   });
-   this.dashboardService.callModalEvent.subscribe((res)=>{
+    this.patientList = this.activate.snapshot.data['data'].document != null ?  this.activate.snapshot.data['data'].document: [];
+    this.patientQueList = this.activate.snapshot.data['patientQue'] != null ?  this.activate.snapshot.data['patientQue']: [];
+  this.getPateintsQueueList(this.patientQueList);
+  //   this.dashboardService.change.subscribe((res)=>{
+  //    this.getPateintsQueueList(res);
+  //  });
+  //  this.dashboardService.callModalEvent.subscribe((res)=>{
 
-    this.presentModal(res);
-  });
-  
+  //   this.presentModal(res);
+  // });
+
   }
 ngAfterViewInit(){
   this.dayView['first'].newChange.subscribe((res)=>{
@@ -133,43 +148,115 @@ this.flashService.show('Appointment Scheduled Succesfully for Customer '+ ele.ev
 
   }
 
-  getPateintsQueueList(){
+  getPateintsQueueList(list: any){
+    if(list != null){
+      this.patientQueSortAndPustFunction(list);
+      this.refresh.next();
+    }else{
     this.dashboardService.getPateintsQueueList().subscribe((res)=>{
-     
-      this.events = []
-res.document.forEach((ele,ind) => {
-let user = {};
-this.users.forEach((use)=>{
-  if(use.id === ele.machineNo){
-    user = use;
-  }
-});
-let  eve: CalendarEvent = <CalendarEvent>{};
-eve.title = ele.customerName;
- //eve.start = addHours(startOfDay(ele.expectedTime), getTime(ele.expectedTime));
- if(ele.isVisitDone === 'Completed'){
-   eve.cssClass  = 'strike';
- }
-eve.start = parse(ele.expectedTime) ;
-eve.end = addHours(parse(ele.expectedTime),1) ;
-eve.color =  this.users[0].color;
-eve.meta =  {
-user: user,
-appointmentDetail: ele
-            };
-eve.resizable =  {
-   beforeStart: true,
-   afterEnd: true
- };
-eve.draggable = true;
-this.events.push(eve);
-this.events = [...this.events];
-});
+this.patientQueSortAndPustFunction(res);
 this.refresh.next();
 
     },(err)=>{
       console.log(err);
     });
   }
+  }
  
+  patientQueSortAndPustFunction(res: any){
+    this.bcaPateintList = [];
+    this.events = []
+    res.document.forEach((ele, ind) => {
+      if (ele.typeOfAppointment === 'TREATMENT_ECP') {
+        let user = {};
+        this.users.forEach((use) => {
+          if (use.id === ele.machineNo) {
+            user = use;
+          }
+        });
+        let eve: CalendarEvent = <CalendarEvent>{};
+        eve.title = ele.customerName;
+        //eve.start = addHours(startOfDay(ele.expectedTime), getTime(ele.expectedTime));
+        if (ele.isVisitDone === 'Completed') {
+          eve.cssClass = 'strike';
+        }
+        eve.start = parse(ele.expectedTime);
+        eve.end = addHours(parse(ele.expectedTime), 1);
+        eve.color = this.users[0].color;
+        eve.meta = {
+          user: user,
+          appointmentDetail: ele
+        };
+        eve.resizable = {
+          beforeStart: true,
+          afterEnd: true
+        };
+        eve.draggable = true;
+        this.events.push(eve);
+        this.events = [...this.events];
+      } else if (ele.typeOfAppointment === 'TREATMENT_BCA') {
+        this.bcaPateintList.push(ele);
+        this.bcaPateintList = [...this.bcaPateintList];
+      }
+
+});
+
+  }
+  async markAppointmentAlert(appoint:any) {
+    const alert = await this.alertController.create({
+      header: 'Is Visit Done?',
+      inputs: [
+        {
+          name: 'radio1',
+          type: 'radio' ,
+          label: 'Yes',
+          value: 'Completed'
+        },
+        {
+          name: 'radio2',
+          type : 'radio',
+          label: 'No',
+          value: 'Cancelled'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (res) => {
+            
+            
+          }
+        }, {
+          text: 'Ok',
+          handler: (res) => {
+            console.log(res);
+            console.log(appoint);
+            this.markAppointmentStat = appoint;
+            this.markAppointmentStat.isVisitDone = res;
+            this.markAppointmentStatus(this.markAppointmentStat);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+markAppointmentStatus(res: any) {
+  this.dashboardService.markPatientAppointment(res).subscribe((res)=>{
+console.log(res);
+  }, (err) => {
+console.log(err);
+  });
+}
+
+getNewJoineeList(){
+  this.dashboardService.getNewJoineeList().subscribe((res)=>{
+console.log(res)
+  },(err)=>{
+
+  })
+}
 }

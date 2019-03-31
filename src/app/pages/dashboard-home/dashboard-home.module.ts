@@ -11,6 +11,7 @@ import { DashboardHomePage } from './dashboard-home.page';
 import { ComponentModule } from 'src/app/components/component.module';
 import { CalendarModule } from 'angular-calendar';
 import { DashboardService } from 'src/app/services/dashboard/dashboard.service';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 const routes: Routes = [
@@ -26,6 +27,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     ComponentModule,
+    NgxDatatableModule,
     CalendarModule,
     RouterModule.forChild(routes)
   ],

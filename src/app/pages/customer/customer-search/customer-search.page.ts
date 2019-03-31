@@ -56,7 +56,6 @@ const val = event.target.value.toLowerCase();
    
   ngOnInit() {
       this.custService.getAllCustomerSortedList().subscribe((res) => {
- console.log(res)
  this.customerList = res;
  this.rows = res;
  this.columns = Object.keys(res[0]).map((key) => {

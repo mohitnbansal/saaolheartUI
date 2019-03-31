@@ -1,3 +1,4 @@
+import { DoctorConsultation } from './../../interfaces/doctorconsultaion';
 import { Appointment } from './../../interfaces/appointment';
 import { ActivatedRoute } from '@angular/router';
 import { DayViewSchedulerComponent } from './../../components/day-view-scheduler/day-view-scheduler.component';
@@ -28,8 +29,9 @@ export class DashboardHomePage implements OnInit ,AfterViewInit{
   public patientList: any = [];
   public patientQueList: any[] = [];
   public bcaPateintList: any[] = [];
-  public rowsNewJoinee: any[] = [];
-  public markAppointmentStat:Appointment = <Appointment>{};
+  public rowsNewJoinee: any = [];
+  public rowsNewJoineeForFilter:any = [];
+  public markAppointmentStat: Appointment = <Appointment>{};
    users = [
     {
       id: 1,
@@ -95,13 +97,15 @@ export class DashboardHomePage implements OnInit ,AfterViewInit{
     this.dashboardService.callModalEvent.subscribe((res)=>{
      this.presentModal(res);
    });
-  
+   this.getNewJoineeList();
   }
   
   ngOnInit() {
     this.patientList = this.activate.snapshot.data['data'].document != null ?  this.activate.snapshot.data['data'].document: [];
     this.patientQueList = this.activate.snapshot.data['patientQue'] != null ?  this.activate.snapshot.data['patientQue']: [];
-  this.getPateintsQueueList(this.patientQueList);
+
+    this.getPateintsQueueList(this.patientQueList);
+  
   //   this.dashboardService.change.subscribe((res)=>{
   //    this.getPateintsQueueList(res);
   //  });
@@ -245,7 +249,7 @@ this.refresh.next();
   }
 
 markAppointmentStatus(res: any) {
-  this.dashboardService.markPatientAppointment(res).subscribe((res)=>{
+  this.dashboardService.markPatientAppointment(res).subscribe(( res ) => {
 console.log(res);
   }, (err) => {
 console.log(err);
@@ -254,9 +258,34 @@ console.log(err);
 
 getNewJoineeList(){
   this.dashboardService.getNewJoineeList().subscribe((res)=>{
-console.log(res)
+console.log(this.rowsNewJoinee.document);
+this.rowsNewJoinee = res.document;
+this.rowsNewJoineeForFilter = res.document;
   },(err)=>{
-
-  })
+console.log(err);
+  });
 }
+
+
+getCustomerListBySearch(event:any){
+  const val = event.target.value.toLowerCase();
+    // get the amount of columns in the table
+    const colsAmt = 8;
+    // get the key names of each column in the dataset
+    console.log(this.rowsNewJoineeForFilter[0])
+    const keys = Object.keys(this.rowsNewJoineeForFilter[0]);
+    // assign filtered matches to the active datatable
+    this.rowsNewJoinee = this.rowsNewJoineeForFilter.filter(function(item){
+      // iterate through each row's column data
+      for (let i = 0; i <   colsAmt; i++) {
+        // check for a match
+        if(item[keys[i]] !=  null) {
+        if (item[keys[i]].toString().toLowerCase().indexOf(val) !== -1 || !val){
+          // found match, return true to add to result set
+          return true;
+        }
+        }
+      }
+    });
+  }
 }

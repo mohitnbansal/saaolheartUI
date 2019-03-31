@@ -19,8 +19,7 @@ const routes: Routes = [
   canActivate: [AuthGuard],
   resolve:{
     data: DasboardResolveService,
-    patientQue: DashboardBCADataResolveService
-   
+    patientQue: DashboardBCADataResolveService   
   }
 },
   { path: 'customer', loadChildren: './pages/customer/customer.module#CustomerPageModule',

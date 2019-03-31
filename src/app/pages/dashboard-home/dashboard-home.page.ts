@@ -169,7 +169,8 @@ this.refresh.next();
  
   patientQueSortAndPustFunction(res: any){
     this.bcaPateintList = [];
-    this.events = []
+    this.events = [];
+    if(res != null && res.document != null){
     res.document.forEach((ele, ind) => {
       if (ele.typeOfAppointment === 'TREATMENT_ECP') {
         let user = {};
@@ -202,9 +203,10 @@ this.refresh.next();
         this.bcaPateintList.push(ele);
         this.bcaPateintList = [...this.bcaPateintList];
       }
+    
 
 });
-
+  }
   }
   async markAppointmentAlert(appoint:any) {
     const alert = await this.alertController.create({
@@ -258,9 +260,10 @@ console.log(err);
 
 getNewJoineeList(){
   this.dashboardService.getNewJoineeList().subscribe((res)=>{
-console.log(this.rowsNewJoinee.document);
 this.rowsNewJoinee = res.document;
 this.rowsNewJoineeForFilter = res.document;
+console.log(this.rowsNewJoinee);
+
   },(err)=>{
 console.log(err);
   });

@@ -54,6 +54,9 @@ export class DashboardService {
   getPaymentPendingList(): Observable<any>
   {
     return this.http.get(environment.apiUrl + 'dashboard/getnewjoinee', this.httpOptions);
-'' 
+  }
+
+  changeScheduling(res: any) {
+    return this.http.post<any>(environment.apiUrl + 'dashboard/changescehduling', res, this.httpOptions);
   }
 }

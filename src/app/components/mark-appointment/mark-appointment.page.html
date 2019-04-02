@@ -22,8 +22,13 @@
 
     <ion-item>
         <ion-label position="floating">Duration of Treatment/Visit</ion-label>
-        <ion-input type="number" min="0" max="60" name="duration" [(ngModel)]="duration"></ion-input>
-
+        <!-- <ion-input type="number" min="0" max="60" name="duration" [(ngModel)]="duration"></ion-input> -->
+        <!-- <input  [owlDateTime]="dt1" [(ngModel)]="duration"  [owlDateTimeTrigger]="dt1" placeholder="Date Time">
+        <owl-date-time #dt1 hour12Timer="true" [pickerType]="'timer'" stepHour="1" stepMinute="30"> </owl-date-time> -->
+        <ion-select interface="popover" [(ngModel)]="duration" placeholder="select duration">
+            <ion-select-option value="1">1 hr</ion-select-option>
+            <ion-select-option value=".30">30 min</ion-select-option>
+                </ion-select>
     </ion-item>
     <ion-item>
         <ion-label> Suggestions/Complaints </ion-label>

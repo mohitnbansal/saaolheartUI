@@ -3,7 +3,7 @@
     </ion-list-header>
     <ion-item>
         <ion-label>Type of Appointment</ion-label>
-        <ion-select [(ngModel)]="appointmentType" placeholder="select appointment">
+        <ion-select  interface="popover"  [(ngModel)]="appointmentType" placeholder="select appointment">
             <ion-select-option value="In House">In House Appointment</ion-select-option>
             <ion-select-option value="Dr Appointment">Dr. Bimal Chhajer</ion-select-option>
             <ion-select-option value="Treatment ECP">Treatment ECP</ion-select-option>
@@ -13,7 +13,7 @@
 
     <ion-item *ngIf="appointmentType=='Treatment ECP'">
         <ion-label>Machine No</ion-label>
-        <ion-select [(ngModel)]="machineNo" placeholder="select Machine">
+        <ion-select interface="popover" [(ngModel)]="machineNo" placeholder="select Machine">
             <ion-select-option value="1">Machine 1</ion-select-option>
             <ion-select-option value="2">Machine 2</ion-select-option>
             <ion-select-option value="3">Machine 3</ion-select-option>
@@ -22,10 +22,12 @@
 
         </ion-select>
     </ion-item>
+    
     <ion-item>
         <ion-label> Date of Appointment </ion-label>
-        <ion-datetime mode="ios" [(ngModel)]="appointmentDate" id="appointmentDate" hourValues="08,09,10,11,12,13,14,15,16,17,18" display-format="MMM DD, YYYY HH:mm "></ion-datetime>
-
+        <!-- <ion-datetime type="date" mode="ios" [(ngModel)]="appointmentDate" id="appointmentDate" hourValues="08,09,10,11,12,13,14,15,16,17,18" display-format="MMM DD, YYYY HH:mm "></ion-datetime> -->
+        <input [owlDateTimeFilter]="myFilter" [owlDateTime]="dt1" [(ngModel)]="appointmentDate"  [owlDateTimeTrigger]="dt1" placeholder="Date Time">
+        <owl-date-time #dt1 hour12Timer="true" stepHour="1" stepMinute="30"> </owl-date-time>
     </ion-item>
 
     <ion-item>

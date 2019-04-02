@@ -1,7 +1,6 @@
 import { FlashMessageService } from './../../services/flash/flash-message.service';
 import { NavParams, ModalController } from '@ionic/angular';
 import { Component, OnInit, Input } from '@angular/core';
-import { DatePicker } from '@ionic-native/date-picker';
 
 @Component({
   selector: 'app-customer-appointment',
@@ -9,8 +8,10 @@ import { DatePicker } from '@ionic-native/date-picker';
   styleUrls: ['./customer-appointment.page.scss'],
 })
 export class CustomerAppointmentPage implements OnInit {
+public dt:Date = new Date();
 @Input() public appointmentType: string;
-@Input() public appointmentDate: any;
+@Input() public appointmentDate: any = new Date( this.dt.getFullYear(), this.dt.getMonth(),this.dt.getDate(),
+ 9, 30);
 @Input() public description: any;
 @Input() public expectedTime: any;
 @Input() public machineNo:number;
@@ -33,6 +34,7 @@ openDate(){
   );*/
 }
 
+
   closeModel() {
     if(this.appointmentType != null && this.appointmentDate != null && this.description!=null){
     const dat = {appointmentType: this.appointmentType,
@@ -42,5 +44,10 @@ openDate(){
           this.flasService.show('Please enter all data related to Appointment',4000);
     }
   }
-
+  public myFilter = (d: Date): boolean => {
+    const day = d.getDay();
+    
+    // Prevent Saturday and Sunday from being selected.
+    return day !== 0 && day !== 6 ;
+}
 }

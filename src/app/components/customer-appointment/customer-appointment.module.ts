@@ -4,8 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-import { DatePicker } from '@ionic-native/date-picker';
 import { CustomerAppointmentPage } from './customer-appointment.page';
+import { OwlDateTimeModule, OwlNativeDateTimeModule  } from 'ng-pick-datetime';
+import { OwlDialogModule } from 'ng-pick-datetime/dialog';
+
 
 const routes: Routes = [
   {
@@ -19,6 +21,10 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    OwlDialogModule,
+    
     RouterModule.forChild(routes)
   ],
   

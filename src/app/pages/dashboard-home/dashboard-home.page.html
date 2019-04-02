@@ -150,7 +150,7 @@
                         New Joinee List
                     </ion-card-header>
                     <ion-card-content>
-
+                  
                         <ion-searchbar (ionInput)="getCustomerListBySearch($event)" animated showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
                         <!-- (page)="onPage($event)" -->
                         <ngx-datatable #myTable class='material' [columnMode]="'standard'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rowsNewJoinee'>

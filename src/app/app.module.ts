@@ -24,7 +24,9 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { StockQuantityPageModule } from './components/stock-quantity/stock-quantity.module';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { CustomerAppointmentPageModule } from './components/customer-appointment/customer-appointment.module';
-import { DatePicker } from '@ionic-native/date-picker';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { OwlDialogModule } from 'ng-pick-datetime/dialog';
+
 export function tokenGetter() {
   return localStorage.getItem('access_token');
 }
@@ -40,7 +42,7 @@ export function tokenGetter() {
     HttpClientModule,
     IonicSelectableModule,
     CalendarModule,
-    MarkAppointmentPageModule,  
+    MarkAppointmentPageModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -57,7 +59,10 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     ComponentModule,
     StockQuantityPageModule,
-    CustomerAppointmentPageModule
+    CustomerAppointmentPageModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    OwlDialogModule
   ],
   providers: [
     StatusBar,

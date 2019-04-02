@@ -73,17 +73,33 @@ export class DashboardHomePage implements OnInit ,AfterViewInit{
    
     event.start = newStart;
     event.end = newEnd;
-    
+    console.log(event);
+    let  app: Appointment = <Appointment>{};
+app = event.meta.appointmentDetail;
+app.expectedTime = event.start;
+    this.dashboardService.changeScheduling(app).subscribe((res)=>{
+      this.flashService.show(res.error,4000);
+    },(err)=>{
+      this.flashService.show(err.error,4000);
+    });
     this.events = [...this.events];
   }
 
   userChanged({ event, newUser }) {
      event.color = newUser.color;
      event.meta.user = newUser;
-    
+     console.log(event);
+     let  app: Appointment = <Appointment>{};
+app = event.meta.appointmentDetail;
+app.machineNo = event.meta.user.id;
+this.dashboardService.changeScheduling(app).subscribe((res)=>{
+  this.flashService.show(res.error,4000);
+},(err)=>{
+  this.flashService.show(err.error,4000);
+});
      this.events = [...this.events];
   }
- 
+  model:any;
   constructor(public dashboardService:DashboardService,
     public modalController:ModalController,
     public flashService:FlashMessageService,
@@ -161,7 +177,7 @@ this.flashService.show('Appointment Scheduled Succesfully for Customer '+ ele.ev
 this.patientQueSortAndPustFunction(res);
 this.refresh.next();
 
-    },(err)=>{
+    }, (err) => {
       console.log(err);
     });
   }
@@ -203,8 +219,6 @@ this.refresh.next();
         this.bcaPateintList.push(ele);
         this.bcaPateintList = [...this.bcaPateintList];
       }
-    
-
 });
   }
   }

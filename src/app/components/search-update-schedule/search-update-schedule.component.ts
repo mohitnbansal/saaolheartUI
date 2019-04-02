@@ -59,11 +59,13 @@ this.customerService.getCustomerListByNameOrMobile(event.target.value).subscribe
     
     this.customerString = '';
     delete this.customerList;
+
     this.presentModal();
   }
 
 
   async presentModal() {
+    console.log(32)
     const modal = await this.modalController.create({
       component: CustomerAppointmentPage,
       cssClass: 'my-custom-modal-css',

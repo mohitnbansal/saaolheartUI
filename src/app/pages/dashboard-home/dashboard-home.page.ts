@@ -17,6 +17,7 @@ import {
 
 import { addHours, startOfDay, getTime, format, parse } from 'date-fns';
 import { Subject } from 'rxjs';
+import { SearchUpdateScheduleComponent } from 'src/app/components/search-update-schedule/search-update-schedule.component';
 
 
 @Component({
@@ -64,7 +65,7 @@ export class DashboardHomePage implements OnInit ,AfterViewInit{
   events: CalendarEvent[] =[];
   refresh: Subject<any> = new Subject();
 @ViewChildren(DayViewSchedulerComponent) dayView :DayViewSchedulerComponent;
-
+@ViewChildren(SearchUpdateScheduleComponent) searchComponent: SearchUpdateScheduleComponent;
   eventTimesChanged({
     event,
     newStart,
@@ -134,7 +135,10 @@ this.dashboardService.changeScheduling(app).subscribe((res)=>{
 ngAfterViewInit(){
   this.dayView['first'].newChange.subscribe((res)=>{
     this.presentModal(res);
-  })
+  });
+  this.searchComponent['first'].updateSchedule.subscribe(()=>{
+this.getPateintsQueueList(null);
+  });
 }
 
 
@@ -159,10 +163,10 @@ ngAfterViewInit(){
               ele.event.meta.appointmentDetail['machineNo'] =  ele.event.meta.user.id;
             this.dashboardService.updateTreatmentSchedule(ele.event.meta.appointmentDetail).subscribe((res)=>{
 this.dashboardService.change.emit();
-this.flashService.show('Appointment Scheduled Succesfully for Customer '+ ele.event.title,5000);
+this.flashService.show(res.error, 5000);
 
             },(err)=>{
-              this.flashService.show('Appointment Scheduled Failed for Customer '+ ele.event.title,5000);
+              this.flashService.show(err.error, 5000);
 
             });
 
@@ -195,7 +199,7 @@ this.refresh.next();
             user = use;
           }
         });
-        let eve: CalendarEvent = <CalendarEvent>{};
+        const eve: CalendarEvent = <CalendarEvent>{};
         eve.title = ele.customerName;
         //eve.start = addHours(startOfDay(ele.expectedTime), getTime(ele.expectedTime));
         if (ele.isVisitDone === 'Completed') {

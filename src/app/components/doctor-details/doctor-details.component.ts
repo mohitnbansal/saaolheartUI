@@ -74,7 +74,7 @@ if(ele.id===list.id){
 ind = index;
 }
   });
-  if(ind){
+  if(ind!=null){
   this.rowsInvoice[ind] = list;
   this.rowsInvoice = [...this.rowsInvoice];
   }
@@ -150,15 +150,17 @@ if(!(row.invoiceStatus=='Total Payment Pending' ||  row.invoiceStatus=='Partiall
   onSubmit() {
     console.log(this.doctorDetailsForm.value);
     this.customerService.saveDoctorDetails(this.doctorDetailsForm.value).subscribe((res) => {
-
+console.log(res)
       this.rowsDoctor.push(res.document);
       this.rowsDoctor = [...this.rowsDoctor];
       let val:any = []
       val.push(res.document);
       this.updateInvoiceAndPaymentDomain(val as any)
-      this.flashProvider.show('Doctor Details Succesfully Added!' , 4000);
+
+      this.flashProvider.show(res.error , 4000);
      }, (err) => {
-       this.flashProvider.show('Unable to update doctor details!' , 4000);
+       console.log(err)
+      this.flashProvider.show(err.error , 4000);
      }) ;
   }
   
@@ -173,7 +175,9 @@ if(!(row.invoiceStatus=='Total Payment Pending' ||  row.invoiceStatus=='Partiall
       if (isNaN(newBalAmt)) {
 
       } else if (newBalAmt < 0 ) {
-        this.flashProvider.show('Kindly Enter Amount Less than the balance amount', 5000);
+        let err = new Array<string>();
+        err.push('Kindly Enter Amount Less than the balance amount')
+        this.flashProvider.show(err, 5000);
         event.target.value = '';
         return;
       } else {
@@ -193,6 +197,7 @@ if(!(row.invoiceStatus=='Total Payment Pending' ||  row.invoiceStatus=='Partiall
 
   }
   printReciept(event, cell, rowIndex, row) {
+    
 this.customerService.printRecipt(row).subscribe((res) => {
  console.log(res);
 // const blob = new Blob([data], { type: 'text/csv' });
@@ -209,16 +214,18 @@ const a = document.createElement('a');
 
 
   generateReciept(event, cell, rowIndex, row) {
-    console.log(row);
+  
    this.customerService.generateReciept(row).subscribe((res) => {
-this.updateSingleInvoiceDomainAndAllPaymentList(res.document)
+this.updateSingleInvoiceDomainAndAllPaymentList(res.document);
       console.log(res);
-      this.flashProvider.show('Reciept Generated for the given Invoice', 5000);
+      this.flashProvider.show(res.error, 5000);
    }, (err) => {
      console.log(err);
+     this.flashProvider.show(err.error, 5000);
    });
   }
   updateDataValue(eve: any, tar: string) {
+    
     let val: any;
     if (tar === 'typeOfTreatement') {
       val = parseInt(eve.target.value, 10);
@@ -227,4 +234,11 @@ this.updateSingleInvoiceDomainAndAllPaymentList(res.document)
     }
     this.doctorDetailsForm.get(tar).setValue(val);
   }
+
+  public myFilter = (d: Date): boolean => {
+    const day = d.getDay();
+    
+    // Prevent Saturday and Sunday from being selected.
+    return day !== 0 && day !== 6 ;
+}
 }

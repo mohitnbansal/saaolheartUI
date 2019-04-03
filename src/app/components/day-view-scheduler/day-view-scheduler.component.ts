@@ -73,7 +73,8 @@ export class DayViewSchedulerCalendarUtils extends CalendarUtils {
       let index ;
       
       this.users.forEach((user,ind)=>{
-if(user.id===dayViewEvent.event.meta.user.id){
+if(user.id===dayViewEvent.event.meta.user.id)
+{
 index = ind;
 }
       });

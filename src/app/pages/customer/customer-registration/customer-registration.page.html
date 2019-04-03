@@ -69,8 +69,11 @@
                                     </ion-col>
                                     <ion-col *ngIf="showHide">
                                         <ion-item>
-                                            <ion-label position="floating">Date of Birth</ion-label>
-                                            <ion-datetime formControlName="dob" id="dob" display-format="MMM DD, YYYY"></ion-datetime>
+                                            <ion-label position="stacked" >Date of Birth</ion-label>
+                                            <!-- <ion-datetime formControlName="dob" id="dob" display-format="MMM DD, YYYY"></ion-datetime> -->
+                                            <input class="ion-input" [owlDateTimeFilter]="myFilter" [owlDateTime]="dt1" id="consulatationDate"  formControlName="dob"   [owlDateTimeTrigger]="dt1" placeholder="Date Time"/>
+                                            <owl-date-time #dt1 hour12Timer="true" stepHour="1" pickerType="calendar" stepMinute="30"> </owl-date-time>
+                                    
                                         </ion-item>
                                     </ion-col>
                                     <ion-col *ngIf="showHide">

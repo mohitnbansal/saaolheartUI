@@ -3,7 +3,7 @@ import { Appointment } from './../../interfaces/appointment';
 import { ModalController } from '@ionic/angular';
 import { FlashMessageService } from 'src/app/services/flash/flash-message.service';
 import { CustomerService } from './../../services/customer/customer.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SalesService } from 'src/app/services/sales/sales.service';
 import { CustomerAppointmentPage } from '../customer-appointment/customer-appointment.page';
 
@@ -16,6 +16,7 @@ export class SearchUpdateScheduleComponent implements OnInit {
   public customerList: any;
   public customerDbObj:any = [];
   @Input() public customerString: string;
+  @Output() updateSchedule: EventEmitter<any> = new EventEmitter();
   public appointment:Appointment = <Appointment>{};
   constructor(public customerService: CustomerService,
 
@@ -65,7 +66,7 @@ this.customerService.getCustomerListByNameOrMobile(event.target.value).subscribe
 
 
   async presentModal() {
-    console.log(32)
+   
     const modal = await this.modalController.create({
       component: CustomerAppointmentPage,
       cssClass: 'my-custom-modal-css',
@@ -84,14 +85,20 @@ this.appointment.visitingForDescription = data.description;
 this.appointment.machineNo= Number(data.machineNo);
 console.log(this.appointment);
 this.dashboardService.addAppointment(this.appointment).subscribe((res)=>{
-  console.log(res)
-  this.dashboardService.change.emit(res);
+  console.log(res);
+  this.getEvent();
+  // this.dashboardService.change.emit(res);
   //Flash serveice Message
-  this.flashService.show('Appointment Scheduled Succesfully for Customer '+this.customerDbObj.firstName,5000);
+  this.flashService.show(res.error,5000);
 },(err)=>{
   console.log(err);
-  this.flashService.show('Appointment Scheduled Failed for Customer '+this.customerDbObj.firstName,5000);
+  this.flashService.show(err.error,5000);
 });
   }
 
+  
+  getEvent() 
+  {
+      this.updateSchedule.emit();
+  }
 }

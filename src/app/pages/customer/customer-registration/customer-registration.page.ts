@@ -50,8 +50,8 @@ export class CustomerRegistrationPage implements OnInit {
   onSubmit() {
 console.log(this.custformGroup.value)
     this.customerService.saveCustomer(this.custformGroup.value).subscribe((res) => {
-
-     this.flashProvider.show('Customer Succesfully Added!' , 4000);
+console.log(res.error)
+      this.flashProvider.show(res.error , 4000);
      this.custformGroup.reset();
      if (res.document.vistingFor === 'store') {
       //this.route.navigate(['store/' + res.document.id]);
@@ -59,8 +59,7 @@ console.log(this.custformGroup.value)
      this.route.navigate(['customer/details/' + res.document.id]);
      }
     }, (err) => {
-      console.log(err.error.error);
-      this.flashProvider.show(err.error.error , 4000);
+      this.flashProvider.show(err.error , 4000);
     }) ;
 
   }
@@ -103,4 +102,11 @@ this.custformGroup.get('dob').valueChanges.subscribe(val => {
 
    });
   }
+  
+  public myFilter = (d: Date): boolean => {
+    const day = d.getDay();
+    
+    // Prevent Saturday and Sunday from being selected.
+    return day !== 0 && day !== 6 ;
+}
 }

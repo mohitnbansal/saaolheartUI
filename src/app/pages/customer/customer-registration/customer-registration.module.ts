@@ -1,3 +1,5 @@
+import { OwlDialogModule } from 'ng-pick-datetime/dialog';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,6 +22,10 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    OwlDialogModule,
+
     RouterModule.forChild(routes)
   ],
   declarations: [CustomerRegistrationPage]

@@ -8,7 +8,7 @@ export class FlashMessageService {
   constructor() { }
 
 
-  show(message, duration) {
+  show(mess, duration) {
 
   }
 

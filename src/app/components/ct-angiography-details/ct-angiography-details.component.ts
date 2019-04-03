@@ -59,7 +59,7 @@ export class CtAngiographyDetailsComponent implements OnInit {
     };
   });
   }
-  this.updateInvoiceAndPaymentDomain();
+  this.updateInvoiceAndPaymentDomain(this.ctAngioFromDb.ctAngioDetailList);
 }
 
 
@@ -87,16 +87,17 @@ ind = index;
 }
   });
  
-  if(ind){
+  if(ind!=null){
   this.rowsCtAngio[ind] = list;
   this.rowsCtAngio = [...this.rowsCtAngio];
   }
-
-  this.flashProvider.show("Invoice Cancelled Succesfully and New Created",5000);
+let err = new Array<String>();
+err.push('Invoice Cancelled Succesfully and New Created')
+  this.flashProvider.show(err, 5000);
 }
 
-private updateInvoiceAndPaymentDomain() {
-  this.ctAngioFromDb.ctAngioDetailList.filter((ele) => {
+private updateInvoiceAndPaymentDomain(obj:any) {
+  obj.filter((ele) => {
     this.rowsInvoice.push(ele.invoiceDomain);
     this.rowInvoiceFromDb.push(ele.invoiceDomain);
     ele.invoiceDomain.invoiceReciptList.filter((val) => {
@@ -117,6 +118,24 @@ private updateInvoiceAndPaymentDomain() {
         'prop': key
       };
     });
+  }
+  this.rowsInvoice = [...this.rowsInvoice];
+}
+updateSingleInvoiceDomainAndAllPaymentList(list:any){
+
+  list.invoiceDomain.invoiceReciptList.filter((val) => {
+    this.rowsPayment.push(val);
+  });
+  this.rowsPayment = [...this.rowsPayment];
+  let ind: any;
+  this.rowsInvoice.forEach((ele,index)=>{
+if(ele.id===list.invoiceDomain.id){
+ind = index;
+}
+  });
+  if(ind!=null){
+  this.rowsInvoice[ind] = list.invoiceDomain;
+  this.rowsInvoice = [...this.rowsInvoice];
   }
 }
   ngOnInit() {
@@ -145,10 +164,14 @@ private updateInvoiceAndPaymentDomain() {
   onSubmit() {
     console.log(this.ctAngioForm.value);
     this.customerService.saveCtAngioDetails(this.ctAngioForm.value).subscribe((res) => {
-      console.log(res);
-      this.flashProvider.show('Ct Angiography Details Succesfully Added!' , 4000);
+     let val:any = []
+     val.push(res.document);
+     this.updateInvoiceAndPaymentDomain(val as any);
+     this.rowsCtAngio.push(res.document);
+     this.rowsCtAngio = [...this.rowsCtAngio];
+      this.flashProvider.show(res.error , 4000);
      }, (err) => {
-       this.flashProvider.show('Unable to update doctor details!' , 4000);
+       this.flashProvider.show(err.error , 4000);
      }) ;
   }
   updateValueCtAngio(event, cell, rowIndex) {
@@ -167,7 +190,9 @@ private updateInvoiceAndPaymentDomain() {
       if (isNaN(newBalAmt)) {
 
       } else if (newBalAmt < 0 ) {
-        this.flashProvider.show('Kindly Enter Amount Less than the balance amount', 5000);
+        let err= new Array<string>();
+        err.push('Kindly Enter Amount Less than the balance amount')
+        this.flashProvider.show(err, 5000);
         event.target.value = '';
         return;
       } else {
@@ -254,4 +279,15 @@ private updateInvoiceAndPaymentDomain() {
          console.log(err);
        });
       }
+      getRowClass = (row) => {
+        if(!(row.invoiceStatus=='Total Payment Pending' ||  row.invoiceStatus=='Partially Pending')){
+          return {
+            'row-color': true
+          };
+        }else{
+          return{
+            'row-color': false
+          }
+        }
+        }
     }

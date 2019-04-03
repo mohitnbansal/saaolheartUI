@@ -59,11 +59,11 @@ export class TreatmentInvoiceDetailsComponent implements OnInit {
     };
   });
   }
-  this.updateInvoiceAndPaymentDomain();
+  this.updateInvoiceAndPaymentDomain(this.treatmentInvoiceFromDb.treatmentPlanList);
 }
 
-private updateInvoiceAndPaymentDomain() {
-  this.treatmentInvoiceFromDb.treatmentPlanList.filter((ele) => {
+private updateInvoiceAndPaymentDomain(obj: any) {
+  obj.filter((ele) => {
     this.rowsInvoice.push(ele.invoiceDomain);
     this.rowInvoiceFromDb.push(ele.invoiceDomain);
     ele.invoiceDomain.invoiceReciptList.filter((val) => {
@@ -85,6 +85,7 @@ private updateInvoiceAndPaymentDomain() {
       };
     });
   }
+  this.rowsInvoice = [...this.rowsInvoice];
 }
   ngOnInit() {
     this.treatmentInvoiceForm = this.createForm({
@@ -107,9 +108,11 @@ private updateInvoiceAndPaymentDomain() {
     console.log(this.treatmentInvoiceForm.value);
     this.customerService.saveTreatmentInvoiceDetails(this.treatmentInvoiceForm.value).subscribe((res) => {
       console.log(res);
-      this.flashProvider.show('TreatementDetails  Succesfully Added!' , 4000);
+      this.rowsTreatmentInvoice.push(res.document);
+      this.rowsTreatmentInvoice = [...this.rowsTreatmentInvoice];
+      this.flashProvider.show(res.error , 4000);
      }, (err) => {
-       this.flashProvider.show('Unable to update doctor details!' , 4000);
+       this.flashProvider.show(err.error  , 4000);
      }) ;
   }
   updateDataValue(eve: any, tar: string) {
@@ -165,10 +168,45 @@ private updateInvoiceAndPaymentDomain() {
     console.log(row);
    this.customerService.generateReciept(row).subscribe((res) => {
       console.log(res);
+      this.updateSingleInvoiceDomainAndAllPaymentList(res.document);
+      this.flashProvider.show(res.error, 5000);
    }, (err) => {
      console.log(err);
+     this.flashProvider.show(err.error, 5000);
    });
   }
-
+  getRowClass = (row) => {
+    if(!(row.invoiceStatus  === 'Total Payment Pending' ||  row.invoiceStatus === 'Partially Pending')){
+      return {
+        'row-color': true
+      };
+    } else {
+      return{
+        'row-color': false
+      }
+    }
+    }
+  updateSingleInvoiceDomainAndAllPaymentList(list:any){
+    list.invoiceReciptList.filter((val) => {
+      this.rowsPayment.push(val);
+    });
+    this.rowsPayment = [...this.rowsPayment];
+    let ind: any;
+    this.rowsInvoice.forEach((ele,index)=>{
+  if(ele.id===list.id){
+  ind = index;
+  }
+    });
+    if(ind!=null){
+    this.rowsInvoice[ind] = list;
+    this.rowsInvoice = [...this.rowsInvoice];
+    }
+  }
+  public myFilter = (d: Date): boolean => {
+    const day = d.getDay();
+    
+    // Prevent Saturday and Sunday from being selected.
+    return day !== 0 && day !== 6 ;
+}
 
 }

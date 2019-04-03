@@ -20,7 +20,7 @@ import { FlashMessageService } from 'src/app/services/flash/flash-message.servic
 export class FlashMessageComponent implements OnInit {
 
   active = false;
-  message = '';
+  message : any[] = [];
 
   constructor(public flashProvider: FlashMessageService) { 
     
@@ -31,9 +31,9 @@ export class FlashMessageComponent implements OnInit {
     this.flashProvider.hide = this.hide.bind(this);
   }
 
-  show(message, duration) {
-
-      this.message = message;
+  show(mes, duration) {
+   console.log(mes);
+      this.message = mes;
       this.active = true;
 
       setTimeout(() => {

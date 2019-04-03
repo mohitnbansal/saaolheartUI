@@ -1,3 +1,5 @@
+import { OwlDialogModule } from 'ng-pick-datetime/dialog';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { MarkAppointmentPageModule } from './mark-appointment/mark-appointment.module';
 import { FormsModule, ReactiveFormsModule, FormGroupDirective, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -36,7 +38,10 @@ import { CustomerAppointmentPageModule } from './customer-appointment/customer-a
     NgxDatatableModule,
     FormsModule,
     ReactiveFormsModule,
-    CalendarModule
+    CalendarModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    OwlDialogModule,
   ],
  
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

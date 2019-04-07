@@ -84,6 +84,9 @@ if(this.rows[k].quantityPurchased > v.quantityPurchased){
 if(isValid===true){
  this.salesService.updateSales(this.rows).subscribe((res)=>{
 console.log(res);
+this.rows = res.document.customerPurchasesList;
+this.totalAmount = res.document.invoiceOfPurchase.totalInvoiceAmt;
+this.rows = [...this.rows]
 this.remove();
  },(err)=>{
 console.log(err)

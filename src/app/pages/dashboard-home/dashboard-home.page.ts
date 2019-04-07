@@ -134,8 +134,13 @@ this.dashboardService.changeScheduling(app).subscribe((res)=>{
   }
 ngAfterViewInit(){
   this.dayView['first'].newChange.subscribe((res)=>{
+    if(res.event.cssClass==='strike'){
+let arr = [];
+arr.push("Appointment Already Marked as completed");
+this.flashService.show(arr,5000);
+    }else{
     this.presentModal(res);
-  });
+   } });
   this.searchComponent['first'].updateSchedule.subscribe(()=>{
 this.getPateintsQueueList(null);
   });
@@ -219,12 +224,14 @@ this.refresh.next();
         eve.draggable = true;
         this.events.push(eve);
         this.events = [...this.events];
+        
       } else if (ele.typeOfAppointment === 'TREATMENT_BCA') {
         this.bcaPateintList.push(ele);
         this.bcaPateintList = [...this.bcaPateintList];
       }
 });
   }
+  console.log(this.events);
   }
   async markAppointmentAlert(appoint:any) {
     const alert = await this.alertController.create({

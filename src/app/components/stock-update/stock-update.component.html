@@ -64,20 +64,20 @@
              <ion-col>
                <ion-item>
                  <ion-label position="floating">Rate</ion-label>
-                 <ion-input [(ngModel)]="currentRateOfStock"></ion-input>
+                 <ion-input name="currentRateOfStock"  [value]="stockDetailsDb.currentRateOfStock" (input)="setQuantity('currentRateOfStock',$event.target.value)"></ion-input>
                </ion-item>
               
              </ion-col>
              <ion-col>
                <ion-item>
                <ion-label position="floating">Quantity to be Updated</ion-label>
-               <ion-input  type="number" [(ngModel)]="qtyOfStockToUpdate"></ion-input>
+               <ion-input  type="number"  (input)="setQuantity('qtyOfStockToUpdate',$event.target.value)"></ion-input>
               </ion-item>
              </ion-col>
              <ion-col>
                 <ion-item>
                 <ion-label position="floating">Reason For Update</ion-label>
-                <ion-textarea  type="number" [(ngModel)]="reasonForUpdate" ></ion-textarea>
+                <ion-textarea  type="text"  (input)="setQuantity('reasonForUpdate',$event.target.value)" ></ion-textarea>
                </ion-item>
               </ion-col>
     </ion-row>

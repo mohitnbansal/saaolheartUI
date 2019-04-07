@@ -40,4 +40,8 @@ getStockbyId(id:any): Observable<any>{
 getSalesStockDetailsById(id:number):Observable<any>{
   return this.http.get(environment.apiUrl + 'stock/getsalesstockbydetails/' + id, this.httpOptions)
 }
+
+updateStock(res:Stock):Observable<any>{
+return this.http.post<any>(environment.apiUrl + 'stock/updatestock/' + res.id, res, this.httpOptions)
+}
 }

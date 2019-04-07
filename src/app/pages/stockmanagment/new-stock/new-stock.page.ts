@@ -38,7 +38,9 @@ export class NewStockPage implements OnInit {
       currentRateOfStock:  [],
       curentStockValue:  [],
       addedOn:[],
-      lastUpdatedOn:[]
+      lastUpdatedOn:[],
+      qtyOfStockToUpdate:[],
+      reasonForUpdate:[]
     });
    this.stockservice.getAllStockCategory().subscribe((res)=>{
     this.stockCategories = res;

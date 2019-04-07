@@ -11,4 +11,6 @@ export interface Stock {
     curentStockValue:  (number | ((control: AbstractControl) => ValidationErrors))[];
     addedOn:  (string | ((control: AbstractControl) => ValidationErrors))[];
     lastUpdatedOn:  (string | ((control: AbstractControl) => ValidationErrors))[];
+    qtyOfStockToUpdate:   (number | ((control: AbstractControl) => ValidationErrors))[];
+    reasonForUpdate: (string | ((control: AbstractControl) => ValidationErrors))[];
 }

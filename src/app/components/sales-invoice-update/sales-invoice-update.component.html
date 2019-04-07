@@ -1,0 +1,94 @@
+
+<ngx-datatable
+style="width: 90%"
+class="material"
+[rows]="rows"
+[columnMode]="'force'"
+[headerHeight]="50"
+[footerHeight]="50"
+[rowHeight]="'auto'"
+[limit]="5"
+[selectedRows]="selectedRows"
+[selected]="selected"
+[selectionType]="'checkbox'"
+[selectAllRowsOnPage]="false"
+[displayCheck]="displayCheck"
+(activate)="onActivate($event)"
+(select)='onSelect($event)'>
+<ngx-datatable-column
+
+  [width]="30"
+  [sortable]="false"
+  [canAutoResize]="false"
+  [draggable]="false"
+  [resizeable]="false"
+  [headerCheckboxable]="true"
+  [checkboxable]="true">
+</ngx-datatable-column>
+
+<ngx-datatable-column name="Sr No">
+    <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+        <strong>{{rowIndex+1}}</strong>
+    </ng-template>
+</ngx-datatable-column>
+
+<ngx-datatable-column name="Stock Name">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+        <strong>{{row.stockDomain.stockName}}</strong>
+    </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Rate">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+        <strong>{{row.stockDomain.currentRateOfStock}}</strong>
+    </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Quantity">
+    <ng-template let-row="row" let-rowIndex="rowIndex" let-value="value"  ngx-datatable-cell-template>
+        <span
+        title="Double click to edit"
+        *ngIf="!editingCtAngio[row.id + '-quantityPurchased']">
+        {{row.quantityPurchased}}
+      </span>
+      <ion-input
+        autofocus
+        (blur)="updateValueQty($event, 'quantityPurchased', rowIndex)"
+        *ngIf="editingCtAngio[row.id+ '-quantityPurchased']"
+        type="number"
+        [value]="row.quantityPurchased"
+        name="quantityPurchased"
+        [min]="0"
+      ></ion-input>
+
+    </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Price">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+        <strong>{{row.price}}</strong>
+    </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-footer>
+        <ng-template 
+          ngx-datatable-footer-template 
+          let-rowCount="rowCount"
+          let-pageSize="pageSize"
+          let-selectedCount="selectedCount"
+          let-curPage="curPage"
+          let-offset="offset">
+          <div style="padding: 5px 10px">
+            <div>
+         <strong>Total Invoice Amount:  </strong> <b> {{totalAmount}}</b>
+            </div>
+            <hr style="width:100%" />
+            <div >
+              Selected : {{selected.length}}
+              Rows: {{rowCount}} |
+              Size: {{pageSize}} |
+              
+              
+            </div>
+          </div>
+        </ng-template>
+      </ngx-datatable-footer>
+</ngx-datatable>
+<ion-button  float-right (click)="update()"> Update </ion-button>
+

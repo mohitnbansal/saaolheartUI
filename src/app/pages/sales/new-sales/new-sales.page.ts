@@ -150,6 +150,7 @@ console.log(err);
       customerTemp.price = k.price ;
       customerTemp.customerId = this.customerDbObj.id;
       customerTemp.totalInvoiceAmt = this.totalPriceOfInv;
+      customerTemp.isCancelled = 'NEW';
       this.customerSaleData.customerPurchasesList.push(customerTemp);
     });
     this.customerSaleData.customerId = this.customerDbObj.id; 
@@ -160,10 +161,10 @@ console.log(err);
     console.log(this.customerSaleData);
     this.salesService.saveStock(this.customerSaleData).subscribe((res)=>{
       console.log(res);
-      this.flashService.show('Succesfully saved sales details for customer ' + this.customerDbObj.firstName,4000);
+      this.flashService.show(res.error,4000);
       this.resetForm();
     }, (err) => {
-      this.flashService.show('ERROR saving sales details for customer ' + this.customerDbObj.firstName,4000);
+      this.flashService.show(err.error,4000);
       console.log(err);
     });
   }

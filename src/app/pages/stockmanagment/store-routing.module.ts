@@ -1,3 +1,5 @@
+import { StockSalesResolveService } from './../../services/stock/stock-sales-resolve.service';
+import { StockDetailsResolveService } from './../../services/stock/stock-details-resolve.service';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -39,7 +41,11 @@ const routes: Routes = [
      children: [
       {
         path: ':id',
-         loadChildren: './stock-details/stock-details.module#StockDetailsPageModule' 
+         loadChildren: './stock-details/stock-details.module#StockDetailsPageModule' ,
+         resolve: {
+          data: StockDetailsResolveService,
+          stockSales: StockSalesResolveService
+            }
        }
     ]
   }

@@ -35,7 +35,9 @@ export class StockService {
   }
  
 getStockbyId(id:any): Observable<any>{
-  return this.http.get(environment.apiUrl + 'stock/getStockDetail/' + id, this.httpOptions)
+  return this.http.get(environment.apiUrl + 'stock/getstockdetail/' + id, this.httpOptions)
 }
-
+getSalesStockDetailsById(id:number):Observable<any>{
+  return this.http.get(environment.apiUrl + 'stock/getsalesstockbydetails/' + id, this.httpOptions)
+}
 }

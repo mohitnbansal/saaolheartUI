@@ -1,5 +1,5 @@
 import { Appointment } from './../../interfaces/appointment';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -8,7 +8,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class DashboardService {
-
+  public  isMenuOpen = new BehaviorSubject<boolean>(true);
+  navItem$ = this.isMenuOpen.asObservable();
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -21,7 +22,10 @@ export class DashboardService {
 
   @Output() callModalEvent = new EventEmitter();
 
-  constructor(public http: HttpClient) { }
+
+  constructor(public http: HttpClient) {
+     
+     }
 
 
   addAppointment(cust: Appointment): Observable<any> {
@@ -59,4 +63,14 @@ export class DashboardService {
   changeScheduling(res: any) {
     return this.http.post<any>(environment.apiUrl + 'dashboard/changescehduling', res, this.httpOptions);
   }
+
+  emitMenuToggle(res:any): void{
+    console.log(res);
+    this.isMenuOpen.next(res);
+
+  }
+  getMessage(): Observable<any> {
+    
+    return this.isMenuOpen.asObservable();
+}
 }

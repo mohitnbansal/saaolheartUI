@@ -1,0 +1,55 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Sales/Invoice Details</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-card>
+        <ion-card-header color="primary">
+            <ion-card-title>
+               Invoice Id -  {{salesInfoDetails.invoiceOfPurchase.id}}  | Total Amt - {{salesInfoDetails.invoiceOfPurchase.totalInvoiceAmt}}
+| Customer Name - {{salesInfoDetails.customerName}}
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+
+            <ion-grid>
+
+                <ion-row>
+
+                    <ion-col align-self-stretch size="3">
+                        <ion-segment [(ngModel)]="customercomp" (ionChange)="onSegmentChange($event)" color="primary">
+
+
+                            <ion-segment-button value="salesInfo" float-left>
+                            Sales Info
+                            </ion-segment-button>
+                            <ion-segment-button float-left value="salesUpdate">
+                                Invoice/Purchase Update
+                            </ion-segment-button>
+                            <ion-segment-button float-left value="salesInvoiceHistory">
+                                Invoice History
+                            </ion-segment-button>
+                            
+                        </ion-segment>
+                    </ion-col>
+
+
+                    <ion-col [ngSwitch]="customercomp">
+                        <app-sales-invoice-info  *ngSwitchCase="'salesInfo'" ></app-sales-invoice-info>
+                        <app-sales-invoice-update *ngSwitchCase="'salesUpdate'"></app-sales-invoice-update>
+                        <app-sales-invoice-history *ngSwitchCase="'salesInvoiceHistory'"></app-sales-invoice-history>
+                        
+                    </ion-col>
+                </ion-row>
+
+            </ion-grid>
+
+        </ion-card-content>
+
+    </ion-card>
+
+</ion-content>

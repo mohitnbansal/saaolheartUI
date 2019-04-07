@@ -1,3 +1,4 @@
+import { HeaderComponent } from './components/header/header.component';
 import { DashboardService } from './services/dashboard/dashboard.service';
 import { MarkAppointmentPageModule } from './components/mark-appointment/mark-appointment.module';
 import { NgModule, Injector } from '@angular/core';
@@ -32,7 +33,7 @@ export function tokenGetter() {
 }
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
+  entryComponents: [HeaderComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -67,8 +68,7 @@ export function tokenGetter() {
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    DashboardService
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
 })

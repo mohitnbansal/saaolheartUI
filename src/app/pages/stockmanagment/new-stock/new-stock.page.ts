@@ -16,6 +16,8 @@ export class NewStockPage implements OnInit {
   public stockCategories:any;
   public stockform: FormGroup;
   public showHide: boolean;
+  public stockList:any = [];
+  public stockShow= false;
   customPopOver: any = {
     subHeader: 'Select Item Category'
   }
@@ -43,7 +45,7 @@ export class NewStockPage implements OnInit {
     },(err)=>{
       console.log(err)
     });
-    console.log(this.stockCategories)
+    this.changeEvent();
   }
 
   private createForm(model: Stock): FormGroup {
@@ -57,7 +59,7 @@ export class NewStockPage implements OnInit {
     console.log(this.stockform.value)
     this.stockservice.saveStock(this.stockform.value).subscribe((res) => {
 
-     this.flashProvider.show('Stock Succesfully Added!' , 4000);
+     this.flashProvider.show(res.error , 4000);
      this.stockform.reset();
      if (res.document.vistingFor === 'store') {
       //this.route.navigate(['store/' + res.document.id]);
@@ -65,11 +67,52 @@ export class NewStockPage implements OnInit {
     // this.route.navigate(['stock/details/' + res.document.id]);
      }
     }, (err) => {
-      this.flashProvider.show('Unable to Save Stock!' , 4000);
-    }) ;
-
-  
-
+      this.flashProvider.show(err.error , 4000);
+    });
   }
 
+  changeEvent() {
+    /**
+     * Below is the event to capture changes in date and covert it into age.
+     */
+    this.stockform.get('stockName').valueChanges.subscribe(val => {
+      if(val.length >=3){
+ this.stockservice.getStockByLikeName(val).subscribe((res)=>{
+console.log(res);
+this.stockList = res;
+this.stockShow = true;
+ }, (err) => {
+console.log(err);
+this.stockShow = false;
+this.stockList =[];
+ });
+} else {
+  this.stockList =[];
+  this.stockShow = false;
+}
+    });
+
+this.stockform.get('currentRateOfStock').valueChanges.subscribe(val => {
+  let stckVal = 0;
+  const currentVal = val;
+ const qty = this.stockform.get('qtyOfStockAvailable').value;
+
+if(currentVal !== null && qty != null){
+  stckVal = currentVal * qty;
+  if(isNaN(stckVal)){
+    stckVal = 0;
+  }
+}
+ this.stockform.get('curentStockValue').setValue(stckVal.toFixed(2));
+});
+this.stockform.get('qtyOfStockAvailable').valueChanges.subscribe(val => {
+  let stckVal = 0;
+  const currentVal = val;
+  const qty = this.stockform.get('currentRateOfStock').value;
+ if(currentVal !== null && qty != null){
+   stckVal = currentVal * qty;
+ }
+  this.stockform.get('curentStockValue').setValue(stckVal);
+ });
+  }
 }

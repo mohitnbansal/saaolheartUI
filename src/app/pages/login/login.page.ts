@@ -83,13 +83,13 @@ const pass = this.loginForm.get('password').value;
    // this.menu.enable(false);
 
     // If you have more than one side menu, use the id like below
-     this.menu.enable(false);
+     this.menu.enable(false,'main');
   }
 
   ionViewWillLeave() {
     // Don't forget to return the swipe to normal, otherwise 
     // the rest of the pages won't be able to swipe to open menu
-    this.menu.enable(true);
+    this.menu.enable(true,'main');
 
     // If you have more than one side menu, use the id like below
     // this.menu.swipeEnable(true, 'menu1');

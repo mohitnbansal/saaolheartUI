@@ -1,5 +1,6 @@
+import { DashboardService } from './services/dashboard/dashboard.service';
 import { UserService } from './services/userservice/user.service';
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter } from '@angular/core';
 
 import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -44,7 +45,9 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private menu: MenuController,
+    public dashboardService: DashboardService
   ) {
     this.initializeApp();
   }
@@ -55,6 +58,8 @@ export class AppComponent {
       this.splashScreen.hide();
     });
   }
+
+ 
   
 }
 

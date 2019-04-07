@@ -38,10 +38,23 @@
                     <ion-row>
                         <ion-col>
                             <ion-item>
-                                <ion-label position="floating">Item Name</ion-label>
-                                <ion-input type="text" formControlName="stockName" id="stockName">
-                                </ion-input>
+                                <ion-label position="floating">Stock Name</ion-label>
+                                <ion-input type="text" formControlName="stockName" id="stockName"></ion-input>
+                               
+                               
                             </ion-item>
+                            <ion-card class="zIndex"  *ngIf="stockShow">
+                                    <ion-card-content>
+                                            <ion-list>
+                                      <ion-item *ngFor="let stock of stockList">
+                                                    <ion-label>{{stock.stockName}} -- {{stock.id}}</ion-label>
+                                               
+                                                </ion-item>
+                                                
+                                               
+                                    </ion-list>
+                                    </ion-card-content>
+                                </ion-card>
                         </ion-col>
                         <ion-col>
                             <ion-item>
@@ -51,32 +64,22 @@
                             </ion-item>
                         </ion-col>
                         <ion-col>
-                            <ion-item>
-                                <ion-label position="floating">Available Stock Value</ion-label>
-                                <ion-input type="text" formControlName="curentStockValue" id="curentStockValue">
-                                </ion-input>
-                            </ion-item>
+                                <ion-item>
+                                        <ion-label position="floating">Quantity of Stock</ion-label>
+                                        <ion-input type="email" formControlName="qtyOfStockAvailable" id="qtyOfStockAvailable">
+                                        </ion-input>
+                                    </ion-item>
+                          
                         </ion-col>
                     </ion-row>
                     <ion-row>
                         <ion-col>
-                            <ion-item>
-                                <ion-label position="floating">Available Stock</ion-label>
-                                <ion-input type="email" formControlName="qtyOfStockAvailable" id="qtyOfStockAvailable">
-                                </ion-input>
-                            </ion-item>
+                                <ion-item>
+                                        <ion-label position="floating">Available Stock Value</ion-label>
+                                        <ion-input type="text" readonly formControlName="curentStockValue" id="curentStockValue">
+                                        </ion-input>
+                                    </ion-item>
                         </ion-col>
-                        <ion-col>
-                            <ion-item>
-                                <ion-label position="floating">Added On</ion-label>
-                                <ion-input type="email" formControlName="addedOn" id="addedOn">
-                                </ion-input>
-                            </ion-item>
-                        </ion-col>
-
-                    </ion-row>
-
-                    <ion-row>
                         <ion-col>
                             <ion-item>
                                 <ion-label position="floating">Stock/Item Description</ion-label>
@@ -85,8 +88,9 @@
                             </ion-item>
                         </ion-col>
 
-
                     </ion-row>
+
+            
 
                 </ion-grid>
                 <ion-item>

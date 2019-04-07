@@ -15,12 +15,18 @@ import { FlashMessageComponent } from './flash-message/flash-message.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TreatmentInvoiceDetailsComponent } from './treatment-invoice-details/treatment-invoice-details.component';
 import { InvoiceDetailsComponent } from './invoice-details/invoice-details.component';
-import { StockQuantityPageModule } from './stock-quantity/stock-quantity.module';
-import { StockQuantityPage } from './stock-quantity/stock-quantity.page';
+
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { DayViewSchedulerComponent } from './day-view-scheduler/day-view-scheduler.component';
 import { SearchUpdateScheduleComponent } from './search-update-schedule/search-update-schedule.component';
-import { CustomerAppointmentPageModule } from './customer-appointment/customer-appointment.module';
+
+import { StockDetailsComponent } from './stock-details/stock-details.component';
+import { StockUpdateComponent } from './stock-update/stock-update.component';
+import { StockUpdateHistoryComponent } from './stock-update-history/stock-update-history.component';
+import { StockPurchaseHistroyComponent } from './stock-purchase-histroy/stock-purchase-histroy.component';
+import { SalesInvoiceInfoComponent } from './sales-invoice-info/sales-invoice-info.component';
+import { SalesInvoiceUpdateComponent } from './sales-invoice-update/sales-invoice-update.component';
+import { SalesInvoiceHistoryComponent } from './sales-invoice-history/sales-invoice-history.component';
 
 @NgModule({
   declarations: [HeaderComponent,
@@ -32,7 +38,14 @@ import { CustomerAppointmentPageModule } from './customer-appointment/customer-a
        TreatmentInvoiceDetailsComponent,
        InvoiceDetailsComponent,
        DayViewSchedulerComponent,
-       SearchUpdateScheduleComponent],
+       SearchUpdateScheduleComponent,
+       StockDetailsComponent,
+       StockUpdateComponent,
+       StockUpdateHistoryComponent,
+       StockPurchaseHistroyComponent,
+       SalesInvoiceInfoComponent,
+       SalesInvoiceUpdateComponent,
+       SalesInvoiceHistoryComponent],
   imports: [
     CommonModule,
     NgxDatatableModule,
@@ -54,7 +67,15 @@ import { CustomerAppointmentPageModule } from './customer-appointment/customer-a
       TreatmentInvoiceDetailsComponent,
       InvoiceDetailsComponent,
       DayViewSchedulerComponent,
-      SearchUpdateScheduleComponent
-      ]
+      SearchUpdateScheduleComponent,
+      StockDetailsComponent,
+      StockUpdateComponent,
+      StockUpdateHistoryComponent,
+      StockPurchaseHistroyComponent,
+      SalesInvoiceInfoComponent,
+      SalesInvoiceUpdateComponent,
+      SalesInvoiceHistoryComponent
+      ],
+      providers:[]
 })
 export class ComponentModule { }

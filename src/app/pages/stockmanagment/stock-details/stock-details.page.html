@@ -1,9 +1,55 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>stock-details</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>Stock Details</ion-title>
+    </ion-toolbar>
 </ion-header>
 
+
 <ion-content padding>
+
+    <ion-card>
+        <ion-card-header color="primary">
+            <ion-card-title>
+                {{stockDetailsDb.stockName}}  - Stock ID {{stockDetailsDb.id}}
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+
+            <ion-grid>
+
+                <ion-row>
+
+                    <ion-col align-self-stretch size="3">
+                        <ion-segment [(ngModel)]="customercomp" (ionChange)="onSegmentChange($event)" color="primary">
+
+
+                            <ion-segment-button value="stockDetails" float-left>
+                                 Details/Summary
+                            </ion-segment-button>
+                            <ion-segment-button float-left value="stockUpdates">
+                                 Update                            </ion-segment-button>
+                            <ion-segment-button float-left value="stockUpdateHistory">
+                                 Update History
+                            </ion-segment-button>
+                            <ion-segment-button float-left value="stockPurchaseHistory">
+                                 Purchase History
+                            </ion-segment-button>
+                           
+                        </ion-segment>
+                    </ion-col>
+                    <ion-col [ngSwitch]="customercomp">
+                      <app-stock-details  *ngSwitchCase="'stockDetails'"></app-stock-details>
+                      <app-stock-update *ngSwitchCase="'stockUpdates'"></app-stock-update>
+                      <app-stock-update-history *ngSwitchCase="'stockUpdateHistory'"></app-stock-update-history>
+                      <app-stock-purchase-histroy *ngSwitchCase="'stockPurchaseHistory'" ></app-stock-purchase-histroy>
+                      
+                    </ion-col>
+                </ion-row>
+
+            </ion-grid>
+
+        </ion-card-content>
+
+    </ion-card>
 
 </ion-content>

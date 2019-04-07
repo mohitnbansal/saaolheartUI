@@ -1,3 +1,4 @@
+import { ComponentModule } from './../../../components/component.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -19,6 +20,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    ComponentModule,
     RouterModule.forChild(routes)
   ],
   declarations: [StockDetailsPage]

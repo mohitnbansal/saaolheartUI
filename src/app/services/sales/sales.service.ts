@@ -21,6 +21,15 @@ export class SalesService {
   saveStock(cust: CustomerSales): Observable<any> {
     return this.http.post<CustomerPurchases[]>(environment.apiUrl + 'sales/savesales', cust, this.httpOptions);
         }
+getAllSalesList():Observable<any>{
+  return this.http.get<any>(environment.apiUrl + 'sales/getallsales');
+}
 
+getSalesDetailById(res:number):Observable<any>{
+  return this.http.get<any>(environment.apiUrl +'sales/findsalesbyid/'+res);
+}
 
+updateSales(res:any): Observable<any> {
+  return this.http.post<CustomerPurchases[]>(environment.apiUrl + 'sales/updatesales', res, this.httpOptions);
+      }
 }

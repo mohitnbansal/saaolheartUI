@@ -211,7 +211,57 @@
                         Payement Pending List
                     </ion-card-header>
                     <ion-card-content>
-
+                            <ion-searchbar (ionInput)="getPaymentListBySearch($event)" animated showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
+                            <!-- (page)="onPage($event)" -->
+                            <ngx-datatable class='material' [columnMode]="'standard'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rowsPayment'>
+                                <ngx-datatable-column name="Sr No" width="80">
+                                    <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                                        <strong>{{rowIndex+1}}</strong>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Customer Id" width="180">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <a [routerDirection]="'forward'" [routerLink]="['/customer/details/',row.id]">
+                                            <b><i> {{row.customerId}}  </i></b>
+                                        </a>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Name" width="150">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <strong>{{row.customerName}}</strong>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Mobile No" width="75">
+                                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                            <strong>{{row.mobileNo}}</strong>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                <ngx-datatable-column name="Enrolled for Treatment " width="50">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <strong>{{row.enrolledFor}}</strong>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Balance Amount" width="75">
+                                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                        <strong>{{row.balanceAmt}}</strong>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Total Amount" width="75">
+                                        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                            <strong>{{row.totalInvoiceAmt}}</strong>
+                                        </ng-template>
+                                    </ngx-datatable-column>
+                                    <ngx-datatable-column name="Total Recieved" width="75">
+                                            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                                                <strong>{{row.totalInvoiceAmt - row.balanceAmt}}</strong>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                <ngx-datatable-column name="Inv Date (Date and Time) " width="300">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <strong>{{row.createdDate | date : 'MMM d, y, h:mm:ss a' }} </strong>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
                     </ion-card-content>
                 </ion-card>
             </ion-col>

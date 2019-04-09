@@ -163,6 +163,11 @@ console.log(err);
       console.log(res);
       this.flashService.show(res.error,4000);
       this.resetForm();
+      this.salesService.printSalesRecipt(res.document).subscribe((response)=>{
+        console.log(response);
+      },(err)=>{
+        console.log(err);
+      })
     }, (err) => {
       this.flashService.show(err.error,4000);
       console.log(err);

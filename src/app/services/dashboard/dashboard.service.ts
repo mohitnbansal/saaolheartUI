@@ -1,8 +1,9 @@
 import { Appointment } from './../../interfaces/appointment';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { CalendarDateFormatter } from 'angular-calendar';
 
 @Injectable({
   providedIn: 'root'
@@ -57,7 +58,7 @@ export class DashboardService {
 
   getPaymentPendingList(): Observable<any>
   {
-    return this.http.get(environment.apiUrl + 'dashboard/getnewjoinee', this.httpOptions);
+    return this.http.get(environment.apiUrl + 'dashboard/getpaymentpending', this.httpOptions);
   }
 
   changeScheduling(res: any) {
@@ -72,5 +73,17 @@ export class DashboardService {
   getMessage(): Observable<any> {
     
     return this.isMenuOpen.asObservable();
+}
+
+
+getAppointmentForDate(res:any): Observable<any> {
+  const param = new HttpParams().set('reqDate', res);
+
+  console.log(param);
+  return this.http.get(environment.apiUrl + 'dashboard/getappointmentbydate', {params: param});
+}
+
+getAllAppointment(): Observable<any> {
+  return this.http.get(environment.apiUrl + 'dashboard/getalldoctorappointment' );
 }
 }

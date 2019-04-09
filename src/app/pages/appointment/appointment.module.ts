@@ -1,3 +1,7 @@
+import { OwlDialogModule } from 'ng-pick-datetime/dialog';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ComponentModule } from './../../components/component.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -19,6 +23,11 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    ComponentModule,
+    NgxDatatableModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    OwlDialogModule,
     RouterModule.forChild(routes)
   ],
   declarations: [AppointmentPage]

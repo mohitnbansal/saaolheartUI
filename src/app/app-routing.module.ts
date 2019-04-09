@@ -1,3 +1,4 @@
+import { DashboardPendingPaymentResolveService } from './services/dashboard/dashboard-pending-payment-resolve.service';
 import { DasboardResolveService } from './services/dashboard/dasboard-resolve.service';
 import { AppComponent } from './app.component';
 import { AuthGuard } from './services/guard/auth.guard';
@@ -19,7 +20,8 @@ const routes: Routes = [
   canActivate: [AuthGuard],
   resolve:{
     data: DasboardResolveService,
-    patientQue: DashboardBCADataResolveService   
+    patientQue: DashboardBCADataResolveService ,
+    patientPendingList:DashboardPendingPaymentResolveService
   }
 },
   { path: 'customer', loadChildren: './pages/customer/customer.module#CustomerPageModule',

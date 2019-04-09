@@ -100,7 +100,9 @@ this.dashboardService.changeScheduling(app).subscribe((res)=>{
 });
      this.events = [...this.events];
   }
-  model:any;
+  model: any;
+  rowsPayment =  [];
+  rowsPaymentFilter = [];
   constructor(public dashboardService:DashboardService,
     public modalController:ModalController,
     public flashService:FlashMessageService,
@@ -115,12 +117,15 @@ this.dashboardService.changeScheduling(app).subscribe((res)=>{
      this.presentModal(res);
    });
    this.getNewJoineeList();
+  
   }
   
   ngOnInit() {
     this.patientList = this.activate.snapshot.data['data'].document != null ?  this.activate.snapshot.data['data'].document: [];
     this.patientQueList = this.activate.snapshot.data['patientQue'] != null ?  this.activate.snapshot.data['patientQue']: [];
-
+    this.rowsPayment = this.activate.snapshot.data['patientPendingList'].document != null ?  this.activate.snapshot.data['patientPendingList'].document: [];
+console.log(this.rowsPayment);
+    this.rowsPayment = [...this.rowsPayment];
     this.getPateintsQueueList(this.patientQueList);
   
   //   this.dashboardService.change.subscribe((res)=>{
@@ -293,7 +298,39 @@ console.log(this.rowsNewJoinee);
 console.log(err);
   });
 }
+getPaymentPendingList(){
+  console.log(1212)
+  this.dashboardService.getPaymentPendingList().subscribe((res)=>{
+    console.log(res);
+    this.rowsPayment = res.document;
+    this.rowsPaymentFilter = res.document;
+    this.rowsPayment = [...this.rowsPayment];
+    console.log( this.rowsPayment );
+  }, (err) => {
 
+  });
+}
+getPaymentListBySearch(event:any){
+  const val = event.target.value.toLowerCase();
+    // get the amount of columns in the table
+    const colsAmt = 8;
+    // get the key names of each column in the dataset
+    console.log(this.rowsPaymentFilter[0])
+    const keys = Object.keys(this.rowsPaymentFilter[0]);
+    // assign filtered matches to the active datatable
+    this.rowsPayment = this.rowsPaymentFilter.filter(function(item){
+      // iterate through each row's column data
+      for (let i = 0; i <   colsAmt; i++) {
+        // check for a match
+        if(item[keys[i]] !=  null) {
+        if (item[keys[i]].toString().toLowerCase().indexOf(val) !== -1 || !val){
+          // found match, return true to add to result set
+          return true;
+        }
+        }
+      }
+    });
+  }
 
 getCustomerListBySearch(event:any){
   const val = event.target.value.toLowerCase();

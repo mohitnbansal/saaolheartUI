@@ -1,9 +1,100 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>appointment</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header></app-header>
+<ion-content>
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>
+      Doctor Appointment
+    </ion-card-title>
+    <ion-card-subtitle>
+      Today's Appointment
+    </ion-card-subtitle>
+    <input class="ion-input"  [(ngModel)]="dateTime" [owlDateTimeFilter]="myFilter" [owlDateTime]="dt1" id="consulatationDate"   [owlDateTimeTrigger]="dt1" placeholder="Date Time"/>
+    <owl-date-time #dt1 hour12Timer="true" stepHour="1" pickerType="calendar" stepMinute="30"> </owl-date-time>
+<ion-button (click)="getListByDate(dateTime)"> Search</ion-button>
+  </ion-card-header> 
+  <ion-card-content>
+      <ion-list> 
+          <ion-list-header>
+              <ion-label>Today's Customer List</ion-label>
+          </ion-list-header>
+          <!-- <ion-virtual-scroll> -->
+            <div *ngFor="let patient of patientList">
+          <ion-item class="ion-activatable" ion-activatable *ngIf="patient.isVisitDone!='Completed'" >
+           
+              <ion-ripple-effect (click)="markAppointmentAlert(patient)"></ion-ripple-effect>
+              <ion-label>
+                  <h4>{{patient.customerName}}</h4> 
+                  <p>Expected Time {{patient.expectedTime | date:'medium' }}</p>
+                  <p>Visit No<ion-badge slot="end"> {{patient.scheduledNumber}}</ion-badge></p>
+              </ion-label>           
+          </ion-item>
+        </div>
+          <!-- </ion-virtual-scroll> -->
+      </ion-list>
+  </ion-card-content>
+  <ion-row class="cardfooter">
+      <ion-col>
+          <p>Total Patient Pending {{patientList.length}}</p>
+      </ion-col>
+  </ion-row>
+</ion-card>
 
-<ion-content padding>
+<ion-item-divider></ion-item-divider>
 
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>
+      Doctor's Appointment Table
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    
+    <!-- <ion-searchbar (ionInput)="getCustomerListBySearch($event)" animated showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar> -->
+    <ngx-datatable #myTable class='material' [columnMode]="'standard'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rows' (page)="onPage($event)">
+        <!-- Row Detail Template -->
+        <!-- <ngx-datatable-row-detail [rowHeight]="getHeight()" #myDetailRow>
+            <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-row-detail-template>
+                <div><strong>Address</strong></div>
+                <div class="row-wrap">{{row.address}}</div>
+            </ng-template>
+        </ngx-datatable-row-detail> -->
+        <!-- Column Templates -->
+        <!-- <ngx-datatable-column [width]="50">
+            <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                <a href="javascript:void(0)" [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded" title="Expand/Collapse Row" (click)="toggleExpandRow(row,expanded)">
+                </a>
+            </ng-template>
+        </ngx-datatable-column> -->
+        <ngx-datatable-column name="Sr No" width="80">
+            <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                <strong>{{rowIndex+1}}</strong>
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Customer Id" width="180">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                <a [routerDirection]="'forward'" [routerLink]="['/customer/details/',row.customerId]">
+                    <b><i> {{row.customerId}}  </i></b>
+                </a> 
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Name" width="150">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+              <strong>{{row.customerName}}</strong>
+          </ng-template>
+      </ngx-datatable-column>
+        <ngx-datatable-column name="Appointment (Date and Time) " width="300">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+              <strong>{{row.expectedTime | date : 'MMM d, y, h:mm:ss a' }} </strong>
+          </ng-template>
+      </ngx-datatable-column>
+      
+        <ngx-datatable-column name="Visiting For" width="50">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                <strong>{{row.visitingForDescription}}</strong>
+            </ng-template>
+        </ngx-datatable-column>
+       
+    </ngx-datatable>
+  </ion-card-content>
+</ion-card>
 </ion-content>

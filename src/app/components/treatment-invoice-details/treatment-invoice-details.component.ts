@@ -105,6 +105,7 @@ private updateInvoiceAndPaymentDomain(obj: any) {
 
 
   onSubmit() {
+    
     console.log(this.treatmentInvoiceForm.value);
     this.customerService.saveTreatmentInvoiceDetails(this.treatmentInvoiceForm.value).subscribe((res) => {
       console.log(res);

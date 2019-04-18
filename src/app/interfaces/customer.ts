@@ -1,6 +1,7 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 export interface Customer {
+    id: (number | ((control: AbstractControl) => ValidationErrors))[];
     firstName: (string | ((control: AbstractControl) => ValidationErrors))[];
     lastName:  (string  | ((control: AbstractControl) => ValidationErrors))[];
     middleName: (string  | ((control: AbstractControl) => ValidationErrors))[];
@@ -15,7 +16,5 @@ export interface Customer {
     vistingFor: (string | ((control: AbstractControl) => ValidationErrors))[];
     aadharNumber: (number | ((control: AbstractControl) => ValidationErrors))[];
     occupation: (string | ((control: AbstractControl) => ValidationErrors))[];
-    landlineOff: (string | ((control: AbstractControl) => ValidationErrors))[];
-    landlineRes: (string | ((control: AbstractControl) => ValidationErrors))[];
     panNumber: (string | ((control: AbstractControl) => ValidationErrors))[];    
 }

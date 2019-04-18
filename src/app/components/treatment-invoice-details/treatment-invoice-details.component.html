@@ -47,7 +47,8 @@
     </ion-row>
     <ion-row>
         <ion-col no-padding>
-            <ngx-datatable no-padding class="material fullscreenManual" [headerHeight]="50" [scrollbarH]='true' [limit]="5" [columnMode]="'flexi'" [footerHeight]="50" [rowHeight]="'auto'" [rows]="rowsTreatmentInvoice">
+            <ngx-datatable no-padding class="material fullscreenManual" [headerHeight]="50" [scrollbarH]='true' 
+            [limit]="5" [columnMode]="'flexi'" [footerHeight]="50" [rowHeight]="'auto'" [rows]="rowsTreatmentInvoice">
                 <ngx-datatable-column name="Treatment Invoice Date">
                     <ng-template ngx-datatable-cell-template let-value="value">
                         {{value | date : 'MMM d, y' }}
@@ -89,7 +90,8 @@
     </ion-row>
     <ion-row>
         <ion-col no-padding>
-            <ngx-datatable  [rowClass]="getRowClass"  #myTable class='material fullscreenManual' [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rowsInvoice' (page)="onPage($event)">
+            <ngx-datatable  [rowClass]="getRowClass"  #myTable class='material fullscreenManual'
+             [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="'auto'"  [scrollbarH]="'true'" [rows]='rowsInvoice' (page)="onPage($event)">
                 <ngx-datatable-column name="Invoice No">
                     <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-rowIndex="rowIndex">
                         {{row.id}}
@@ -183,7 +185,8 @@
     </ion-row>
     <ion-row>
         <ion-col no-padding>
-            <ngx-datatable #myTable class='material fullscreenManual' [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rowsPayment' (page)="onPage($event)">
+            <ngx-datatable #myTable class='material fullscreenManual' [columnMode]="'flexi'" [headerHeight]="50" 
+            [sortType]="'multi'" [footerHeight]="50" [rowHeight]="'auto'"  [scrollbarH]="'true'" [rows]='rowsPayment' (page)="onPage($event)">
                 <ngx-datatable-column name="Invoice No">
                     <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-rowIndex="rowIndex">
                         {{row.invoiceId}}

@@ -1,3 +1,4 @@
+import { PipesModule } from './pipes/pipes.module';
 import { HeaderComponent } from './components/header/header.component';
 import { DashboardService } from './services/dashboard/dashboard.service';
 import { MarkAppointmentPageModule } from './components/mark-appointment/mark-appointment.module';
@@ -27,6 +28,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { CustomerAppointmentPageModule } from './components/customer-appointment/customer-appointment.module';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { OwlDialogModule } from 'ng-pick-datetime/dialog';
+import { AadharTranformPipe } from './pipes/aadhar/aadhar-tranform.pipe';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -63,8 +65,10 @@ export function tokenGetter() {
     CustomerAppointmentPageModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    OwlDialogModule
+    OwlDialogModule,
+    PipesModule
   ],
+  exports:[],
   providers: [
     StatusBar,
     SplashScreen,

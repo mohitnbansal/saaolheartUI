@@ -59,13 +59,17 @@ return this.http.post<Customer>(environment.apiUrl + 'customer/addcustomer', cus
       return this.http.post<TreatmentPlanDetails>(environment.apiUrl + 'customer/savetreatmentplandetails', doct , this.httpOptions);
     }
 
-    getCustomerListByNameOrMobile(par:any){
+    getCustomerListByNameOrMobile(par: any): Observable<any> {
       const params = new HttpParams().set('searchParam', par);
       return this.http.get(environment.apiUrl + 'customer/getcustomerbysearch', {params: params});
   
     }
 
-    cancelAndCreateNewInvoice(ele:any){
+    cancelAndCreateNewInvoice(ele: any): Observable<any> {
       return this.http.post<any>(environment.apiUrl + 'customer/cancelInvoice', ele , this.httpOptions);
+    }
+    
+    getcustomeralltreatment(id: number): Observable<any> {
+      return this.http.get<any>(environment.apiUrl + 'customer/getcustomeralltreatment/' + id, this.httpOptions);
     }
 }

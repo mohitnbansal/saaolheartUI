@@ -26,33 +26,36 @@
                             <ion-segment-button value="customerdetails" float-left>
                                 Customer Details
                             </ion-segment-button>
+                            <div *ngIf="customerFormDetails['vistingFor'] =='treatment'">
                             <ion-segment-button float-left value="doctordetails">
                                 Doctor Consultation
                             </ion-segment-button>
                             <ion-segment-button float-left value="ctangiographydetails">
                                 Ct Angiography MOU
                             </ion-segment-button>
-                            <ion-segment-button float-left value="treatmentplandetails">
-                                Treatment Plan
-                            </ion-segment-button>
+                         
                             <ion-segment-button float-left value="treatmentinvoicedetails">
                                 Treatment Invoice
                             </ion-segment-button>
-                            <ion-segment-button float-left value="invociedetails">
-                                Invoice
+                            <ion-segment-button float-left value="treatmentplandetails">
+                                Treatment Plan
                             </ion-segment-button>
+                        </div>
                         </ion-segment>
                     </ion-col>
 
 
                     <ion-col [ngSwitch]="customercomp">
-                        <app-customer-detail *ngSwitchCase="'customerdetails'"></app-customer-detail>
+                        <app-customer-detail  *ngSwitchCase="'customerdetails'"></app-customer-detail>
+                       
                         <app-doctor-details *ngSwitchCase="'doctordetails'"></app-doctor-details>
                         <app-ct-angiography-details *ngSwitchCase="'ctangiographydetails'"></app-ct-angiography-details>
-                        <app-treatment-plan-detail *ngSwitchCase="'treatmentplandetails'"></app-treatment-plan-detail>
                         <app-treatment-invoice-details *ngSwitchCase="'treatmentinvoicedetails'"></app-treatment-invoice-details>
-                        <app-invoice-details *ngSwitchCase="'invociedetails'"></app-invoice-details>
+                        <app-treatment-plan-detail *ngSwitchCase="'treatmentplandetails'"></app-treatment-plan-detail>
+                        <!-- <app-invoice-details *ngSwitchCase="'invociedetails'"></app-invoice-details> -->
+
                     </ion-col>
+              
                 </ion-row>
 
             </ion-grid>

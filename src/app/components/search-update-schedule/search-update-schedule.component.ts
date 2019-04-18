@@ -92,7 +92,7 @@ this.dashboardService.addAppointment(this.appointment).subscribe((res)=>{
   this.flashService.show(res.error,5000);
 },(err)=>{
   console.log(err);
-  this.flashService.show(err.error,5000);
+  this.flashService.show(err.error.error,8000);
 });
   }
 

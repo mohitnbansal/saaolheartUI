@@ -38,6 +38,13 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: './customer-registration/customer-registration.module#CustomerRegistrationPageModule'
+          },
+          {
+            path: ':id',
+            loadChildren: './customer-registration/customer-registration.module#CustomerRegistrationPageModule'
+           , resolve: {
+              data: CustomerDetailsService,
+            }
           }
         ]
       },

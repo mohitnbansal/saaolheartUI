@@ -1,3 +1,5 @@
+import { CustomerDetailsPage } from './../pages/customer/customer-details/customer-details.page';
+import { CustomerRegistrationPageModule } from './../pages/customer/customer-registration/customer-registration.module';
 import { OwlDialogModule } from 'ng-pick-datetime/dialog';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { MarkAppointmentPageModule } from './mark-appointment/mark-appointment.module';
@@ -54,9 +56,9 @@ import { SalesInvoiceHistoryComponent } from './sales-invoice-history/sales-invo
     CalendarModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
-    OwlDialogModule,
+    OwlDialogModule
   ],
- 
+ entryComponents:[],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [HeaderComponent,
      CustomerDetailComponent,

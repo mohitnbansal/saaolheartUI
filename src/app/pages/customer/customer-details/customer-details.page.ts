@@ -1,9 +1,12 @@
+import { CustomerDetailComponent } from './../../../components/customer-detail/customer-detail.component';
+import { CustomerRegistrationPage } from './../customer-registration/customer-registration.page';
+import { ModalController } from '@ionic/angular';
 import { DoctorDetailsComponent } from './../../../components/doctor-details/doctor-details.component';
 import { DoctorConsultation } from './../../../interfaces/doctorconsultaion';
 import { FlashMessageService } from './../../../services/flash/flash-message.service';
 import { CustomerService } from './../../../services/customer/customer.service';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, ViewChild, ViewChildren, AfterViewInit, Input } from '@angular/core';
 
 
@@ -17,11 +20,16 @@ import { Component, OnInit, ViewChild, ViewChildren, AfterViewInit, Input } from
 export class CustomerDetailsPage implements OnInit, AfterViewInit{
   customercomp = '';
   customerFormDetails: any;
+  public customerDetails: any;
+  @ViewChildren(CustomerDetailComponent) customerDetailsComp: CustomerDetailComponent;
   constructor(public activate: ActivatedRoute, public fb: FormBuilder,
   public customerService: CustomerService,
-  public flashProvider: FlashMessageService) {
-
-}
+  public flashProvider: FlashMessageService,
+  public active: ActivatedRoute,
+  public route:Router) 
+  {
+    this.customerDetails = this.activate.snapshot.data['data'];
+  }
 
 
   ngOnInit() {
@@ -30,7 +38,9 @@ export class CustomerDetailsPage implements OnInit, AfterViewInit{
   }
   ngAfterViewInit() {
    // console.log(this.doctorDetail.initializeForm());
- 
+this.customerDetailsComp['first'].navigateTo.subscribe((res)=>{
+this.route.navigateByUrl('/customer/register/' + res);
+});
   }
   onSegmentChange(eve: any) {
    console.log(eve.detail.value);
@@ -40,5 +50,4 @@ export class CustomerDetailsPage implements OnInit, AfterViewInit{
  // this.doctorDetail.initializeForm();
    }
   }
- 
 }

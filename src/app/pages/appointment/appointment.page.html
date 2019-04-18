@@ -19,13 +19,16 @@
           </ion-list-header>
           <!-- <ion-virtual-scroll> -->
             <div *ngFor="let patient of patientList">
-          <ion-item class="ion-activatable" ion-activatable *ngIf="patient.isVisitDone!='Completed'" >
+          <ion-item class="ion-activatable" ion-activatable >
            
               <ion-ripple-effect (click)="markAppointmentAlert(patient)"></ion-ripple-effect>
               <ion-label>
                   <h4>{{patient.customerName}}</h4> 
                   <p>Expected Time {{patient.expectedTime | date:'medium' }}</p>
-                  <p>Visit No<ion-badge slot="end"> {{patient.scheduledNumber}}</ion-badge></p>
+                  <p>
+                    Visit Status  {{patient.isVisitDone}}
+                 </p>
+                  <p>Visit No<ion-badge slot="end">  {{patient.visitNumber != null ? patient.visitNumber : "Yet To visit" }}</ion-badge></p>
               </ion-label>           
           </ion-item>
         </div>

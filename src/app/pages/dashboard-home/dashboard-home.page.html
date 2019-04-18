@@ -47,7 +47,9 @@
                         </div>
                         <br />
 
-                        <mwl-day-view-scheduler [dayStartHour]="8" [refresh]="refresh" [dayEndHour]="18" (user)="users" [viewDate]="viewDate" [events]="events" (eventTimesChanged)="eventTimesChanged($event)" (userChanged)="userChanged($event)">
+                        <mwl-day-view-scheduler [dayStartHour]="8" [refresh]="refresh"
+                         [dayEndHour]="18" (user)="users" [viewDate]="viewDate" [events]="events"
+                          (eventTimesChanged)="eventTimesChanged($event)" (userChanged)="userChanged($event)">
                         </mwl-day-view-scheduler>
                     </ion-card-content>
                 </ion-card>
@@ -73,17 +75,13 @@
                             <ion-item class="ion-activatable" ion-activatable *ngFor="let patient of patientList">
                                 <ion-ripple-effect (click)="markAppointmentAlert(patient)"></ion-ripple-effect>
                                 <ion-label>
-                                    <h4>
-                                        {{patient.customerName}}
-                                    </h4>
-                                    <p>
-                                        Expected Time {{patient.expectedTime | date:'medium' }}
-                                    </p>
-                                    <p>
-                                        Visit No
-                                        <ion-badge slot="end"> {{patient.scheduledNumber}}</ion-badge>
-                                    </p>
-                                </ion-label>
+                                        <h4>{{patient.customerName}}</h4> 
+                                        <p>Expected Time {{patient.expectedTime | date:'medium' }}</p>
+                                        <p>
+                                          Visit Status  {{patient.isVisitDone}}
+                                       </p>
+                                        <p>Visit No<ion-badge slot="end">  {{patient.visitNumber != null ? patient.visitNumber : "Yet To visit" }}</ion-badge></p>
+                                    </ion-label> 
 
                             </ion-item>
 
@@ -104,16 +102,17 @@
                             BCA Appointments List
                         </ion-card-title>
                     </ion-card-header>
-                    <ion-card-content>
+                    <ion-card-content >
+                        
                         <ion-list>
                             <ion-list-header>
                                 <ion-label>Customer's List</ion-label>
                             </ion-list-header>
-                            <!-- <ion-virtual-scroll> -->
+                            <ion-virtual-scroll [items]="bcaPateintList">
 
 
 
-                            <ion-item class="ion-activatable" ion-activatable *ngFor="let patient of bcaPateintList">
+                            <ion-item class="ion-activatable" ion-activatable *ngFor="let patient">
                                 <ion-ripple-effect (click)="markAppointmentAlert(patient)"></ion-ripple-effect>
                                 <ion-label>
                                     <h4>
@@ -123,19 +122,23 @@
                                         Expected Time {{patient.expectedTime | date:'medium' }}
                                     </p>
                                     <p>
-                                        BCA Visit No
-                                        <ion-badge slot="end"> {{patient.scheduledNumber}}</ion-badge>
+                                       Visit Status  {{patient.isVisitDone}}
+                                    </p>
+                                    <p>
+                                        Visit No
+                                        <ion-badge slot="end">  {{patient.treatmentDetailDomain.visitNumber != null ? patient.treatmentDetailDomain.visitNumber
+                                             : (patient.treatmentDetailDomain.isTreatmentDone === 'Cancelled' ? "Cancelled" : "Yet To Visit" )}}</ion-badge>
                                     </p>
                                 </ion-label>
 
                             </ion-item>
 
-                            <!-- </ion-virtual-scroll> -->
+                            </ion-virtual-scroll>
                         </ion-list>
                     </ion-card-content>
                     <ion-row class="cardfooter">
                         <ion-col>
-                            <p>Total Patient Pending {{patientList.length}} </p>
+                            <p>Total Patient Scheduled for Today {{bcaPateintList.length}} </p>
                         </ion-col>
                     </ion-row>
                 </ion-card>

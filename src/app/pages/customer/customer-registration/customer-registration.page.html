@@ -32,31 +32,36 @@
                                                 <ion-select-option value="store">Products</ion-select-option>
                                                 <ion-select-option value="treatment">Treatment</ion-select-option>
                                             </ion-select>
-
                                         </ion-item>
+                                        <ion-text *ngIf="custformGroup.controls['vistingFor'].errors && custformGroup.controls['vistingFor'].dirty" color="danger" padding>Please Select Type Of Customer.</ion-text>
+
                                     </ion-col>
                                 </ion-row>
                                 <ion-row>
                                     <ion-col>
                                         <ion-item>
                                             <ion-label position="floating">First Name</ion-label>
-                                            <ion-input type="text" formControlName="firstName" id="firstName">
+                                            <ion-input [value]="custformGroup.controls['firstName'].value  | uppercase"  type="text" formControlName="firstName" id="firstName">
                                             </ion-input>
                                         </ion-item>
+                                        <ion-text *ngIf="custformGroup.controls['firstName'].errors && custformGroup.controls['firstName'].dirty" color="danger" padding>Please Enter First Name.</ion-text>
+
                                     </ion-col>
                                     <ion-col>
                                         <ion-item>
                                             <ion-label position="floating">Middle Name</ion-label>
-                                            <ion-input type="text" formControlName="middleName" id="middleName">
+                                            <ion-input   [value]="custformGroup.controls['middleName'].value  | uppercase"  type="text" formControlName="middleName" id="middleName">
                                             </ion-input>
                                         </ion-item>
                                     </ion-col>
                                     <ion-col>
                                         <ion-item>
                                             <ion-label position="floating">Last Name</ion-label>
-                                            <ion-input type="text" formControlName="lastName" id="lastName">
+                                            <ion-input [value]="custformGroup.controls['lastName'].value  | uppercase" type="text" formControlName="lastName" id="lastName">
                                             </ion-input>
                                         </ion-item>
+                                        <ion-text *ngIf="custformGroup.controls['lastName'].errors && custformGroup.controls['lastName'].dirty" color="danger" padding>Please Enter Last Name.</ion-text>
+
                                     </ion-col>
                                 </ion-row>
                                 <ion-row>
@@ -66,15 +71,19 @@
                                             <ion-input type="email" formControlName="emailId" id="emailId">
                                             </ion-input>
                                         </ion-item>
+                                        <ion-text *ngIf="custformGroup.controls['emailId'].errors && custformGroup.controls['emailId'].dirty" color="danger" padding>Email is not valid.</ion-text>
+
                                     </ion-col>
                                     <ion-col *ngIf="showHide">
                                         <ion-item>
                                             <ion-label position="stacked" >Date of Birth</ion-label>
                                             <!-- <ion-datetime formControlName="dob" id="dob" display-format="MMM DD, YYYY"></ion-datetime> -->
-                                            <input class="ion-input" [owlDateTimeFilter]="myFilter" [owlDateTime]="dt1" id="consulatationDate"  formControlName="dob"   [owlDateTimeTrigger]="dt1" placeholder="Date Time"/>
-                                            <owl-date-time #dt1 hour12Timer="true" stepHour="1" pickerType="calendar" stepMinute="30"> </owl-date-time>
+                                            <input  [(ngModel)]="dob"  class="ion-input" [owlDateTime]="dt1" id="consulatationDate"  formControlName="dob"   [owlDateTimeTrigger]="dt1" placeholder="Date Time"/>
+                                            <owl-date-time  #dt1 hour12Timer="true" stepHour="1" pickerType="calendar" stepMinute="30"> </owl-date-time>
                                     
                                         </ion-item>
+                                        <ion-text *ngIf="custformGroup.controls['dob'].errors && custformGroup.controls['dob'].dirty" color="danger" padding>Please Input Date of birth.</ion-text>
+
                                     </ion-col>
                                     <ion-col *ngIf="showHide">
                                         <ion-item>
@@ -82,6 +91,7 @@
                                             <ion-input name="age" formControlName="age" type="text" readonly="true" id="age">
                                             </ion-input>
                                         </ion-item>
+
                                     </ion-col>
                                 </ion-row>
                                 <ion-row>
@@ -95,6 +105,8 @@
                                             </ion-select>
 
                                         </ion-item>
+                                        <ion-text *ngIf="custformGroup.controls['gender'].errors && custformGroup.controls['gender'].dirty" color="danger" padding>Please Select Gender.</ion-text>
+
                                     </ion-col>
                                     <ion-col *ngIf="showHide">
                                         <ion-item>
@@ -102,14 +114,15 @@
                                             <ion-input type="text" formControlName="occupation" id="occupation">
                                             </ion-input>
                                         </ion-item>
+                                        <ion-text *ngIf="custformGroup.controls['occupation'].errors && custformGroup.controls['occupation'].dirty" color="danger" padding>Please Input Occupation.</ion-text>
                                     </ion-col>
                                     <ion-col *ngIf="showHide">
                                         <ion-item>
                                             <ion-label position="floating">Aadhar number</ion-label>
-
-                                            <ion-input type="text" formControlName="aadharNumber" id="aadharNumber">
+                                            <ion-input  type="text" maxlength="14" [value]="custformGroup.controls['aadharNumber'].value  | aadharTranform" formControlName="aadharNumber" id="aadharNumber">
                                             </ion-input>
                                         </ion-item>
+                                        <ion-text *ngIf="custformGroup.controls['aadharNumber'].errors && custformGroup.controls['aadharNumber'].dirty" color="danger" padding>Please Input Valid Aadhar Number.</ion-text>
                                     </ion-col>
                                 </ion-row>
                             </ion-grid>
@@ -117,9 +130,7 @@
                         <!-- <ion-col>
                             <ion-img style="width:50%;height:50%;" src="https://picsum.photos/100"></ion-img>
                         </ion-col> -->
-
-
-                    </ion-row>
+                </ion-row>
                     <ion-row>
                         <ion-col>
                             <ion-grid>
@@ -127,9 +138,11 @@
                                     <ion-col *ngIf="showHide">
                                         <ion-item>
                                             <ion-label position="floating">PAN Number</ion-label>
-                                            <ion-input type="text" formControlName="panNumber" id="panNumber">
+                                            <ion-input [value]="custformGroup.controls['panNumber'].value  | uppercase" type="text" formControlName="panNumber" id="panNumber">
                                             </ion-input>
                                         </ion-item>
+                                        <ion-text *ngIf="custformGroup.controls['panNumber'].errors && custformGroup.controls['panNumber'].dirty" color="danger" padding>Please Input Valid PAN Number.</ion-text>
+
                                     </ion-col>
 
                                 </ion-row>
@@ -140,6 +153,8 @@
                                             <ion-input type="text" formControlName="mobileNo" id="mobileNo">
                                             </ion-input>
                                         </ion-item>
+                                        <ion-text *ngIf="custformGroup.controls['mobileNo'].errors && custformGroup.controls['mobileNo'].dirty" color="danger" padding>Please Enter Mobile No.</ion-text>
+
                                     </ion-col>
                                     <ion-col *ngIf="showHide">
                                         <ion-item>
@@ -155,16 +170,20 @@
                         <ion-col *ngIf="showHide">
                             <ion-item>
                                 <ion-label position="floating">Address</ion-label>
-                                <ion-textarea rows="10" type="email" formControlName="address" id="address">
+                                <ion-textarea rows="10" type="text" formControlName="address" id="address">
                                 </ion-textarea>
                             </ion-item>
+                            <ion-text *ngIf="custformGroup.controls['address'].errors && custformGroup.controls['address'].dirty" color="danger" padding>Please Enter Address .</ion-text>
+
                         </ion-col>
                     </ion-row>
 
                 </ion-grid>
                 <ion-item>
-                    <ion-button shape="round" size="default" slot="end" type="submit" [disabled]="!custformGroup.valid">
+                    <ion-button *ngIf="customerDetails['id'] == null" shape="round" size="default" slot="end" type="submit"  [disabled]="!custformGroup.valid">
                         <ion-icon size="default" name="person-add"></ion-icon> &nbsp; Add Customer</ion-button>
+                        <ion-button *ngIf="customerDetails['id'] != null" shape="round" size="default" slot="end" type="submit"  [disabled]="!custformGroup.valid">
+                                <ion-icon size="default" name="person-add"></ion-icon> &nbsp; Update Customer</ion-button>
                     <ion-button shape="round" size="default" slot="end" type="reset">Reset</ion-button>
 
                 </ion-item>

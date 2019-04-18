@@ -1,25 +1,44 @@
 <div class="cal-day-view" #dayViewContainer>
     <div class="day-view-column-headers">
         <div class="day-view-column-header" *ngFor="let user of view.users">
-            {{ user.name }}
+            {{ user.name }} 
         </div>
     </div>
     <div class="cal-hour-rows" mwlDroppable (dragEnter)="eventDragEnter = eventDragEnter + 1" (dragLeave)="eventDragEnter = eventDragEnter - 1">
 
         <div class="cal-events">
-            <div #event *ngFor="let dayEvent of view?.events; trackBy: trackByDayEvent; index as i" class="cal-event-container" [class.cal-starts-within-day]="!dayEvent.startsBeforeDay" [class.cal-ends-within-day]="!dayEvent.endsAfterDay" [ngClass]="dayEvent.event.cssClass"
+            <div #event *ngFor="let dayEvent of view?.events; trackBy: trackByDayEvent; index as i" 
+            class="cal-event-container" 
+            [class.cal-starts-within-day]="!dayEvent.startsBeforeDay" 
+            [class.cal-ends-within-day]="!dayEvent.endsAfterDay"
+             [ngClass]="dayEvent.event.cssClass"
                 mwlDraggable id="drill-{{i}}" [dragAxis]="{
           x: true,
           y: dayEvent.event.draggable && currentResizes.size === 0
         }" [dragSnapGrid]="{
           y: eventSnapSize || hourSegmentHeight,
           x: eventWidth
-        }" [validateDrag]="validateDrag" (dragStart)="dragStarted(event, dayViewContainer)" (dragging)="dragMove()" (dragEnd)="eventDragged(dayEvent, $event.x, $event.y)" [style.marginTop.px]="dayEvent.top" [style.height.px]="dayEvent.height" [style.marginLeft.px]="dayEvent.left + 70"
+        }" [validateDrag]="validateDrag" (dragStart)="dragStarted(event, dayViewContainer)" (dragging)="dragMove()" 
+        (dragEnd)="eventDragged(dayEvent, $event.x, $event.y)" 
+        [style.marginTop.px]="dayEvent.top" [style.height.px]="dayEvent.height" [style.marginLeft.px]="dayEvent.left + 70"
                 [style.width.px]="dayEvent.width - 1">
-                <mwl-calendar-day-view-event (click)="getEvent(dayEvent)" [dayEvent]="dayEvent" [tooltipPlacement]="tooltipPlacement" [tooltipTemplate]="tooltipTemplate" [tooltipAppendToBody]="tooltipAppendToBody" [customTemplate]="eventTemplate" [eventTitleTemplate]="eventTitleTemplate"
+                <mwl-calendar-day-view-event (click)="getEvent(dayEvent)" 
+                [dayEvent]="dayEvent" 
+                [tooltipPlacement]="tooltipPlacement"
+                 [tooltipTemplate]="tooltipTemplate" 
+                 [tooltipAppendToBody]="tooltipAppendToBody"
+                  [customTemplate]="dataTemplate" [eventTitleTemplate]="eventTitleTemplate"
                     [eventActionsTemplate]="eventActionsTemplate" (eventClicked)="eventClicked.emit({ event: dayEvent.event })">
                 </mwl-calendar-day-view-event>
-
+<ng-template #dataTemplate >
+{{dayEvent.event.title}}
+<br>
+ <label>Visit Duration: -</label> 
+   {{dayEvent.event.meta.appointmentDetail.treatmentDetailDomain.duration !=null ? (dayEvent.event.meta.appointmentDetail.treatmentDetailDomain.duration | slice:2) : "NA"}}
+   <br>
+   <label>Duration Till: -</label> 
+     {{dayEvent.event.meta.appointmentDetail.treatmentDetailDomain.durationUpTillNow !=null ? (dayEvent.event.meta.appointmentDetail.treatmentDetailDomain.durationUpTillNow | slice:2 ): "NA"}}
+</ng-template>
             </div>
         </div>
 

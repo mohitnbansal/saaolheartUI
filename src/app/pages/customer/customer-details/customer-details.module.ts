@@ -1,3 +1,4 @@
+import { CustomerRegistrationPageModule } from './../customer-registration/customer-registration.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';

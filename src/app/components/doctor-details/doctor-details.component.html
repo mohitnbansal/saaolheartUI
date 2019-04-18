@@ -11,6 +11,7 @@
                     <owl-date-time #dt1 hour12Timer="true" stepHour="1" pickerType="calendar" stepMinute="30"> </owl-date-time>
             
                 </ion-item>
+                
             </ion-col>
             <ion-col>
                 <ion-item>
@@ -56,7 +57,7 @@
             </ion-col>
         </ion-row>
 
-        <ion-button float-right type="submit" [disabled]="!doctorDetailsForm.valid">Submit</ion-button>
+        <ion-button float-right type="submit"  [disabled]="!doctorDetailsForm.valid">Submit</ion-button>
         <ion-button float-right type="reset">Reset</ion-button>
 
     </ion-grid>
@@ -110,7 +111,10 @@
     </ion-row>
     <ion-row>
         <ion-col no-padding>
-            <ngx-datatable   [rowClass]="getRowClass" #myTable class='material fullscreenManual' [limit]="5" [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rowsInvoice' >
+            <ngx-datatable   [rowClass]="getRowClass" #myTable class='material fullscreenManual' 
+            [limit]="5" [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="'auto'" 
+         
+            [scrollbarH]="'true'" [rows]='rowsInvoice' >
                 <ngx-datatable-column name="Invoice No">
                     <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-rowIndex="rowIndex">
                         {{row.id}}
@@ -205,7 +209,8 @@
     </ion-row>
     <ion-row>
         <ion-col no-padding>
-            <ngx-datatable #myTable class='material fullscreenManual' [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [limit]="5" [rows]='rowsPayment'>
+            <ngx-datatable #myTable class='material fullscreenManual' [columnMode]="'flexi'" [headerHeight]="50" 
+            [sortType]="'multi'" [footerHeight]="50" [rowHeight]="'auto'" [scrollbarH]="'true'" [limit]="5" [rows]='rowsPayment'>
                 <ngx-datatable-column name="Invoice No">
                     <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-rowIndex="rowIndex">
                         {{row.invoiceId}}

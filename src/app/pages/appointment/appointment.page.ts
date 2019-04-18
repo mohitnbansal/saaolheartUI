@@ -1,3 +1,4 @@
+import { FlashMessageService } from 'src/app/services/flash/flash-message.service';
 import { AlertController } from '@ionic/angular';
 import { DashboardService } from 'src/app/services/dashboard/dashboard.service';
 import { Component, OnInit } from '@angular/core';
@@ -16,7 +17,8 @@ export class AppointmentPage implements OnInit {
   patientList = [];
   markAppointmentStat:any;
   constructor( public dashboardService: DashboardService,
-    public alertController:AlertController) { 
+    public alertController:AlertController,
+    public flashService: FlashMessageService) { 
       this.getAllAppointmentList();
     
       this.getListByDate(formatDate(new Date, 'dd-MM-yyyy', 'en-US', '+0530'));
@@ -28,21 +30,24 @@ getAllAppointmentList(){
   this.dashboardService.getAllAppointment().subscribe((res) => {
 console.log(res)
 this.rows = res.document;
+if(this.rows !== null && this.rows.length > 0 ){
 this.rows = [...this.rows];
+}
   }, (err) => {
 console.log(err);
   });
 }
 getListByDate(res: any) {
-  console.log(res)
+  console.log(res);
 this.dashboardService.getAppointmentForDate(res).subscribe((response) => {
   this.patientList = response.document;
-console.log(response)
+console.log(response);
 },(err) => {
 console.log(err);
 })
 };
 async markAppointmentAlert(appoint:any) {
+  if(appoint.isVisitDone !== 'Completed'){
   const alert = await this.alertController.create({
     header: 'Is Visit Done?',
     inputs: [
@@ -80,13 +85,25 @@ async markAppointmentAlert(appoint:any) {
       }
     ]
   });
-
+  
   await alert.present();
+}else if(appoint.isVisitDone === 'Cancelled'){
+  const err = [];
+  err.push('Customer DR. Appointment Cancelled');
+  this.flashService.show(err, 6000);
+} else {
+  let err = [];
+  err.push('Pateint Appointment Already Completed');
+  this.flashService.show(err,5000);
+}
 }
 
 markAppointmentStatus(res: any) {
+  
 this.dashboardService.markPatientAppointment(res).subscribe(( res ) => {
-console.log(res);
+  let err = [];
+  err.push('Pateint Appointment Marked as Completed');
+this.flashService.show(err,5000);
 }, (err) => {
 console.log(err);
 });
@@ -94,9 +111,8 @@ console.log(err);
 
   public myFilter = (d: Date): boolean => {
     const day = d.getDay();
-    
-    // Prevent Saturday and Sunday from being selected.
-    return day !== 0 && day !== 6 ;
+
+    return day !== 0 ;
 }
 
 }

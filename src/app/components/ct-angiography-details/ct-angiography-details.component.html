@@ -11,8 +11,12 @@
             <ion-col>
 
                 <ion-item>
-                    <ion-label position="floating">Date</ion-label>
-                    <ion-datetime id="consulatationDate" ngDefaultControl formControlName="refDate" value="213" displayFormat="" pickerFormat=""></ion-datetime>
+                    <ion-label  position="stacked">Date</ion-label>
+                    <!-- <ion-datetime id="consulatationDate" ngDefaultControl formControlName="refDate" value="213" displayFormat="" pickerFormat=""></ion-datetime> -->
+                
+                    <input ion-input [owlDateTimeFilter]="myFilter"  [owlDateTime]="dt1" id="refDate"  (ionChange)="updateDataValue($event,'consulationDate')"  ngDefaultControl formControlName="refDate"   [owlDateTimeTrigger]="dt1" placeholder="Date Time"/>
+                    <owl-date-time #dt1 hour12Timer="true" stepHour="1" pickerType="calendar" stepMinute="30"> </owl-date-time>
+            
                 </ion-item>
             </ion-col>
         </ion-row>
@@ -77,7 +81,7 @@
 
                 <ion-item>
                     <ion-label position="floating">Invoice Amount</ion-label>
-                    <ion-input type="number" ngDefaultControl formControlName="invoiceTotalamt"></ion-input>
+                    <ion-input type="number"  (ionChange)="updateDataValue($event,'invoiceTotalamt')"  ngDefaultControl formControlName="invoiceTotalamt"></ion-input>
                 </ion-item>
             </ion-col>
 
@@ -98,7 +102,8 @@
     </ion-row>
     <ion-row>
         <ion-col no-padding>
-            <ngx-datatable no-padding class="material fullscreenManual" [headerHeight]="50" [scrollbarH]='true' [limit]="5" [columnMode]="'flexi'" [footerHeight]="50" [rowHeight]="'auto'" [rows]="rowsCtAngio">
+            <ngx-datatable no-padding class="material fullscreenManual" [headerHeight]="50" [scrollbarH]='true' [limit]="5" 
+            [columnMode]="'flexi'" [footerHeight]="50" [rowHeight]="'auto'" [rows]="rowsCtAngio">
                 <ngx-datatable-column name="Ref Date">
                     <ng-template ngx-datatable-cell-template let-value="value">
                         {{value | date : 'MMM d, y' }}
@@ -135,7 +140,9 @@
     </ion-row>
     <ion-row>
         <ion-col no-padding>
-            <ngx-datatable  [rowClass]="getRowClass" #myTable class='material fullscreenManual' [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rowsInvoice' >
+            <ngx-datatable  [rowClass]="getRowClass" #myTable class='material fullscreenManual' 
+            [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="'auto'" 
+             [scrollbarH]="'true'" [rows]='rowsInvoice' >
                 <ngx-datatable-column name="Invoice No">
                     <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-rowIndex="rowIndex">
                         {{row.id}}
@@ -196,7 +203,7 @@
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
 
 
-                        <ion-select [disabled]="row.invoiceStatus=='Payement Completed'"  value="{{row.invoiceStatus}}" name="invoiceStatus" (ionChange)="updateValueInvoice($event, 'cancelInvoice', rowIndex)">
+                        <ion-select   value="{{row.invoiceStatus}}" name="invoiceStatus" (ionChange)="updateValueInvoice($event, 'cancelInvoice', rowIndex)">
                             <ion-select-option value="Total Payment Pending">Pending</ion-select-option>
                             <ion-select-option value="Partially Pending">Partial</ion-select-option>
                             <ion-select-option value="Payement Conpleted">Completed</ion-select-option>
@@ -208,7 +215,7 @@
                 <ngx-datatable-column width="200" name="Payment Amount">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
 
-                        <ion-button  *ngIf="row.invoiceStatus=='Total Payment Pending' ||  row.invoiceStatus=='Partially Pending'" size="small" shape="round" (click)="generateReciept($event, 'name', rowIndex, row)" color="primary">Generate Reciept</ion-button>
+                        <ion-button  size="small" shape="round" (click)="generateReciept($event, 'name', rowIndex, row)" color="primary">Generate Reciept</ion-button>
                     </ng-template>
                 </ngx-datatable-column>
 
@@ -229,7 +236,9 @@
     </ion-row>
     <ion-row>
         <ion-col no-padding>
-            <ngx-datatable #myTable class='material fullscreenManual' [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rowsPayment' >
+            <ngx-datatable #myTable class='material fullscreenManual' [columnMode]="'flexi'" 
+            [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="'auto'"
+             [scrollbarH]="'true'" [rows]='rowsPayment' >
                 <ngx-datatable-column name="Invoice No">
                     <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-rowIndex="rowIndex">
                         {{row.invoiceId}}

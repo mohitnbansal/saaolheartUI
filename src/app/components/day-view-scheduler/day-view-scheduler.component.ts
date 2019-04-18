@@ -101,7 +101,15 @@ index = ind;
         border: solid 1px black;
         text-align: center;
       }
-     
+      .strike {
+        background: repeating-linear-gradient(
+            45deg !important,
+            #606dbc !important,
+            #606dbc 10px !important,
+            #465298 10px !important,
+            #465298 20px !important
+          );
+    }
     `
   ],
   providers: [
@@ -128,6 +136,7 @@ export class DayViewSchedulerComponent extends CalendarDayViewComponent
   @Output() public newChange = new EventEmitter();
   ngOnInit()
   {
+    console.log(this.eventTemplate);
   this.alertController = new AlertController();
 this.httpClient = new HttpClient(this.httpHandler);
 this.dashboardService = new DashboardService(this.httpClient);
@@ -136,6 +145,7 @@ this.flashService = new FlashMessageService();
 
   getEvent(eventDay: any) 
   {
+    
       this.newChange.emit(eventDay);
   }
 

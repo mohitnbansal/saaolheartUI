@@ -36,4 +36,9 @@ updateSales(res:any): Observable<any> {
 printSalesRecipt(res:any):Observable<any>{
   return this.http.post<any>(environment.apiUrl + 'sales/printRecipt', res, this.httpOptions);
 }
+
+emailReciept(res:any):Observable<any>{
+  return this.http.post<any>(environment.apiUrl + 'sales/emailreciept', res, this.httpOptions);
+}
+
 }

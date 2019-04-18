@@ -1,7 +1,9 @@
+import { PipesModule } from './../../../pipes/pipes.module';
+import { AadharTranformPipe } from './../../../pipes/aadhar/aadhar-tranform.pipe';
 import { OwlDialogModule } from 'ng-pick-datetime/dialog';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -25,9 +27,11 @@ const routes: Routes = [
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     OwlDialogModule,
-
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    PipesModule
   ],
-  declarations: [CustomerRegistrationPage]
+  declarations: [CustomerRegistrationPage],
+  exports:[CustomerRegistrationPage],
+  providers:[DatePipe]
 })
 export class CustomerRegistrationPageModule {}

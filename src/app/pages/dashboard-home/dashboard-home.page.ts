@@ -60,7 +60,9 @@ export class DashboardHomePage implements OnInit ,AfterViewInit{
       color: colors.blue
     }
   ];
-  
+  model: any;
+  rowsPayment =  [];
+  rowsPaymentFilter = [];
   viewDate = new Date();
   events: CalendarEvent[] =[];
   refresh: Subject<any> = new Subject();
@@ -81,7 +83,7 @@ app.expectedTime = event.start;
     this.dashboardService.changeScheduling(app).subscribe((res)=>{
       this.flashService.show(res.error,4000);
     },(err)=>{
-      this.flashService.show(err.error,4000);
+      this.flashService.show(err.error.error,4000);
     });
     this.events = [...this.events];
   }
@@ -96,13 +98,11 @@ app.machineNo = event.meta.user.id;
 this.dashboardService.changeScheduling(app).subscribe((res)=>{
   this.flashService.show(res.error,4000);
 },(err)=>{
-  this.flashService.show(err.error,4000);
+  this.flashService.show(err.error.error,4000);
 });
      this.events = [...this.events];
   }
-  model: any;
-  rowsPayment =  [];
-  rowsPaymentFilter = [];
+
   constructor(public dashboardService:DashboardService,
     public modalController:ModalController,
     public flashService:FlashMessageService,
@@ -172,11 +172,11 @@ this.getPateintsQueueList(null);
               ele.event.meta.appointmentDetail['end'] =  ele.event.end;
               ele.event.meta.appointmentDetail['machineNo'] =  ele.event.meta.user.id;
             this.dashboardService.updateTreatmentSchedule(ele.event.meta.appointmentDetail).subscribe((res)=>{
-this.dashboardService.change.emit();
-this.flashService.show(res.error, 5000);
+              this.getPateintsQueueList(null);
+              this.flashService.show(res.error, 5000);
 
             },(err)=>{
-              this.flashService.show(err.error, 5000);
+              this.flashService.show(err.error.error, 5000);
 
             });
 
@@ -214,6 +214,8 @@ this.refresh.next();
         //eve.start = addHours(startOfDay(ele.expectedTime), getTime(ele.expectedTime));
         if (ele.isVisitDone === 'Completed') {
           eve.cssClass = 'strike';
+        } else {
+          eve.cssClass = 'nonstrike';
         }
         eve.start = parse(ele.expectedTime);
         eve.end = addHours(parse(ele.expectedTime), 1);
@@ -239,6 +241,18 @@ this.refresh.next();
   console.log(this.events);
   }
   async markAppointmentAlert(appoint:any) {
+    console.log(appoint);
+    if(appoint.isVisitDone === 'Completed') {
+const err = [];
+err.push('Customer BCA Appointment Already Completed');
+this.flashService.show(err, 6000);
+    } else if(appoint.isVisitDone === 'Cancelled'){
+      const err = [];
+      err.push('Customer BCA Appointment Cancelled');
+      this.flashService.show(err, 6000);
+    }
+    
+    else {
     const alert = await this.alertController.create({
       header: 'Is Visit Done?',
       inputs: [
@@ -276,15 +290,17 @@ this.refresh.next();
         }
       ]
     });
-
+  
     await alert.present();
+    }
   }
 
 markAppointmentStatus(res: any) {
   this.dashboardService.markPatientAppointment(res).subscribe(( res ) => {
-console.log(res);
+    this.flashService.show(res.error, 6000);
+    this.getPateintsQueueList(null);
   }, (err) => {
-console.log(err);
+this.flashService.show(err.error.error, 6000);
   });
 }
 

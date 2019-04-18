@@ -53,11 +53,13 @@ const val = event.target.value.toLowerCase();
       console.log(res)
       this.stockList = res;
       this.rows = res;
+      if(res !== null && res.length > 0) {
       this.columns = Object.keys(res[0]).map((key) => {
          return {
            'prop': key
          };
        });
+      }
            }, (err) => {
      console.log(err);
            });

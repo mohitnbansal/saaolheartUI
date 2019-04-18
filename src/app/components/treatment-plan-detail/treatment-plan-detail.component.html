@@ -75,15 +75,23 @@
 <ion-item-divider class="divider">
 </ion-item-divider>
 <br> -->
+<ion-item>
+    <ion-label position="floating">Select Invoice Ref</ion-label>
+    <ion-select (ionChange)="changeTreatmentPlanTable($event)" interface="popover" ngDefaultControl  id="treatmentPlanId">
+        <ion-select-option *ngFor="let treat of treatMentOptionList" value="{{treat.value}}">{{treat.text}}</ion-select-option>
+    </ion-select>
+</ion-item>
 <ion-grid>
     <ion-row class="divider">
         <ion-col>
-            <ion-note color="primary"><b><u><h2>Treatment Plan Details History</h2></u></b></ion-note>
+            <ion-note color="primary"><b><u><h2>ECP Treatment Plan Details History</h2></u></b></ion-note>
         </ion-col>
     </ion-row>
     <ion-row>
         <ion-col no-padding>
-            <ngx-datatable no-padding class="material fullscreenManual" [headerHeight]="50" [scrollbarH]='true' [limit]="5" [columnMode]="'flexi'" [footerHeight]="50" [rowHeight]="'auto'" [rows]="rowsTreatmentDetail">
+            <ngx-datatable no-padding class="material fullscreenManual"
+             [headerHeight]="50" [scrollbarH]='true' [limit]="10" [columnMode]="'flexi'" 
+             [footerHeight]="50" [rowHeight]="'auto'" [rows]="rowsTreatmentDetail">
                 <ngx-datatable-column name="Treatment Date">
                     <ng-template ngx-datatable-cell-template let-value="value">
                         {{value | date : 'MMM d, y, h:mm:ss a' }}
@@ -91,29 +99,52 @@
                 </ngx-datatable-column>
                 <ngx-datatable-column name="Duration">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        {{row.duration}}
+                        {{row.duration |  slice:2}}
                     </ng-template>
                 </ngx-datatable-column>
-                <!-- <ngx-datatable-column name="Beginning B.P.">
+                <ngx-datatable-column name="Visit Status">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        {{row.begBp}}
+                        {{row.isTreatmentDone}}
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Beginning H.P.">
+                <ngx-datatable-column name="Complaints">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        {{row.begHp}}
+                        {{row.complaints}}
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="End B.P.">
-                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        {{row.endBp}}
+            </ngx-datatable>
+
+
+        </ion-col>
+    </ion-row>
+</ion-grid>
+
+<ion-grid>
+    <ion-row class="divider">
+        <ion-col>
+            <ion-note color="primary"><b><u><h2>BCA Treatment Plan Details History</h2></u></b></ion-note>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col no-padding>
+            <ngx-datatable no-padding class="material fullscreenManual"
+             [headerHeight]="50" [scrollbarH]='true' [limit]="10" [columnMode]="'flexi'" 
+             [footerHeight]="50" [rowHeight]="'auto'" [rows]="rowsTreatmentDetailBca">
+                <ngx-datatable-column name="Treatment Date">
+                    <ng-template ngx-datatable-cell-template let-value="value">
+                        {{value | date : 'MMM d, y, h:mm:ss a' }}
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="End H.P.">
+                <ngx-datatable-column name="Duration">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        {{row.endHp}}
+                        {{row.duration |  slice:2}}
                     </ng-template>
-                </ngx-datatable-column> -->
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Visit Status">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                        {{row.isTreatmentDone}}
+                    </ng-template>
+                </ngx-datatable-column>
                 <ngx-datatable-column name="Complaints">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                         {{row.complaints}}

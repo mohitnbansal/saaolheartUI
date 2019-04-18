@@ -111,8 +111,12 @@ private updateInvoiceAndPaymentDomain(obj: any) {
       console.log(res);
       this.rowsTreatmentInvoice.push(res.document);
       this.rowsTreatmentInvoice = [...this.rowsTreatmentInvoice];
+      const val: any = [];
+      val.push(res.document);
+      this.updateInvoiceAndPaymentDomain(val as any)
       this.flashProvider.show(res.error , 4000);
      }, (err) => {
+       console.log(err)
        this.flashProvider.show(err.error  , 4000);
      }) ;
   }
@@ -207,7 +211,7 @@ private updateInvoiceAndPaymentDomain(obj: any) {
     const day = d.getDay();
     
     // Prevent Saturday and Sunday from being selected.
-    return day !== 0 && day !== 6 ;
+    return day !== 0 ;
 }
 
 }

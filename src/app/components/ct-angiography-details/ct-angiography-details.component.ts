@@ -123,18 +123,18 @@ private updateInvoiceAndPaymentDomain(obj:any) {
 }
 updateSingleInvoiceDomainAndAllPaymentList(list:any){
 
-  list.invoiceDomain.invoiceReciptList.filter((val) => {
+  list.invoiceReciptList.filter((val) => {
     this.rowsPayment.push(val);
   });
   this.rowsPayment = [...this.rowsPayment];
   let ind: any;
   this.rowsInvoice.forEach((ele,index)=>{
-if(ele.id===list.invoiceDomain.id){
+if(ele.id===list.id){
 ind = index;
 }
   });
   if(ind!=null){
-  this.rowsInvoice[ind] = list.invoiceDomain;
+  this.rowsInvoice[ind] = list;
   this.rowsInvoice = [...this.rowsInvoice];
   }
 }
@@ -178,6 +178,15 @@ ind = index;
     this.editingCtAngio[rowIndex + '-' + cell] = false;
     this.rowsCtAngio[rowIndex][cell] = event.target.value;
   }
+  updateDataValue(eve: any, tar: string) {
+    
+    let val: any;
+ 
+      val = eve.target.value;
+  
+    this.ctAngioForm.get(tar).setValue(val);
+  }
+
   updateValueInvoice(event, cell, rowIndex) {
     /**
      * Bug needs to be solved the Balance amount not getting reset to original DB amount when entered zero
@@ -271,12 +280,16 @@ ind = index;
       console.log(errr);
      });
       }
+
       generateReciept(event, cell, rowIndex, row) {
         console.log(row);
        this.customerService.generateReciept(row).subscribe((res) => {
+        this.updateSingleInvoiceDomainAndAllPaymentList(res.document);
           console.log(res);
+          this.flashProvider.show(res.error, 5000);
        }, (err) => {
          console.log(err);
+         this.flashProvider.show(err.error, 5000);
        });
       }
       getRowClass = (row) => {
@@ -290,4 +303,12 @@ ind = index;
           }
         }
         }
+
+        
+  public myFilter = (d: Date): boolean => {
+    const day = d.getDay();
+    
+    // Prevent Saturday and Sunday from being selected.
+    return day !== 0;
+}
     }

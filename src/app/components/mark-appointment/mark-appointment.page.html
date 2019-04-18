@@ -26,8 +26,9 @@
         <!-- <input  [owlDateTime]="dt1" [(ngModel)]="duration"  [owlDateTimeTrigger]="dt1" placeholder="Date Time">
         <owl-date-time #dt1 hour12Timer="true" [pickerType]="'timer'" stepHour="1" stepMinute="30"> </owl-date-time> -->
         <ion-select interface="popover" [(ngModel)]="duration" placeholder="select duration">
-            <ion-select-option value="1">1 hr</ion-select-option>
-            <ion-select-option value=".30">30 min</ion-select-option>
+            <ion-select-option value="60">1 hr</ion-select-option>
+            <ion-select-option value="30">30 min</ion-select-option>
+            <ion-select-option value="0">0 min</ion-select-option>
                 </ion-select>
     </ion-item>
     <ion-item>

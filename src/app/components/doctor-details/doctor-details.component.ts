@@ -11,7 +11,7 @@ import { Component, OnInit, OnChanges, DoCheck, Input, AfterViewInit } from '@an
   styleUrls: ['./doctor-details.component.scss']
 })
 export class DoctorDetailsComponent implements OnInit {
-  doctorDetailsForm: FormGroup;
+  doctorDetailsForm: FormGroup = <FormGroup>{};
   invoiceMasterType: any;
   doctorDetailfromDb: any;
   invoiceTypeId: number;
@@ -41,14 +41,27 @@ export class DoctorDetailsComponent implements OnInit {
 constructor(public activate: ActivatedRoute, public fb: FormBuilder,
   public customerService: CustomerService,
   public flashProvider: FlashMessageService) {
-  this.doctorDetailfromDb = this.activate.snapshot.data['data'];
-  this.invoiceMasterType = this.activate.snapshot.data['invoiceType'];
-  
+    this.doctorDetailfromDb = this.activate.snapshot.data['data'];
+    this.invoiceMasterType = this.activate.snapshot.data['invoiceType'];
+      
   this.invoiceMasterType.forEach(element => {
-   if (element.typeName === 'DOCTOR CONSULTATION') {
-  this.invoiceTypeId = element.id;
-   }
-  });
+    if (element.typeName === 'DOCTOR CONSULTATION') {
+   this.invoiceTypeId = element.id;
+    }
+   });
+    this.doctorDetailsForm = this.createForm({
+      id: [],
+      consulationDate:  [],
+      consultationBy: ['', Validators.compose([Validators.required])],
+      daignosisSummary: ['', Validators.compose([Validators.required])],
+      testSuggested: [''],
+      typeOfTreatement:  [,Validators.compose([Validators.required])],
+      invoice:  [],
+      customerId: [this.doctorDetailfromDb.id],
+      invoiceTotalamt: [, Validators.required],
+      invoiceMasterTypeId: [this.invoiceTypeId]
+    });
+
 
  this.rowsDoctor = this.doctorDetailfromDb.doctorConsultationList;
  if (this.doctorDetailfromDb.doctorConsultationList.length > 0  ) {
@@ -58,9 +71,7 @@ constructor(public activate: ActivatedRoute, public fb: FormBuilder,
     };
   });
  }
-    this.updateInvoiceAndPaymentDomain(this.doctorDetailfromDb.doctorConsultationList);
-    console.log(this.doctorDetailfromDb.doctorConsultationList);
-   
+    this.updateInvoiceAndPaymentDomain(this.doctorDetailfromDb.doctorConsultationList);   
 }
 
 updateSingleInvoiceDomainAndAllPaymentList(list:any){
@@ -118,19 +129,7 @@ if(!(row.invoiceStatus=='Total Payment Pending' ||  row.invoiceStatus=='Partiall
   }
  
   ngOnInit() {
-   
-          this.doctorDetailsForm = this.createForm({
-            id: [],
-            consulationDate:  [],
-            consultationBy: [''],
-            daignosisSummary: [''],
-            testSuggested: [''],
-            typeOfTreatement:  [],
-            invoice:  [],
-            customerId: [this.doctorDetailfromDb.id],
-            invoiceTotalamt: [, Validators.required],
-            invoiceMasterTypeId: [this.invoiceTypeId]
-          });
+
      
   }
  
@@ -239,6 +238,6 @@ this.updateSingleInvoiceDomainAndAllPaymentList(res.document);
     const day = d.getDay();
     
     // Prevent Saturday and Sunday from being selected.
-    return day !== 0 && day !== 6 ;
+    return day !== 0;
 }
 }

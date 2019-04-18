@@ -16,9 +16,9 @@ temp = [];
   constructor(public activate:ActivatedRoute) { 
 
     this.salesList = this.activate.snapshot.data['dataList'];
-
+if(this.salesList.document !== null) {
     this.temp = [...this.salesList.document];
-
+}
       // push our inital complete list
       this.rows = this.salesList.document;
 

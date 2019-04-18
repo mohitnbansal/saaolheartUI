@@ -16,6 +16,7 @@ treatmentPlanForm: FormGroup;
 treatmentPlanFromDb: any;
 invoiceMasterType: any;
 treatMentOptionList: any = [{}];
+
 /**
    * Ct Angio Row Details
    */
@@ -23,22 +24,19 @@ treatMentOptionList: any = [{}];
   rowsTreatmentDetail = [];
   columnsTreatmentDetail = [];
 
+  rowsTreatmentDetailBca = [];
+
   constructor(public activate: ActivatedRoute, public fb: FormBuilder,
     public customerService: CustomerService,
     public flashProvider: FlashMessageService) {
     this.treatmentPlanFromDb = this.activate.snapshot.data['data'];
     this.invoiceMasterType = this.activate.snapshot.data['invoiceType'];
- 
+ console.log(this.treatmentPlanFromDb.treatmentPlanList)
     if(this.treatmentPlanFromDb.treatmentPlanList.length > 0) {
+      this.treatMentOptionList = [];
       this.treatmentPlanFromDb.treatmentPlanList.forEach( (element, k )  => {
-        this.treatMentOptionList.push({text: element.treatmentMaster.treatmentName + '- Inv Ref' + element.invoiceDomain.id 
+        this.treatMentOptionList.push({text: element.treatmentMaster.treatmentName + '- Inv Ref No :- ' + element.invoiceDomain.id 
                                         , value: element.id});
-                  if (element.treatmentPlanDetailsList.length > 0) {
-                    element.treatmentPlanDetailsList.forEach(childEle => {
-                     
-                      this.rowsTreatmentDetail.push(childEle);
-                    });
-                  }
       });
 
     }
@@ -55,37 +53,32 @@ treatMentOptionList: any = [{}];
        }
  
 }
+changeTreatmentPlanTable(event: any) {
 
-  ngOnInit() {
-    this.treatmentPlanForm = this.createForm({
-      id: [],
-      treatmentDate: [],
-      duration: [],
-      begBp: [],
-      begHp:  [],
-      endBp: [],
-      endHp:  [],
-      complaints: [],
-      treatmentPlanId: []
+  
+  this.treatmentPlanFromDb.treatmentPlanList.forEach( (element, k )  => {
+
+  if (element.treatmentPlanDetailsList.length > 0) {
+    if (Number(event.target.value) === Number(element.id)) {
+      console.log(element.id);
+    element.treatmentPlanDetailsList.forEach(childEle => {
+if (childEle.treatmentType === 'Treatment ECP') {
+  this.rowsTreatmentDetail.push(childEle);
+} else {
+  this.rowsTreatmentDetailBca.push(childEle);
+}
+
+     
     });
+    this.rowsTreatmentDetailBca = [...this.rowsTreatmentDetailBca];
+    this.rowsTreatmentDetail = [...this.rowsTreatmentDetail];
+  }
+  }
+});
+}
+  ngOnInit() {
 
   }
-  private createForm(model: TreatmentPlanDetails): FormGroup {
-    return this.fb.group(model);
-  }
 
-  updateDataValue(eve: any, tar: string) {
-    console.log(eve.target.value);
-    this.treatmentPlanForm.get(tar).setValue(eve.target.value);
-  }
 
-  onSubmit() {
-    console.log(this.treatmentPlanForm.value);
-    this.customerService.saveTreatmentPlanDetails(this.treatmentPlanForm.value).subscribe((res) => {
-      console.log(res);
-      this.flashProvider.show('Treatement Plan Details  Succesfully Added!' , 4000);
-     }, (err) => {
-       this.flashProvider.show('Unable to update Treatement Plan Details!' , 4000);
-     }) ;
-  }
 }

@@ -28,7 +28,7 @@ export class MarkAppointmentPage implements OnInit {
       duration : this.duration, complaints :this.complaints}
     this.modalCtrl.dismiss(dat);
     }else{
-          this.flasService.show('Please enter all data related to Update',4000);
+          this.flasService.show('Please enter all data related to Update', 4000);
     }
   }
 }

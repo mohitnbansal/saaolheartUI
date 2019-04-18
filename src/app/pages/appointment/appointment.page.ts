@@ -1,9 +1,11 @@
 import { FlashMessageService } from 'src/app/services/flash/flash-message.service';
 import { AlertController } from '@ionic/angular';
 import { DashboardService } from 'src/app/services/dashboard/dashboard.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Pipe } from '@angular/compiler/src/core';
-import { formatDate } from '@angular/common';
+import { formatDate, DatePipe } from '@angular/common';
+import { OwlDateTimeComponent } from 'ng-pick-datetime';
+import { Local } from 'protractor/built/driverProviders';
 
 @Component({
   selector: 'app-appointment',
@@ -16,12 +18,14 @@ export class AppointmentPage implements OnInit {
   columns = [];
   patientList = [];
   markAppointmentStat:any;
+
   constructor( public dashboardService: DashboardService,
     public alertController:AlertController,
-    public flashService: FlashMessageService) { 
+    public flashService: FlashMessageService,
+    public datePipe: DatePipe) { 
       this.getAllAppointmentList();
     
-      this.getListByDate(formatDate(new Date, 'dd-MM-yyyy', 'en-US', '+0530'));
+      this.getListByDate(new Date());
     }
 
   ngOnInit() {
@@ -38,8 +42,11 @@ console.log(err);
   });
 }
 getListByDate(res: any) {
-  console.log(res);
-this.dashboardService.getAppointmentForDate(res).subscribe((response) => {
+  // formatDate(res,'dd-MMM-yyy', 'us');
+  // // this.datePipe.transform(new Date(res), 'medium');
+  // console.log( formatDate(res,'dd-MMM-yyy', 'us'));
+  // console.log(formatDate(res, 'dd-MM-yyyy', 'en-US', '+0530'));
+this.dashboardService.getAppointmentForDate(formatDate(res, 'dd-MM-yyyy', 'en-US', '+0530')).subscribe((response) => {
   this.patientList = response.document;
 console.log(response);
 },(err) => {

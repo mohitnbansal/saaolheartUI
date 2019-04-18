@@ -71,6 +71,7 @@
                             <!-- <ion-virtual-scroll> -->
 
 
+                                    <div style="height: 300px; overflow-y: auto;" >
 
                             <ion-item class="ion-activatable" ion-activatable *ngFor="let patient of patientList">
                                 <ion-ripple-effect (click)="markAppointmentAlert(patient)"></ion-ripple-effect>
@@ -84,7 +85,7 @@
                                     </ion-label> 
 
                             </ion-item>
-
+</div>
                             <!-- </ion-virtual-scroll> -->
                         </ion-list>
                     </ion-card-content>
@@ -108,11 +109,11 @@
                             <ion-list-header>
                                 <ion-label>Customer's List</ion-label>
                             </ion-list-header>
-                            <ion-virtual-scroll [items]="bcaPateintList">
+                            <!-- <ion-virtual-scroll> -->
 
 
-
-                            <ion-item class="ion-activatable" ion-activatable *ngFor="let patient">
+<div style="height: 300px;  overflow-y: auto;" >
+                            <ion-item class="ion-activatable" ion-activatable *ngFor="let patient of bcaPateintList">
                                 <ion-ripple-effect (click)="markAppointmentAlert(patient)"></ion-ripple-effect>
                                 <ion-label>
                                     <h4>
@@ -132,8 +133,8 @@
                                 </ion-label>
 
                             </ion-item>
-
-                            </ion-virtual-scroll>
+                        </div>
+                            <!-- </ion-virtual-scroll> -->
                         </ion-list>
                     </ion-card-content>
                     <ion-row class="cardfooter">
@@ -265,19 +266,6 @@
                                     </ng-template>
                                 </ngx-datatable-column>
                             </ngx-datatable>
-                    </ion-card-content>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col>
-                <ion-card>
-                    <ion-card-header>
-                        Treatment Plan pending list
-                    </ion-card-header>
-                    <ion-card-content>
-
-
                     </ion-card-content>
                 </ion-card>
             </ion-col>

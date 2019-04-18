@@ -3,7 +3,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ComponentModule } from './../../components/component.module';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -28,8 +28,10 @@ const routes: Routes = [
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     OwlDialogModule,
+  
     RouterModule.forChild(routes)
   ],
+  providers:[DatePipe],
   declarations: [AppointmentPage]
 })
 export class AppointmentPageModule {}

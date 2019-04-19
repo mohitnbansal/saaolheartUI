@@ -17,10 +17,10 @@ datatable-scroller {
     white-space: pre-wrap
 }
 
- :host /deep/ .datatable-row-group {
+ :host  .datatable-row-group {
     will-change: transform;
 }
 
- :host /deep/ .ngx-datatable.material .datatable-header .datatable-row-right {
+ :host  .ngx-datatable.material .datatable-header .datatable-row-right {
     margin-left: -8px;
 }

@@ -385,7 +385,7 @@ getCustomerListBySearch(event:any){
     getHeight(): number {
         return 150;
     };
-    getStockListBySearch(event:any){
+    getStockListBySearch(event: any) {
   
   const val = event.target.value.toLowerCase();
     // get the amount of columns in the table

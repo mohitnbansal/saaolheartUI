@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl : 'http://162.241.201.133:8082/'
+  apiUrl : 'http://216-10-243-54.webhostbox.net:8082/'
 };

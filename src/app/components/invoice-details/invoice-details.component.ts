@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InvoiceDetailsComponent implements OnInit {
 
-  constructor() { }
+  constructor() { } 
 
   ngOnInit() {
   }

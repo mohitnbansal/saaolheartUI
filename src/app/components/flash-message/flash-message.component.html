@@ -1,4 +1,17 @@
-<div (click)="hide()" @messageState *ngIf="active" class="flash-container">
+<div (click)="hide()" @messageState *ngIf="activeRed" class="flash-container-red">
+
+    <!-- <div class="message">
+        {{message}}
+    </div> -->
+
+    <div *ngFor="let mess of message" class="message">  
+        <ol>
+            <li>{{mess}}</li>
+        </ol>
+    </div>
+
+</div>
+<div (click)="hide()" @messageState *ngIf="activeGreen" class="flash-container-green">
 
     <!-- <div class="message">
         {{message}}

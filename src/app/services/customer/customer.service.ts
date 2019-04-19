@@ -45,7 +45,7 @@ return this.http.post<Customer>(environment.apiUrl + 'customer/addcustomer', cus
     }
 
     printRecipt(invo: any): Observable<any> {
-      return this.http.post(environment.apiUrl + 'customer/printreciept', invo ,  { responseType : 'blob'});
+      return this.http.post(environment.apiUrl + 'customer/printreciept', invo ,   {responseType: 'blob' as 'json'} );
     }
 
     saveCtAngioDetails(doct: CtAngioDetails): Observable<any>{
@@ -71,5 +71,13 @@ return this.http.post<Customer>(environment.apiUrl + 'customer/addcustomer', cus
     
     getcustomeralltreatment(id: number): Observable<any> {
       return this.http.get<any>(environment.apiUrl + 'customer/getcustomeralltreatment/' + id, this.httpOptions);
+    }
+
+    saveFile(data: any, filename?: string) {
+      console.log(data)
+
+      const file = new Blob([data], { type: 'application/pdf' });
+      const fileURL = URL.createObjectURL(file);
+      window.open(fileURL);
     }
 }

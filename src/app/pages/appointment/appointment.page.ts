@@ -42,10 +42,7 @@ console.log(err);
   });
 }
 getListByDate(res: any) {
-  // formatDate(res,'dd-MMM-yyy', 'us');
-  // // this.datePipe.transform(new Date(res), 'medium');
-  // console.log( formatDate(res,'dd-MMM-yyy', 'us'));
-  // console.log(formatDate(res, 'dd-MM-yyyy', 'en-US', '+0530'));
+
 this.dashboardService.getAppointmentForDate(formatDate(res, 'dd-MM-yyyy', 'en-US', '+0530')).subscribe((response) => {
   this.patientList = response.document;
 console.log(response);
@@ -97,11 +94,11 @@ async markAppointmentAlert(appoint:any) {
 }else if(appoint.isVisitDone === 'Cancelled'){
   const err = [];
   err.push('Customer DR. Appointment Cancelled');
-  this.flashService.show(err, 6000);
+  this.flashService.showGreen(err, 6000);
 } else {
   let err = [];
   err.push('Pateint Appointment Already Completed');
-  this.flashService.show(err,5000);
+  this.flashService.showRed(err,5000);
 }
 }
 
@@ -110,7 +107,7 @@ markAppointmentStatus(res: any) {
 this.dashboardService.markPatientAppointment(res).subscribe(( res ) => {
   let err = [];
   err.push('Pateint Appointment Marked as Completed');
-this.flashService.show(err,5000);
+this.flashService.showGreen(err,5000);
 }, (err) => {
 console.log(err);
 });

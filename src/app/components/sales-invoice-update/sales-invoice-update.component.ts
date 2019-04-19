@@ -92,7 +92,7 @@ this.remove();
 console.log(err)
  });
 }else{
-  this.flash.show(arr,4000);
+  this.flash.showRed(arr,4000);
 }
     });
 

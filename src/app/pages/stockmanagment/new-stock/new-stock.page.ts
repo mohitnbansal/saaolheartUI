@@ -61,7 +61,7 @@ export class NewStockPage implements OnInit {
     console.log(this.stockform.value)
     this.stockservice.saveStock(this.stockform.value).subscribe((res) => {
 
-     this.flashProvider.show(res.error , 4000);
+     this.flashProvider.showGreen(res.error , 4000);
      this.stockform.reset();
      if (res.document.vistingFor === 'store') {
       //this.route.navigate(['store/' + res.document.id]);
@@ -69,7 +69,7 @@ export class NewStockPage implements OnInit {
     // this.route.navigate(['stock/details/' + res.document.id]);
      }
     }, (err) => {
-      this.flashProvider.show(err.error , 4000);
+      this.flashProvider.showRed(err.error , 4000);
     });
   }
 

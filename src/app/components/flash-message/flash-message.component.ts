@@ -19,31 +19,44 @@ import { FlashMessageService } from 'src/app/services/flash/flash-message.servic
 })
 export class FlashMessageComponent implements OnInit {
 
-  active = false;
+  activeGreen = false;
+  activeRed = false;
   message : any[] = [];
 
   constructor(public flashProvider: FlashMessageService) { 
     
    }
+   ngOnInit() {
+    this.flashProvider.showRed = this.showRed.bind(this);
+    this.flashProvider.showGreen = this.showGreen.bind(this);
 
-  ngOnInit() {
-    this.flashProvider.show = this.show.bind(this);
     this.flashProvider.hide = this.hide.bind(this);
   }
 
-  show(mes, duration) {
-   console.log(mes);
-      this.message = mes;
-      this.active = true;
+  showGreen(message, duration) {
+
+    this.message = message;
+    this.activeGreen = true;
+
+    setTimeout(() => {
+        this.activeGreen = false;
+    }, duration);
+
+}
+
+  showRed(message, duration) {
+
+      this.message = message;
+      this.activeRed = true;
 
       setTimeout(() => {
-          this.active = false;
+          this.activeRed = false;
       }, duration);
 
   }
 
   hide() {
-      this.active = false;
+      this.activeRed = false;
+      this.activeGreen = false;
   }
-
 }

@@ -8,10 +8,17 @@ export class FlashMessageService {
   constructor() { }
 
 
-  show(mess, duration) {
+  // show(mess, duration) {
+
+  // }
+
+  showGreen(message,duration){
 
   }
-
+  
+  showRed(message,duration){
+    
+  }
   hide() {
 
   }

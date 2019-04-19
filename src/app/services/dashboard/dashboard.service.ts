@@ -86,4 +86,9 @@ getAppointmentForDate(res:any): Observable<any> {
 getAllAppointment(): Observable<any> {
   return this.http.get(environment.apiUrl + 'dashboard/getalldoctorappointment' );
 }
+
+getLowStockList(): Observable<any> {  
+  return this.http.get(environment.apiUrl + 'dashboard/getlowstocks?limit=' + 10 );
+
+}
 }

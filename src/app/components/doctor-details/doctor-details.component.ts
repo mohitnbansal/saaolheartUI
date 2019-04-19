@@ -156,10 +156,10 @@ console.log(res)
       val.push(res.document);
       this.updateInvoiceAndPaymentDomain(val as any)
 
-      this.flashProvider.show(res.error , 4000);
+      this.flashProvider.showGreen(res.error , 4000);
      }, (err) => {
        console.log(err)
-      this.flashProvider.show(err.error , 4000);
+      this.flashProvider.showRed(err.error , 4000);
      }) ;
   }
   
@@ -176,7 +176,7 @@ console.log(res)
       } else if (newBalAmt < 0 ) {
         let err = new Array<string>();
         err.push('Kindly Enter Amount Less than the balance amount')
-        this.flashProvider.show(err, 5000);
+        this.flashProvider.showRed(err, 5000);
         event.target.value = '';
         return;
       } else {
@@ -217,10 +217,10 @@ const a = document.createElement('a');
    this.customerService.generateReciept(row).subscribe((res) => {
 this.updateSingleInvoiceDomainAndAllPaymentList(res.document);
       console.log(res);
-      this.flashProvider.show(res.error, 5000);
+      this.flashProvider.showGreen(res.error, 5000);
    }, (err) => {
      console.log(err);
-     this.flashProvider.show(err.error, 5000);
+     this.flashProvider.showRed(err.error, 5000);
    });
   }
   updateDataValue(eve: any, tar: string) {

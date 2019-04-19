@@ -29,6 +29,7 @@ import { StockPurchaseHistroyComponent } from './stock-purchase-histroy/stock-pu
 import { SalesInvoiceInfoComponent } from './sales-invoice-info/sales-invoice-info.component';
 import { SalesInvoiceUpdateComponent } from './sales-invoice-update/sales-invoice-update.component';
 import { SalesInvoiceHistoryComponent } from './sales-invoice-history/sales-invoice-history.component';
+import { ToolpopComponent } from './toolpop/toolpop.component';
 
 @NgModule({
   declarations: [HeaderComponent,
@@ -47,7 +48,8 @@ import { SalesInvoiceHistoryComponent } from './sales-invoice-history/sales-invo
        StockPurchaseHistroyComponent,
        SalesInvoiceInfoComponent,
        SalesInvoiceUpdateComponent,
-       SalesInvoiceHistoryComponent],
+       SalesInvoiceHistoryComponent,
+      ToolpopComponent],
   imports: [
     CommonModule,
     NgxDatatableModule,
@@ -58,7 +60,7 @@ import { SalesInvoiceHistoryComponent } from './sales-invoice-history/sales-invo
     OwlNativeDateTimeModule,
     OwlDialogModule
   ],
- entryComponents:[],
+ entryComponents:[ToolpopComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [HeaderComponent,
      CustomerDetailComponent,
@@ -76,8 +78,10 @@ import { SalesInvoiceHistoryComponent } from './sales-invoice-history/sales-invo
       StockPurchaseHistroyComponent,
       SalesInvoiceInfoComponent,
       SalesInvoiceUpdateComponent,
-      SalesInvoiceHistoryComponent
+      SalesInvoiceHistoryComponent,
+      ToolpopComponent
       ],
-      providers:[]
+      providers:[],
+    
 })
 export class ComponentModule { }

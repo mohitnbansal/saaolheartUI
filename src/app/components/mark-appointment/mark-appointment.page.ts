@@ -23,12 +23,12 @@ export class MarkAppointmentPage implements OnInit {
   }
 
   closeModel() {
-    if(this.isVisitDone != null && this.duration != null && this.complaints!=null){
+    if(this.isVisitDone != null && this.duration != null && this.complaints != null) {
     const dat = {isVisitDone: this.isVisitDone,
       duration : this.duration, complaints :this.complaints}
     this.modalCtrl.dismiss(dat);
     }else{
-          this.flasService.show('Please enter all data related to Update', 4000);
+          this.flasService.showRed('Please enter all data related to Update', 4000);
     }
   }
 }

@@ -36,10 +36,10 @@ public stockView:Stock = <Stock>{};
   
    console.log(this.stockView)
 this.stockService.updateStock(this.stockView).subscribe((res)=>{
-this.flashservice.show(res.error,5000)}
+this.flashservice.showGreen(res.error,5000)}
 ,
 (err) => {
-  this.flashservice.show(err.error.error, 5000);
+  this.flashservice.showRed(err.error.error, 5000);
 });
   }
 }

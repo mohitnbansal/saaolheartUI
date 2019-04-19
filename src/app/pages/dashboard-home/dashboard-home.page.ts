@@ -1,3 +1,4 @@
+import { Stock } from './../../interfaces/stock';
 import { DoctorConsultation } from './../../interfaces/doctorconsultaion';
 import { Appointment } from './../../interfaces/appointment';
 import { ActivatedRoute } from '@angular/router';
@@ -27,6 +28,9 @@ import { SearchUpdateScheduleComponent } from 'src/app/components/search-update-
   styleUrls: ['./dashboard-home.page.scss'],
 })
 export class DashboardHomePage implements OnInit ,AfterViewInit{
+  public stockList : Stock[];
+  public rowsStock : Stock[];
+  public  columnsStock: any[];
   public patientList: any = [];
   public patientQueList: any[] = [];
   public bcaPateintList: any[] = [];
@@ -81,9 +85,9 @@ export class DashboardHomePage implements OnInit ,AfterViewInit{
 app = event.meta.appointmentDetail;
 app.expectedTime = event.start;
     this.dashboardService.changeScheduling(app).subscribe((res)=>{
-      this.flashService.show(res.error,4000);
+      this.flashService.showGreen(res.error,4000);
     },(err)=>{
-      this.flashService.show(err.error.error,4000);
+      this.flashService.showRed(err.error.error,4000);
     });
     this.events = [...this.events];
   }
@@ -96,9 +100,9 @@ app.expectedTime = event.start;
 app = event.meta.appointmentDetail;
 app.machineNo = event.meta.user.id;
 this.dashboardService.changeScheduling(app).subscribe((res)=>{
-  this.flashService.show(res.error,4000);
+  this.flashService.showGreen(res.error,4000);
 },(err)=>{
-  this.flashService.show(err.error.error,4000);
+  this.flashService.showRed(err.error.error,4000);
 });
      this.events = [...this.events];
   }
@@ -121,10 +125,17 @@ this.dashboardService.changeScheduling(app).subscribe((res)=>{
   }
   
   ngOnInit() {
-    this.patientList = this.activate.snapshot.data['data'].document != null ?  this.activate.snapshot.data['data'].document: [];
-    this.patientQueList = this.activate.snapshot.data['patientQue'] != null ?  this.activate.snapshot.data['patientQue']: [];
-    this.rowsPayment = this.activate.snapshot.data['patientPendingList'].document != null ?  this.activate.snapshot.data['patientPendingList'].document: [];
-console.log(this.rowsPayment);
+    this.patientList = this.activate.snapshot.data['data'].document != null ?  this.activate.snapshot.data['data'].document : [];
+    this.patientQueList = this.activate.snapshot.data['patientQue'] != null ?  this.activate.snapshot.data['patientQue'] : [];
+    this.rowsPayment = this.activate.snapshot.data['patientPendingList'].document != null ? 
+                       this.activate.snapshot.data['patientPendingList'].document : [];
+    this.rowsStock = this.activate.snapshot.data['lowStock'].document != null ?
+                         this.activate.snapshot.data['lowStock'].document :  [];
+    
+    console.log(this.rowsPayment);
+    if(this.rowsStock.length > 0) {
+    this.rowsStock = [...this.rowsStock];
+    }
     this.rowsPayment = [...this.rowsPayment];
     this.getPateintsQueueList(this.patientQueList);
   
@@ -142,7 +153,7 @@ ngAfterViewInit(){
     if(res.event.cssClass==='strike'){
 let arr = [];
 arr.push("Appointment Already Marked as completed");
-this.flashService.show(arr,5000);
+this.flashService.showRed(arr,5000);
     }else{
     this.presentModal(res);
    } });
@@ -173,10 +184,10 @@ this.getPateintsQueueList(null);
               ele.event.meta.appointmentDetail['machineNo'] =  ele.event.meta.user.id;
             this.dashboardService.updateTreatmentSchedule(ele.event.meta.appointmentDetail).subscribe((res)=>{
               this.getPateintsQueueList(null);
-              this.flashService.show(res.error, 5000);
+              this.flashService.showGreen(res.error, 5000);
 
             },(err)=>{
-              this.flashService.show(err.error.error, 5000);
+              this.flashService.showRed(err.error.error, 5000);
 
             });
 
@@ -245,11 +256,11 @@ this.refresh.next();
     if(appoint.isVisitDone === 'Completed') {
 const err = [];
 err.push('Customer BCA Appointment Already Completed');
-this.flashService.show(err, 6000);
+this.flashService.showRed(err, 6000);
     } else if(appoint.isVisitDone === 'Cancelled'){
       const err = [];
       err.push('Customer BCA Appointment Cancelled');
-      this.flashService.show(err, 6000);
+      this.flashService.showGreen(err, 6000);
     }
     
     else {
@@ -297,10 +308,10 @@ this.flashService.show(err, 6000);
 
 markAppointmentStatus(res: any) {
   this.dashboardService.markPatientAppointment(res).subscribe(( res ) => {
-    this.flashService.show(res.error, 6000);
+    this.flashService.showGreen(res.error, 6000);
     this.getPateintsQueueList(null);
   }, (err) => {
-this.flashService.show(err.error.error, 6000);
+this.flashService.showRed(err.error.error, 6000);
   });
 }
 
@@ -369,4 +380,30 @@ getCustomerListBySearch(event:any){
       }
     });
   }
+
+
+    getHeight(): number {
+        return 150;
+    };
+    getStockListBySearch(event:any){
+  
+  const val = event.target.value.toLowerCase();
+    // get the amount of columns in the table
+    const colsAmt = this.columnsStock.length;
+    // get the key names of each column in the dataset
+    const keys = Object.keys(this.stockList[0]);
+    // assign filtered matches to the active datatable
+    this.rowsStock = this.stockList.filter(function(item){
+      // iterate through each row's column data
+      for (let i = 0; i < colsAmt; i++) {
+        // check for a match
+        if(item[keys[i]] !=  null) {
+        if (item[keys[i]].toString().toLowerCase().indexOf(val) !== -1 || !val){
+          // found match, return true to add to result set
+          return true;
+        }
+        }
+      }
+    });
+  };
 }

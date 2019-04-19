@@ -161,7 +161,7 @@ console.log(err);
     console.log(this.customerSaleData);
     this.salesService.saveStock(this.customerSaleData).subscribe((res)=>{
       console.log(res);
-      this.flashService.show(res.error,4000);
+      this.flashService.showGreen(res.error,4000);
       this.resetForm();
 if(action==='print'){
       this.salesService.printSalesRecipt(res.document).subscribe((response)=>{
@@ -178,7 +178,7 @@ if(action==='print'){
     }
 
     }, (err) => {
-      this.flashService.show(err.error,4000);
+      this.flashService.showRed(err.error,4000);
       console.log(err);
     });
   }

@@ -114,10 +114,10 @@ private updateInvoiceAndPaymentDomain(obj: any) {
       const val: any = [];
       val.push(res.document);
       this.updateInvoiceAndPaymentDomain(val as any)
-      this.flashProvider.show(res.error , 4000);
+      this.flashProvider.showGreen(res.error , 4000);
      }, (err) => {
        console.log(err)
-       this.flashProvider.show(err.error  , 4000);
+       this.flashProvider.showRed(err.error  , 4000);
      }) ;
   }
   updateDataValue(eve: any, tar: string) {
@@ -134,7 +134,7 @@ private updateInvoiceAndPaymentDomain(obj: any) {
       if (isNaN(newBalAmt)) {
 
       } else if (newBalAmt < 0 ) {
-        this.flashProvider.show('Kindly Enter Amount Less than the balance amount', 5000);
+        this.flashProvider.showRed('Kindly Enter Amount Less than the balance amount', 5000);
         event.target.value = '';
         return;
       } else {
@@ -155,14 +155,9 @@ private updateInvoiceAndPaymentDomain(obj: any) {
 
   printReciept(event, cell, rowIndex, row) {
     this.customerService.printRecipt(row).subscribe((res) => {
-     console.log(res);
-    // const blob = new Blob([data], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(res);
-    // window.open(url); if Image needs to open in new tab
-    const a = document.createElement('a');
-      a.href = url;
-      a.download = 'File.pdf';
-      a.click();
+      const filename = 'in.pdf';
+ console.log(res)
+      this.customerService.saveFile(res, filename);
     }  , (errr) => {
       console.log(errr);
      });
@@ -174,10 +169,10 @@ private updateInvoiceAndPaymentDomain(obj: any) {
    this.customerService.generateReciept(row).subscribe((res) => {
       console.log(res);
       this.updateSingleInvoiceDomainAndAllPaymentList(res.document);
-      this.flashProvider.show(res.error, 5000);
+      this.flashProvider.showGreen(res.error, 5000);
    }, (err) => {
      console.log(err);
-     this.flashProvider.show(err.error, 5000);
+     this.flashProvider.showRed(err.error, 5000);
    });
   }
   getRowClass = (row) => {

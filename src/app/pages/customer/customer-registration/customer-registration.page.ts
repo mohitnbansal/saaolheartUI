@@ -83,7 +83,7 @@ export class CustomerRegistrationPage implements OnInit, OnChanges , AfterViewIn
 console.log(this.custformGroup)
     this.customerService.saveCustomer(this.custformGroup.value).subscribe((res) => {
 console.log(res.error)
-      this.flashProvider.show(res.error , 4000);
+      this.flashProvider.showGreen(res.error , 4000);
      this.custformGroup.reset();
      if (res.document.vistingFor === 'store') {
       //this.route.navigate(['store/' + res.document.id]);
@@ -91,7 +91,7 @@ console.log(res.error)
      this.route.navigate(['customer/details/' + res.document.id]);
      }
     }, (err) => {
-      this.flashProvider.show(err.error , 4000);
+      this.flashProvider.showRed(err.error , 4000);
     }) ;
 
   }

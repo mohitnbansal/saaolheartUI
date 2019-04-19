@@ -1,4 +1,4 @@
-.flash-container {
+.flash-container-red {
     position: absolute;
     top: 10;
     width: 100%;
@@ -6,6 +6,19 @@
     color: #fff;
     background-color: #ff7675;
     border: 1px solid #d63031;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.flash-container-green {
+    position: absolute;
+    top: 10;
+    width: 100%;
+    height: 56px;
+    color: #fff;
+    background-color: lightgreen;
+    border: 1px solid green;
     z-index: 1;
     display: flex;
     align-items: center;

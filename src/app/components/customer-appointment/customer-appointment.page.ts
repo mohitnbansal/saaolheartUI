@@ -41,7 +41,7 @@ openDate(){
        appointmentDate : this.appointmentDate, description :this.description,machineNo:this.machineNo}
     this.modalCtrl.dismiss(dat);
     }else{
-          this.flasService.show('Please enter all data related to Appointment',4000);
+          this.flasService.showRed('Please enter all data related to Appointment',4000);
     }
   }
  

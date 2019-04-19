@@ -89,10 +89,10 @@ this.dashboardService.addAppointment(this.appointment).subscribe((res)=>{
   this.getEvent();
   // this.dashboardService.change.emit(res);
   //Flash serveice Message
-  this.flashService.show(res.error,5000);
+  this.flashService.showGreen(res.error,5000);
 },(err)=>{
   console.log(err);
-  this.flashService.show(err.error.error,8000);
+  this.flashService.showRed(err.error.error,8000);
 });
   }
 

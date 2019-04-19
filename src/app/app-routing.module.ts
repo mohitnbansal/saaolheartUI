@@ -1,3 +1,4 @@
+import { DashboardLowStockResolveService } from './services/dashboard/dashboard-low-stock-resolve.service';
 import { DashboardPendingPaymentResolveService } from './services/dashboard/dashboard-pending-payment-resolve.service';
 import { DasboardResolveService } from './services/dashboard/dasboard-resolve.service';
 import { AppComponent } from './app.component';
@@ -21,7 +22,8 @@ const routes: Routes = [
   resolve:{
     data: DasboardResolveService,
     patientQue: DashboardBCADataResolveService ,
-    patientPendingList:DashboardPendingPaymentResolveService
+    patientPendingList: DashboardPendingPaymentResolveService,
+    lowStock: DashboardLowStockResolveService
   }
 },
   { path: 'customer', loadChildren: './pages/customer/customer.module#CustomerPageModule',

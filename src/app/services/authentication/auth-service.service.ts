@@ -2,6 +2,7 @@ import { TOKEN_AUTH_USERNAME, TOKEN_AUTH_PASSWORD } from './../constants/auth-co
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subscribable } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class AuthServiceService {
         })
       };
 
-        return this.http.post<any>(AuthServiceService.AUTH_TOKEN, body, httpOptions);
+        return this.http.post<any>(environment.apiUrl + 'oauth/token', body, httpOptions);
   //   .subscribe((res: any) => {
   //     console.log(res);
   //     if (res.access_token) {

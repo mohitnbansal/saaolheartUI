@@ -91,7 +91,7 @@
     <ion-row>
         <ion-col no-padding>
             <ngx-datatable  [rowClass]="getRowClass"  #myTable class='material fullscreenManual'
-             [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="'auto'"  [scrollbarH]="'true'" [rows]='rowsInvoice' (page)="onPage($event)">
+             [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="'auto'"  [scrollbarH]="'true'" [rows]='rowsInvoice' >
                 <ngx-datatable-column name="Invoice No">
                     <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-rowIndex="rowIndex">
                         {{row.id}}
@@ -186,7 +186,7 @@
     <ion-row>
         <ion-col no-padding>
             <ngx-datatable #myTable class='material fullscreenManual' [columnMode]="'flexi'" [headerHeight]="50" 
-            [sortType]="'multi'" [footerHeight]="50" [rowHeight]="'auto'"  [scrollbarH]="'true'" [rows]='rowsPayment' (page)="onPage($event)">
+            [sortType]="'multi'" [footerHeight]="50" [rowHeight]="'auto'"  [scrollbarH]="'true'" [rows]='rowsPayment'>
                 <ngx-datatable-column name="Invoice No">
                     <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-rowIndex="rowIndex">
                         {{row.invoiceId}}

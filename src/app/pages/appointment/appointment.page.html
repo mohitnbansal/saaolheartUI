@@ -53,7 +53,8 @@
   <ion-card-content>
     
     <!-- <ion-searchbar (ionInput)="getCustomerListBySearch($event)" animated showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar> -->
-    <ngx-datatable #myTable class='material' [columnMode]="'standard'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rows' (page)="onPage($event)">
+    <ngx-datatable #myTable class='material' [columnMode]="'standard'" [headerHeight]="50" 
+    [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rows'>
         <!-- Row Detail Template -->
         <!-- <ngx-datatable-row-detail [rowHeight]="getHeight()" #myDetailRow>
             <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-row-detail-template>

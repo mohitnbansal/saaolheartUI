@@ -1,3 +1,4 @@
+import { CustomerListResolveService } from './../../services/customer/customer-list-resolve.service';
 import { InvoiceMasterService } from './../../services/master/invoice-master.service';
 import { CustomerPage } from './customer.page';
 import { RouterModule, Routes } from '@angular/router';
@@ -48,7 +49,12 @@ const routes: Routes = [
           }
         ]
       },
-      { path: 'search', loadChildren: './customer-search/customer-search.module#CustomerSearchPageModule' }
+      {
+        path: 'search', loadChildren: './customer-search/customer-search.module#CustomerSearchPageModule',
+
+      resolve: {
+        list: CustomerListResolveService
+          } }
 
     ]
   }

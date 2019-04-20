@@ -36,6 +36,8 @@ public stockView:Stock = <Stock>{};
   
    console.log(this.stockView)
 this.stockService.updateStock(this.stockView).subscribe((res)=>{
+  this.stockDetailsDb = res.document;
+  this.activate.snapshot.data['data'] = res.document;
 this.flashservice.showGreen(res.error,5000)}
 ,
 (err) => {

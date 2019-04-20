@@ -8,15 +8,15 @@
 :host /deep/ .strike {
     background: repeating-linear-gradient(
         45deg,
-        #606dbc,
-        #606dbc 10px,
-        #465298 10px,
-        #465298 20px
+        #61bd84,
+        #a1e7c4 10px,
+        #185c34 10px,
+        #4ead0e 20px
       );
       padding: 10px;
       font-size: 12px;
       background-color: #d1e8ff;
-      border: 1px solid #1e90ff;
+      border: 1px solid darkgreen;
       color: rgb(0, 0, 0);
       box-sizing: border-box;
       overflow: hidden;
@@ -32,8 +32,8 @@
     padding: 10px;
     font-size: 12px;
     background-color: #d1e8ff;
-    border: 1px solid #1e90ff;
-    color: #1e90ff;
+    border: 1px solid darkred;
+    color: red;
     box-sizing: border-box;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -33,11 +33,11 @@ updateSales(res:any): Observable<any> {
   return this.http.post<CustomerPurchases[]>(environment.apiUrl + 'sales/updatesales', res, this.httpOptions);
       }
 
-printSalesRecipt(res:any):Observable<any>{
-  return this.http.post<any>(environment.apiUrl + 'sales/printRecipt', res, this.httpOptions);
+printSalesRecipt(res: any): Observable<any>{
+  return this.http.post<any>(environment.apiUrl + 'sales/printrecipt' , res,  {responseType: 'blob' as 'json'});
 }
 
-emailReciept(res:any):Observable<any>{
+emailReciept(res: any): Observable<any>{
   return this.http.post<any>(environment.apiUrl + 'sales/emailreciept', res, this.httpOptions);
 }
 

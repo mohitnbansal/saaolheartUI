@@ -9,6 +9,7 @@ import { IonSearchbar, ModalController } from '@ionic/angular';
 import { StockService } from 'src/app/services/stock/stock.service';
 import { StockQuantityPage } from 'src/app/components/stock-quantity/stock-quantity.page';
 import { filter } from 'rxjs/operators';
+import { CommonUtilService } from 'src/app/services/common/common-util.service';
 
 @Component({
   selector: 'app-new-sales',
@@ -39,7 +40,8 @@ public customerSaleData: CustomerSales = <CustomerSales>{} ;
     public stockService: StockService,
     public salesService: SalesService,
     public flashService: FlashMessageService,
-    public modalController: ModalController) {
+    public modalController: ModalController,
+    public commonService: CommonUtilService) {
 
      }
 
@@ -163,13 +165,14 @@ console.log(err);
       console.log(res);
       this.flashService.showGreen(res.error,4000);
       this.resetForm();
-if(action==='print'){
-      this.salesService.printSalesRecipt(res.document).subscribe((response)=>{
+if(action==='print') {
+      this.salesService.printSalesRecipt(res.document).subscribe((response) => {
         console.log(response);
+        this.commonService.saveFile(response);
       },(err)=>{
         console.log(err);
       });
-    } else if (action === 'mail'){
+    } else if (action === 'mail') {
       this.salesService.emailReciept(res.document).subscribe((response)=>{
         console.log(response);
       },(err)=>{

@@ -1,3 +1,4 @@
+import { CommonUtilService } from './../../services/common/common-util.service';
 import { FlashMessageService } from './../../services/flash/flash-message.service';
 import { CustomerService } from './../../services/customer/customer.service';
 import { DoctorConsultation } from './../../interfaces/doctorconsultaion';
@@ -40,7 +41,8 @@ export class DoctorDetailsComponent implements OnInit {
 
 constructor(public activate: ActivatedRoute, public fb: FormBuilder,
   public customerService: CustomerService,
-  public flashProvider: FlashMessageService) {
+  public flashProvider: FlashMessageService,
+  public commonService: CommonUtilService) {
     this.doctorDetailfromDb = this.activate.snapshot.data['data'];
     this.invoiceMasterType = this.activate.snapshot.data['invoiceType'];
       
@@ -236,8 +238,10 @@ this.updateSingleInvoiceDomainAndAllPaymentList(res.document);
 
   public myFilter = (d: Date): boolean => {
     const day = d.getDay();
-    
+
     // Prevent Saturday and Sunday from being selected.
     return day !== 0;
 }
+
+
 }

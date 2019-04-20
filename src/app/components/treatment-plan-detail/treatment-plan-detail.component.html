@@ -90,7 +90,7 @@
     <ion-row>
         <ion-col no-padding>
             <ngx-datatable no-padding class="material fullscreenManual"
-             [headerHeight]="50" [scrollbarH]='true' [limit]="10" [columnMode]="'flexi'" 
+             [headerHeight]="50" [scrollbarH]='true' [limit]="5" [columnMode]="'flexi'" 
              [footerHeight]="50" [rowHeight]="'auto'" [rows]="rowsTreatmentDetail">
                 <ngx-datatable-column name="Treatment Date">
                     <ng-template ngx-datatable-cell-template let-value="value">
@@ -128,18 +128,14 @@
     <ion-row>
         <ion-col no-padding>
             <ngx-datatable no-padding class="material fullscreenManual"
-             [headerHeight]="50" [scrollbarH]='true' [limit]="10" [columnMode]="'flexi'" 
+             [headerHeight]="50" [scrollbarH]='true' [limit]="5" [columnMode]="'flexi'" 
              [footerHeight]="50" [rowHeight]="'auto'" [rows]="rowsTreatmentDetailBca">
                 <ngx-datatable-column name="Treatment Date">
                     <ng-template ngx-datatable-cell-template let-value="value">
                         {{value | date : 'MMM d, y, h:mm:ss a' }}
                     </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Duration">
-                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                        {{row.duration |  slice:2}}
-                    </ng-template>
-                </ngx-datatable-column>
+       
                 <ngx-datatable-column name="Visit Status">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                         {{row.isTreatmentDone}}

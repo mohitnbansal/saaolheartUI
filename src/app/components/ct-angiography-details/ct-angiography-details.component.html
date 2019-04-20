@@ -124,6 +124,13 @@
                         {{row.invoiceDomain.id}}
                     </ng-template>
                 </ngx-datatable-column>
+                <ngx-datatable-column  width="200" name="Action">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" >
+
+                        <ion-button  size="small" shape="round" (click)="printMou(row.id)" color="primary">Generate Reciept  </ion-button>
+
+                    </ng-template>
+                </ngx-datatable-column>
             </ngx-datatable>
 
 
@@ -141,7 +148,9 @@
     <ion-row>
         <ion-col no-padding>
             <ngx-datatable  [rowClass]="getRowClass" #myTable class='material fullscreenManual' 
-            [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="'auto'" 
+            [columnMode]="'flexi'" [headerHeight]="50" [sortType]="'multi'" 
+            [limit]="8"
+            [footerHeight]="50" [rowHeight]="'auto'" 
              [scrollbarH]="'true'" [rows]='rowsInvoice' >
                 <ngx-datatable-column name="Invoice No">
                     <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-rowIndex="rowIndex">
@@ -215,7 +224,7 @@
                 <ngx-datatable-column width="200" name="Payment Amount">
                     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
 
-                        <ion-button  size="small" shape="round" (click)="generateReciept($event, 'name', rowIndex, row)" color="primary">Generate Reciept</ion-button>
+                        <ion-button *ngIf="row.invoiceStatus=='Total Payment Pending' ||  row.invoiceStatus=='Partially Pending'"  size="small" shape="round" (click)="generateReciept($event, 'name', rowIndex, row)" color="primary">Generate Reciept</ion-button>
                     </ng-template>
                 </ngx-datatable-column>
 

@@ -1,3 +1,5 @@
+import { LoaderComponent } from './components/loader/loader.component';
+import { LoaderInterceptorService } from './services/loader/loader-interceptor.service';
 import { PipesModule } from './pipes/pipes.module';
 import { HeaderComponent } from './components/header/header.component';
 import { DashboardService } from './services/dashboard/dashboard.service';
@@ -16,7 +18,7 @@ import { ComponentModule } from './components/component.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { JwtModule } from '@auth0/angular-jwt';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IonicStorageModule, Storage } from '@ionic/storage';
 import { IonicSelectableModule } from 'ionic-selectable';
 
@@ -35,7 +37,7 @@ export function tokenGetter() {
 }
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [HeaderComponent],
+  entryComponents: [HeaderComponent, LoaderComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -72,7 +74,8 @@ export function tokenGetter() {
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true}
   ],
   bootstrap: [AppComponent]
 })

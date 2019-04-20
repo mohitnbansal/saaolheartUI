@@ -73,11 +73,9 @@ return this.http.post<Customer>(environment.apiUrl + 'customer/addcustomer', cus
       return this.http.get<any>(environment.apiUrl + 'customer/getcustomeralltreatment/' + id, this.httpOptions);
     }
 
-    saveFile(data: any, filename?: string) {
-      console.log(data)
-
-      const file = new Blob([data], { type: 'application/pdf' });
-      const fileURL = URL.createObjectURL(file);
-      window.open(fileURL);
+    printMou(num: number): Observable<any> {
+      return this.http.get(environment.apiUrl + 'customer/printmou?ctConsultationId='+ num ,   {responseType: 'blob' as 'json'} );
     }
+
+   
 }

@@ -1,3 +1,4 @@
+import { CommonUtilService } from './../../services/common/common-util.service';
 import { Component, OnInit } from '@angular/core';
 
 import { FlashMessageService } from './../../services/flash/flash-message.service';
@@ -42,7 +43,8 @@ export class TreatmentInvoiceDetailsComponent implements OnInit {
 
   constructor(public activate: ActivatedRoute, public fb: FormBuilder,
     public customerService: CustomerService,
-    public flashProvider: FlashMessageService) {
+    public flashProvider: FlashMessageService,
+    public commonService: CommonUtilService) {
     this.treatmentInvoiceFromDb = this.activate.snapshot.data['data'];
     this.invoiceMasterType = this.activate.snapshot.data['invoiceType'];
     console.log(this.invoiceMasterType);
@@ -157,7 +159,7 @@ private updateInvoiceAndPaymentDomain(obj: any) {
     this.customerService.printRecipt(row).subscribe((res) => {
       const filename = 'in.pdf';
  console.log(res)
-      this.customerService.saveFile(res, filename);
+      this.commonService.saveFile(res, filename);
     }  , (errr) => {
       console.log(errr);
      });
@@ -187,6 +189,7 @@ private updateInvoiceAndPaymentDomain(obj: any) {
     }
     }
   updateSingleInvoiceDomainAndAllPaymentList(list:any){
+    this.rowsPayment= [];
     list.invoiceReciptList.filter((val) => {
       this.rowsPayment.push(val);
     });

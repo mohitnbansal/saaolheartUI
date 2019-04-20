@@ -1,3 +1,4 @@
+import { LoaderComponent } from './loader/loader.component';
 import { CustomerDetailsPage } from './../pages/customer/customer-details/customer-details.page';
 import { CustomerRegistrationPageModule } from './../pages/customer/customer-registration/customer-registration.module';
 import { OwlDialogModule } from 'ng-pick-datetime/dialog';
@@ -49,7 +50,7 @@ import { ToolpopComponent } from './toolpop/toolpop.component';
        SalesInvoiceInfoComponent,
        SalesInvoiceUpdateComponent,
        SalesInvoiceHistoryComponent,
-      ToolpopComponent],
+      ToolpopComponent,LoaderComponent],
   imports: [
     CommonModule,
     NgxDatatableModule,
@@ -60,7 +61,7 @@ import { ToolpopComponent } from './toolpop/toolpop.component';
     OwlNativeDateTimeModule,
     OwlDialogModule
   ],
- entryComponents:[ToolpopComponent],
+ entryComponents:[ToolpopComponent,LoaderComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [HeaderComponent,
      CustomerDetailComponent,
@@ -79,7 +80,7 @@ import { ToolpopComponent } from './toolpop/toolpop.component';
       SalesInvoiceInfoComponent,
       SalesInvoiceUpdateComponent,
       SalesInvoiceHistoryComponent,
-      ToolpopComponent
+      ToolpopComponent,LoaderComponent
       ],
       providers:[],
     

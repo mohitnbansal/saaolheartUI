@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { CommonUtilService } from 'src/app/services/common/common-util.service';
 
 @Component({
   selector: 'app-ct-angiography-details',
@@ -42,7 +43,8 @@ export class CtAngiographyDetailsComponent implements OnInit {
   constructor(public activate: ActivatedRoute, public fb: FormBuilder,
     public customerService: CustomerService,
     public flashProvider: FlashMessageService,
-    public alertController: AlertController) {
+    public alertController: AlertController,
+    public commonService:CommonUtilService) {
     this.ctAngioFromDb = this.activate.snapshot.data['data'];
     this.invoiceMasterType = this.activate.snapshot.data['invoiceType'];
     console.log(this.invoiceMasterType);
@@ -154,7 +156,7 @@ ind = index;
       invoice: [],
       invoiceMasterTypeId:  [this.invoiceTypeId],
       customerId: [this.ctAngioFromDb.id],
-      invoiceTotalamt: [7000]
+      invoiceTotalamt: [7500]
     });
   }
   private createForm(model: CtAngioDetails): FormGroup {
@@ -249,7 +251,7 @@ ind = index;
              this.customerService.cancelAndCreateNewInvoice(this.ctAngioForm.value).subscribe((res)=>{
               this.updatePartialCtDetailAndInvoiceAndPaymentDomain(res.document);
              },(err)=>{
-
+console.log(err);
              });
 
             }
@@ -310,5 +312,15 @@ ind = index;
     
     // Prevent Saturday and Sunday from being selected.
     return day !== 0;
+}
+
+printMou(id: number): void{
+  this.customerService.printMou(id).subscribe((res) => {
+this.commonService.saveFile(res);
+  }, (err) => {
+    const er = [] ;
+    er.push('Unable to Print Mou Please Contact IT Support')
+    this.flashProvider.showRed(er,8000);
+  });
 }
     }

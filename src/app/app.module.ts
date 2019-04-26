@@ -51,7 +51,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ['http://localhost:8082', 'localhost:8082', 'localhost'],
+        whitelistedDomains: ['http://localhost:8082','http://protechnic.in','protechnic.in:8082','protechnic.in ', 'localhost:8082', 'localhost'],
       // blacklistedRoutes: ['example.com/examplebadroute/']
       }
     }),

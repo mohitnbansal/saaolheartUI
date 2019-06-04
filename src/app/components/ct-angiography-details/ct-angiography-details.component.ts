@@ -285,6 +285,11 @@ console.log(err);
 
       generateReciept(event, cell, rowIndex, row) {
         console.log(row);
+        if(row.paymentMode ==='' || row.paymentAmount ===''){
+          const arr = [];
+          arr.push('Please Select Payment Mode and Input Payment Amount befor reciept generation');
+          this.flashProvider.showRed(arr,6000);
+        } else {
        this.customerService.generateReciept(row).subscribe((res) => {
         this.updateSingleInvoiceDomainAndAllPaymentList(res.document);
           console.log(res);
@@ -293,9 +298,10 @@ console.log(err);
          console.log(err);
          this.flashProvider.showRed(err.error, 5000);
        });
+        }
       }
       getRowClass = (row) => {
-        if(!(row.invoiceStatus=='Total Payment Pending' ||  row.invoiceStatus=='Partially Pending')){
+        if(!(row.invoiceStatus === 'Total Payment Pending' ||  row.invoiceStatus === 'Partially Pending')){
           return {
             'row-color': true
           };

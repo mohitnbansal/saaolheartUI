@@ -1,6 +1,7 @@
 import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { SalesService } from 'src/app/services/sales/sales.service';
 
 @Component({
   selector: 'app-search-sales',
@@ -13,15 +14,22 @@ rows=[];
 columns=[];
 temp = [];
 @ViewChild(DatatableComponent) table: DatatableComponent;
-  constructor(public activate:ActivatedRoute) { 
+  constructor(public activate:ActivatedRoute,
+    private router:Router,
+    public salesService: SalesService) { 
 
     this.salesList = this.activate.snapshot.data['dataList'];
+    router.events.subscribe((val) => {
+      if (val instanceof NavigationEnd) {
+        this.salesList =   this.salesService.getAllSalesList();
+      }
+  });
 if(this.salesList.document !== null) {
     this.temp = [...this.salesList.document];
 }
       // push our inital complete list
       this.rows = this.salesList.document;
-
+      
   }
 
 

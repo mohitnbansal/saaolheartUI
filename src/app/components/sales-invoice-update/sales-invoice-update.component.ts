@@ -2,6 +2,7 @@ import { FlashMessageService } from './../../services/flash/flash-message.servic
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, DoCheck, Input, IterableDiffers, OnChanges, SimpleChanges } from '@angular/core';
 import { SalesService } from 'src/app/services/sales/sales.service';
+import { CommonUtilService } from 'src/app/services/common/common-util.service';
 
 @Component({
   selector: 'app-sales-invoice-update',
@@ -19,7 +20,8 @@ export class SalesInvoiceUpdateComponent implements OnInit  {
   differ: any;
   constructor(public activate: ActivatedRoute,
     public flash: FlashMessageService,
-    public salesService:SalesService) {
+    public salesService:SalesService,
+    public commonService: CommonUtilService) {
 
     this.salesInfo = this.activate.snapshot.data['dataDetails'].document;
     this.totalAmount = this.salesInfo.invoiceOfPurchase.totalInvoiceAmt;
@@ -110,5 +112,21 @@ console.log(err)
   }
   updateValueQty(event, cell, rowIndex) {
     this.rows[rowIndex][cell] = event.target.value;
+  }
+  printOrMail(action: string){
+    if(action==='print') {
+      this.salesService.printSalesRecipt(this.salesInfo).subscribe((response) => {
+        console.log(response);
+        this.commonService.saveFile(response);
+      },(err)=>{
+        console.log(err);
+      });
+    } else if (action === 'mail') {
+      this.salesService.emailReciept(this.salesInfo).subscribe((response)=>{
+        console.log(response);
+      },(err)=>{
+        console.log(err);
+      });
+    }
   }
 }

@@ -42,8 +42,15 @@
                 </ngx-datatable-column>
                 <ngx-datatable-column name="Customer Id" width="180">
                     <ng-template let-row="row" ngx-datatable-cell-template>
-                        <a [routerDirection]="'forward'" [routerLink]="['/customer/details/',row.id]">
+                        <a [routerDirection]="'forward'" [routerLink]="['/customer/details/',row.id]" >
                             <b><i> {{row.customerRefId}}  </i></b>
+                        </a>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Consultation Id" width="180">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <a [routerDirection]="'forward'" [routerLink]="['/customer/details/',row.id]">
+                            <b><i> {{row.consultaionNumber}}  </i></b>
                         </a>
                     </ng-template>
                 </ngx-datatable-column>

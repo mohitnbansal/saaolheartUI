@@ -10,7 +10,7 @@
     <ion-card>
         <ion-card-header color="primary">
             <ion-card-title>
-                {{customerFormDetails.firstName}} {{customerFormDetails.lastName}} - Counsultation ID {{customerFormDetails.id}}
+                {{customerFormDetails.firstName}} {{customerFormDetails.lastName}} - Counsultation ID {{customerFormDetails.consultaionNumber}}
             </ion-card-title>
         </ion-card-header>
         <ion-card-content>
@@ -47,13 +47,11 @@
 
                     <ion-col [ngSwitch]="customercomp">
                         <app-customer-detail  *ngSwitchCase="'customerdetails'"></app-customer-detail>
-                       
                         <app-doctor-details *ngSwitchCase="'doctordetails'"></app-doctor-details>
                         <app-ct-angiography-details *ngSwitchCase="'ctangiographydetails'"></app-ct-angiography-details>
                         <app-treatment-invoice-details *ngSwitchCase="'treatmentinvoicedetails'"></app-treatment-invoice-details>
                         <app-treatment-plan-detail *ngSwitchCase="'treatmentplandetails'"></app-treatment-plan-detail>
                         <!-- <app-invoice-details *ngSwitchCase="'invociedetails'"></app-invoice-details> -->
-
                     </ion-col>
               
                 </ion-row>

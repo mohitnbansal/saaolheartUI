@@ -23,7 +23,8 @@ class="material"
   [draggable]="false"
   [resizeable]="false"
   [headerCheckboxable]="true"
-  [checkboxable]="true">
+  [checkboxable]="true"
+  limit="10" [scrollbarV]="'true'" [scrollbarH]="'true'" >
 </ngx-datatable-column>
 
 <ngx-datatable-column name="Sr No">
@@ -91,4 +92,5 @@ class="material"
       </ngx-datatable-footer>
 </ngx-datatable>
 <ion-button  float-right (click)="update()"> Update </ion-button>
+<ion-button float-left (click)="printOrMail('print')">Print</ion-button>
 

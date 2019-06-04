@@ -217,7 +217,8 @@
                     <ion-card-content>
                             <ion-searchbar (ionInput)="getPaymentListBySearch($event)" animated showCancelButton cancelButtonText="Custom Cancel"></ion-searchbar>
                             <!-- (page)="onPage($event)" -->
-                            <ngx-datatable class='material' [columnMode]="'standard'" [headerHeight]="50" [sortType]="'multi'" [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rowsPayment'>
+                            <ngx-datatable class='material' [columnMode]="'standard'" [headerHeight]="50" [sortType]="'multi'" 
+                            [footerHeight]="50" [rowHeight]="50" [scrollbarV]="'true'" [scrollbarH]="'true'" [rows]='rowsPayment'>
                                 <ngx-datatable-column name="Sr No" width="80">
                                     <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
                                         <strong>{{rowIndex+1}}</strong>
@@ -243,6 +244,11 @@
                                 <ngx-datatable-column name="Enrolled for Treatment " width="50">
                                     <ng-template let-row="row" ngx-datatable-cell-template>
                                         <strong>{{row.enrolledFor}}</strong>
+                                    </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column name="Invoice Type" width="50">
+                                    <ng-template let-row="row" ngx-datatable-cell-template>
+                                        <strong>{{row.invoiceType.typeName}}</strong>
                                     </ng-template>
                                 </ngx-datatable-column>
                                 <ngx-datatable-column name="Balance Amount" width="75">

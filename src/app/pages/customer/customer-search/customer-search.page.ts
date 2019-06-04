@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { CustomerService } from './../../../services/customer/customer.service';
 import { Customer } from './../../../interfaces/customer';
 import { Component, OnInit, ViewChild, AfterViewInit, AfterViewChecked, AfterContentChecked, AfterContentInit } from '@angular/core';
@@ -21,8 +21,14 @@ public customerList: Customer[];
 
   tablestyle = 'bootstrap';
   constructor(public custService: CustomerService,
-    public activate: ActivatedRoute) {
-      const list = this.activate.snapshot.data['list'];
+    public activate: ActivatedRoute,
+    private router: Router) {
+      let list = this.activate.snapshot.data['list'];
+      router.events.subscribe((val) => {
+        if (val instanceof NavigationEnd) {
+          list =   this.custService.getAllCustomerSortedList();
+        }
+    });
       if (list != null) {
       this.setDatatable(list);
       this.rows = [...this.rows];

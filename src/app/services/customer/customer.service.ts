@@ -41,7 +41,6 @@ return this.http.post<Customer>(environment.apiUrl + 'customer/addcustomer', cus
 
     generateReciept(invoice:any): Observable<any>{
       return this.http.post<DoctorConsultation>(environment.apiUrl + 'customer/generatereciept', invoice ,this.httpOptions);
-    
     }
 
     printRecipt(invo: any): Observable<any> {
@@ -62,13 +61,12 @@ return this.http.post<Customer>(environment.apiUrl + 'customer/addcustomer', cus
     getCustomerListByNameOrMobile(par: any): Observable<any> {
       const params = new HttpParams().set('searchParam', par);
       return this.http.get(environment.apiUrl + 'customer/getcustomerbysearch', {params: params});
-  
     }
 
     cancelAndCreateNewInvoice(ele: any): Observable<any> {
       return this.http.post<any>(environment.apiUrl + 'customer/cancelInvoice', ele , this.httpOptions);
     }
-    
+
     getcustomeralltreatment(id: number): Observable<any> {
       return this.http.get<any>(environment.apiUrl + 'customer/getcustomeralltreatment/' + id, this.httpOptions);
     }
@@ -77,5 +75,4 @@ return this.http.post<Customer>(environment.apiUrl + 'customer/addcustomer', cus
       return this.http.get(environment.apiUrl + 'customer/printmou?ctConsultationId='+ num ,   {responseType: 'blob' as 'json'} );
     }
 
-   
 }

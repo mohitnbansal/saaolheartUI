@@ -215,7 +215,11 @@ const a = document.createElement('a');
 
 
   generateReciept(event, cell, rowIndex, row) {
-  
+    if(row.paymentMode ==='' || row.paymentAmount ===''){
+      const arr = [];
+      arr.push('Please Select Payment Mode and Input Payment Amount befor reciept generation');
+      this.flashProvider.showRed(arr,6000);
+    } else {
    this.customerService.generateReciept(row).subscribe((res) => {
 this.updateSingleInvoiceDomainAndAllPaymentList(res.document);
       console.log(res);
@@ -224,6 +228,7 @@ this.updateSingleInvoiceDomainAndAllPaymentList(res.document);
      console.log(err);
      this.flashProvider.showRed(err.error, 5000);
    });
+  }
   }
   updateDataValue(eve: any, tar: string) {
     

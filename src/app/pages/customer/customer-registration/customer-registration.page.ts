@@ -58,10 +58,10 @@ export class CustomerRegistrationPage implements OnInit, OnChanges , AfterViewIn
       vistingFor: [this.customerDetails != null ? this.customerDetails.vistingFor : '',
       Validators.compose([Validators.required])],
       aadharNumber: [this.customerDetails.aadharNumber != null ? this.customerDetails.aadharNumber : null,
-      Validators.compose([Validators.required, Validators.minLength(14)])],
+      Validators.compose([ Validators.minLength(14)])],
       occupation: [this.customerDetails.occupation != null ? this.customerDetails.occupation : null],
       panNumber: [this.customerDetails.panNumber != null ? this.customerDetails.panNumber : null,
-      Validators.compose([Validators.required, Validators.minLength(10), Validators.pattern('[A-Z]{5}[0-9]{4}[A-Z]{1}')])]
+      Validators.compose([Validators.minLength(10), Validators.pattern('[A-Z]{5}[0-9]{4}[A-Z]{1}')])]
     });
     this.changeEvent();
   }
@@ -135,6 +135,8 @@ console.log(this.custformGroup);
 console.log(val)
     if (val === 'store') {
           this.removeControlsForStore();
+          this.custformGroup.get('emailId').setValidators(null);
+          
     } else {
 this.customerDetails.vistingFor = 'treatment';
       

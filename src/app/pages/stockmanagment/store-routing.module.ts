@@ -32,7 +32,7 @@ const routes: Routes = [
        children: [
          {
            path: '',
-           loadChildren: './update-stock-items/update-stock-items.module#UpdateStockItemsPageModule'
+           loadChildren: './update-stock-items/update-stock-items.module#UpdateStockItemsPageModule',
          },
          
        ]
